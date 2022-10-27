@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>986</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Amministratore - gestisci consulenza medica</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayoutPrincipale">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayoutIndietroLogout">
+       <item>
+        <widget class="QPushButton" name="pushButtonIndietro">
+         <property name="text">
+          <string>INDIETRO</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonLogout">
+         <property name="text">
+          <string>LOGOUT</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDettagliTrattamento">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Dettagli consulenza medica:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayoutDatiTrattamento">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutClasse">
+         <item>
+          <widget class="QLabel" name="labelGiorno">
+           <property name="maximumSize">
+            <size>
+             <width>135</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Giorno della settimana:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="comboBoxGiorno"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutCosto">
+         <item>
+          <widget class="QLabel" name="labelCosto">
+           <property name="text">
+            <string>Costo:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditCosto"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelEuro">
+           <property name="text">
+            <string>€</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutDurata">
+         <item>
+          <widget class="QLabel" name="labelDurata">
+           <property name="text">
+            <string>Durata:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditDurata"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelMinuti">
+           <property name="text">
+            <string>minuti</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonSalva">
+       <property name="text">
+        <string>Salva</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GestioneTrattConsView</class>
+ <widget class="QWidget" name="GestioneTrattConsView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>900</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Amministratore</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayoutPrincipale">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayoutIndietroLogout">
+       <item>
+        <widget class="QPushButton" name="pushButtonIndietro">
+         <property name="text">
+          <string>INDIETRO</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonLogout">
+         <property name="text">
+          <string>LOGOUT</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayoutRicerca">
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelRicercaTraNome">
+         <property name="text">
+          <string>Ricerca per nome trattamento: </string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="comboBoxClasseTra"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="labelRicercaTraClasse">
+         <property name="text">
+          <string>Ricerca per classe trattamento:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="lineEditNomeTra"/>
+       </item>
+       <item row="9" column="0" colspan="2">
+        <widget class="QPushButton" name="pushButtonRicerca">
+         <property name="text">
+          <string>Ricerca</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QListView" name="listViewTrattamenti"/>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayoutNuovoTraGestisciCons">
+       <item>
+        <widget class="QPushButton" name="pushButtonNuovoTra">
+         <property name="text">
+          <string>Nuovo Trattamento Fisioterapico</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonGestisciCons">
+         <property name="text">
+          <string>Gestisci Consulenza medica</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

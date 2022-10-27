@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Visualizza</class>
+ <widget class="QWidget" name="Visualizza">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>900</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Amministratore - visualizza trattamento</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayoutPrincipale">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayoutIndietroLogout">
+       <item>
+        <widget class="QPushButton" name="pushButtonIndietro">
+         <property name="text">
+          <string>INDIETRO</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonLogout">
+         <property name="text">
+          <string>LOGOUT</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelDettagliTrattamento">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Dettagli trattamento:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayoutDatiTrattamento">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutNome">
+         <item>
+          <widget class="QLabel" name="labelNome">
+           <property name="text">
+            <string>Nome:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelNomeValue">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutClasse">
+         <item>
+          <widget class="QLabel" name="labelClasse">
+           <property name="text">
+            <string>Classe:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelClasseValue">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutCosto">
+         <item>
+          <widget class="QLabel" name="labelCosto">
+           <property name="text">
+            <string>Costo:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelCostoValue">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelEuro">
+           <property name="text">
+            <string>€</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutDurata">
+         <item>
+          <widget class="QLabel" name="labelDurata">
+           <property name="text">
+            <string>Durata:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelDurataValue">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelMinuti">
+           <property name="text">
+            <string>minuti</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayoutEliminaModificaTra">
+       <item>
+        <widget class="QPushButton" name="pushButtonEliminaTra">
+         <property name="text">
+          <string>Elimina trattamento</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonModificaTra">
+         <property name="text">
+          <string>modifica trattamento</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
