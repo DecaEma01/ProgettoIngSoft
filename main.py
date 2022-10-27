@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 import sys
 
 from TrattamentiConsulenze.ViewsTrattCons.GestioneConsView import GestioneConsView
-
+from TrattamentiConsulenze.ControllersTrattCons.ConsulenzaController import ConsulenzaController
 
 # Press Maiusc+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
@@ -15,11 +15,18 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+
+    ConsulenzaController().getConsulenza()
+
     app = QtWidgets.QApplication(sys.argv)
     Form = QtWidgets.QWidget()
     ui = GestioneConsView()
-    ui.setupUi(Form)
+    ui.setupUi(Form,app)
     Form.show()
     sys.exit(app.exec_())
+
+
+
+
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 

@@ -10,9 +10,13 @@ class ConsulenzaModel:
         self.durata = ""
 
     def setInfoConsulenza(self, giornoSettimana, costo, durata):
-        consulenza = None
+        self.giornoSettimana = giornoSettimana
+        self.costo = costo
+        self.durata = durata
+
+    def setInfoConsulenzaFile(self):
         with open('Dati/Consulenza.pickle', 'rb') as f:
-            pickle.dump(consulenza, f, pickle.HIGHEST_PROTOCOL)
+            consulenza=pickle.load(f)
 
         self.giornoSettimana = consulenza.giornoSettimana
         self.costo = consulenza.costo
@@ -22,13 +26,14 @@ class ConsulenzaModel:
         consulenza = self
         with open('Dati/Consulenza.pickle', 'wb') as f:
             pickle.dump(consulenza, f, pickle.HIGHEST_PROTOCOL)
-
+"""
     def getInfoConsulenza(self):
         return {
             "giornoSettimana": self.giornoSettimana,
             "costo": self.costo,
             "durata": self.durata,
         }
+"""
 
 
 

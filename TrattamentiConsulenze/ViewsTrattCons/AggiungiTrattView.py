@@ -90,6 +90,8 @@ class Ui_Form(object):
         self.horizontalLayoutDurata.addWidget(self.labelMinuti)
         self.verticalLayoutDatiTrattamento.addLayout(self.horizontalLayoutDurata)
         self.verticalLayoutPrincipale.addLayout(self.verticalLayoutDatiTrattamento)
+        spacerItem = QtWidgets.QSpacerItem(40, 350, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayoutPrincipale.addItem(spacerItem)
         self.pushButtonSalva = QtWidgets.QPushButton(Form)
         self.pushButtonSalva.setObjectName("pushButtonSalva")
         self.verticalLayoutPrincipale.addWidget(self.pushButtonSalva)
