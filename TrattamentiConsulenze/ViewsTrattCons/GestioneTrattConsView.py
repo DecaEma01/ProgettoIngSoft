@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'GestioneTrattConsView_UI.ui'
+# Form implementation generated from reading ui file 'GestioneTrattConsView.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -11,75 +11,75 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class GestioneTrattConsView(object):
-    def setupUi(self, GestioneTrattConsView_UI):
-        GestioneTrattConsView_UI.setObjectName("GestioneTrattConsView_UI")
-        GestioneTrattConsView_UI.resize(900, 700)
-        self.verticalLayout = QtWidgets.QVBoxLayout(GestioneTrattConsView_UI)
+class Ui_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(900, 700)
+        self.verticalLayout = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
         self.verticalLayoutPrincipale = QtWidgets.QVBoxLayout()
         self.verticalLayoutPrincipale.setObjectName("verticalLayoutPrincipale")
         self.horizontalLayoutIndietroLogout = QtWidgets.QHBoxLayout()
         self.horizontalLayoutIndietroLogout.setObjectName("horizontalLayoutIndietroLogout")
-        self.pushButtonIndietro = QtWidgets.QPushButton(GestioneTrattConsView_UI)
+        self.pushButtonIndietro = QtWidgets.QPushButton(Form)
         self.pushButtonIndietro.setObjectName("pushButtonIndietro")
         self.horizontalLayoutIndietroLogout.addWidget(self.pushButtonIndietro)
-        self.pushButtonLogout = QtWidgets.QPushButton(GestioneTrattConsView_UI)
+        self.pushButtonLogout = QtWidgets.QPushButton(Form)
         self.pushButtonLogout.setObjectName("pushButtonLogout")
         self.horizontalLayoutIndietroLogout.addWidget(self.pushButtonLogout)
         self.verticalLayoutPrincipale.addLayout(self.horizontalLayoutIndietroLogout)
         self.gridLayoutRicerca = QtWidgets.QGridLayout()
         self.gridLayoutRicerca.setObjectName("gridLayoutRicerca")
-        self.labelRicercaTraNome = QtWidgets.QLabel(GestioneTrattConsView_UI)
+        self.labelRicercaTraNome = QtWidgets.QLabel(Form)
         self.labelRicercaTraNome.setObjectName("labelRicercaTraNome")
         self.gridLayoutRicerca.addWidget(self.labelRicercaTraNome, 2, 0, 1, 1)
-        self.comboBoxClasseTra = QtWidgets.QComboBox(GestioneTrattConsView_UI)
+        self.comboBoxClasseTra = QtWidgets.QComboBox(Form)
         self.comboBoxClasseTra.setObjectName("comboBoxClasseTra")
         self.gridLayoutRicerca.addWidget(self.comboBoxClasseTra, 1, 1, 1, 1)
-        self.labelRicercaTraClasse = QtWidgets.QLabel(GestioneTrattConsView_UI)
+        self.labelRicercaTraClasse = QtWidgets.QLabel(Form)
         self.labelRicercaTraClasse.setObjectName("labelRicercaTraClasse")
         self.gridLayoutRicerca.addWidget(self.labelRicercaTraClasse, 1, 0, 1, 1)
-        self.lineEditNomeTra = QtWidgets.QLineEdit(GestioneTrattConsView_UI)
+        self.lineEditNomeTra = QtWidgets.QLineEdit(Form)
         self.lineEditNomeTra.setObjectName("lineEditNomeTra")
         self.gridLayoutRicerca.addWidget(self.lineEditNomeTra, 2, 1, 1, 1)
-        self.pushButtonRicerca = QtWidgets.QPushButton(GestioneTrattConsView_UI)
+        self.pushButtonRicerca = QtWidgets.QPushButton(Form)
         self.pushButtonRicerca.setObjectName("pushButtonRicerca")
         self.gridLayoutRicerca.addWidget(self.pushButtonRicerca, 9, 0, 1, 2)
         self.verticalLayoutPrincipale.addLayout(self.gridLayoutRicerca)
-        self.listViewTrattamenti = QtWidgets.QListView(GestioneTrattConsView_UI)
+        self.listViewTrattamenti = QtWidgets.QListView(Form)
         self.listViewTrattamenti.setObjectName("listViewTrattamenti")
         self.verticalLayoutPrincipale.addWidget(self.listViewTrattamenti)
         self.verticalLayoutNuovoTraGestisciCons = QtWidgets.QVBoxLayout()
         self.verticalLayoutNuovoTraGestisciCons.setObjectName("verticalLayoutNuovoTraGestisciCons")
-        self.pushButtonNuovoTra = QtWidgets.QPushButton(GestioneTrattConsView_UI)
+        self.pushButtonNuovoTra = QtWidgets.QPushButton(Form)
         self.pushButtonNuovoTra.setObjectName("pushButtonNuovoTra")
         self.verticalLayoutNuovoTraGestisciCons.addWidget(self.pushButtonNuovoTra)
-        self.pushButtonGestisciCons = QtWidgets.QPushButton(GestioneTrattConsView_UI)
+        self.pushButtonGestisciCons = QtWidgets.QPushButton(Form)
         self.pushButtonGestisciCons.setObjectName("pushButtonGestisciCons")
         self.verticalLayoutNuovoTraGestisciCons.addWidget(self.pushButtonGestisciCons)
         self.verticalLayoutPrincipale.addLayout(self.verticalLayoutNuovoTraGestisciCons)
         self.verticalLayout.addLayout(self.verticalLayoutPrincipale)
 
-        self.retranslateUi(GestioneTrattConsView_UI)
-        QtCore.QMetaObject.connectSlotsByName(GestioneTrattConsView_UI)
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def retranslateUi(self, GestioneTrattConsView_UI):
+    def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        GestioneTrattConsView_UI.setWindowTitle(_translate("GestioneTrattConsView_UI", "Amministratore"))
-        self.pushButtonIndietro.setText(_translate("GestioneTrattConsView_UI", "INDIETRO"))
-        self.pushButtonLogout.setText(_translate("GestioneTrattConsView_UI", "LOGOUT"))
-        self.labelRicercaTraNome.setText(_translate("GestioneTrattConsView_UI", "Ricerca per nome trattamento: "))
-        self.labelRicercaTraClasse.setText(_translate("GestioneTrattConsView_UI", "Ricerca per classe trattamento:"))
-        self.pushButtonRicerca.setText(_translate("GestioneTrattConsView_UI", "Ricerca"))
-        self.pushButtonNuovoTra.setText(_translate("GestioneTrattConsView_UI", "Nuovo Trattamento Fisioterapico"))
-        self.pushButtonGestisciCons.setText(_translate("GestioneTrattConsView_UI", "Gestisci Consulenza medica"))
+        Form.setWindowTitle(_translate("Form", "Amministratore"))
+        self.pushButtonIndietro.setText(_translate("Form", "INDIETRO"))
+        self.pushButtonLogout.setText(_translate("Form", "LOGOUT"))
+        self.labelRicercaTraNome.setText(_translate("Form", "Ricerca per nome trattamento: "))
+        self.labelRicercaTraClasse.setText(_translate("Form", "Ricerca per classe trattamento:"))
+        self.pushButtonRicerca.setText(_translate("Form", "Ricerca"))
+        self.pushButtonNuovoTra.setText(_translate("Form", "Nuovo Trattamento Fisioterapico"))
+        self.pushButtonGestisciCons.setText(_translate("Form", "Gestisci Consulenza medica"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    GestioneTrattConsView_UI = QtWidgets.QWidget()
-    ui = GestioneTrattConsView()
-    ui.setupUi(GestioneTrattConsView_UI)
-    GestioneTrattConsView_UI.show()
+    Form = QtWidgets.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(Form)
+    Form.show()
     sys.exit(app.exec_())

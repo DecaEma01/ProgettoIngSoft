@@ -15,12 +15,15 @@ class ConsulenzaModel:
         self.durata = durata
 
     def setInfoConsulenzaFile(self):
-        with open('Dati/Consulenza.pickle', 'rb') as f:
-            consulenza=pickle.load(f)
+        try:
+            with open('Dati/Consulenza.pickle', 'rb') as f:
+                consulenza=pickle.load(f)
 
-        self.giornoSettimana = consulenza.giornoSettimana
-        self.costo = consulenza.costo
-        self.durata = consulenza.durata
+            self.giornoSettimana = consulenza.giornoSettimana
+            self.costo = consulenza.costo
+            self.durata = consulenza.durata
+        except:
+            print ("Impossibile aprire il file")
 
     def salvaConsulenza(self):
         consulenza = self

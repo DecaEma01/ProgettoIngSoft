@@ -12,13 +12,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 from TrattamentiConsulenze.ControllersTrattCons.ConsulenzaController import ConsulenzaController
-from TrattamentiConsulenze.ViewsTrattCons.GestioneTrattConsView import GestioneTrattConsView
+#from TrattamentiConsulenze.ViewsTrattCons.GestioneTrattConsView import GestioneTrattConsView
 
 
 class GestioneConsView(object):
     def setupUi(self, Form , app):
         Form.setObjectName("Form")
-        Form.resize(986, 700)
+        Form.resize(900, 700)
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
         self.verticalLayoutPrincipale = QtWidgets.QVBoxLayout()
@@ -28,8 +28,8 @@ class GestioneConsView(object):
 
         self.pushButtonIndietro = QtWidgets.QPushButton(Form)
         self.pushButtonIndietro.clicked.connect(lambda: self.chiudiFinestra(Form))
-
         self.pushButtonIndietro.setObjectName("pushButtonIndietro")
+
         self.horizontalLayoutIndietroLogout.addWidget(self.pushButtonIndietro)
 
         self.pushButtonLogout = QtWidgets.QPushButton(Form)
@@ -99,7 +99,7 @@ class GestioneConsView(object):
         self.pushButtonSalva = QtWidgets.QPushButton(Form)
         self.pushButtonSalva.setObjectName("pushButtonSalva")
 
-        #salva i nuovi dati relativi alla consulenza
+        #salva i nuovi dati relativi alla consulenza e chiude la finestra
         self.pushButtonSalva.clicked.connect(lambda: self.inoltroFormConsulenza(Form))
 
 
@@ -123,12 +123,9 @@ class GestioneConsView(object):
         self.pushButtonSalva.setText(_translate("Form", "Salva"))
 
 
-    def inoltroFormConsulenza(self):
+    def inoltroFormConsulenza(self,Form):
         if ConsulenzaController().modificaConsulenza(str(self.comboBoxGiorno.currentText()),str(self.lineEditCosto.text()),str(self.lineEditDurata.text())):
-            #GestioneTrattConsView().vistaGestioneTrattCons.show()
-            #self.vistaGestioneTrattCons = GestioneTrattConsView()
-            #self.vistaGestioneTrattCons.show()
-            pass
+            self.chiudiFinestra(Form)
         else:
             errore = QMessageBox()
             errore.setWindowTitle("Errore di inserimento")

@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 import sys
 
+from TrattamentiConsulenze.ViewsTrattCons.AggiungiTrattView import AggiungiTrattView
 from TrattamentiConsulenze.ViewsTrattCons.GestioneConsView import GestioneConsView
 from TrattamentiConsulenze.ControllersTrattCons.ConsulenzaController import ConsulenzaController
 
@@ -15,8 +16,14 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-
-    ConsulenzaController().getConsulenza()
+    app = QtWidgets.QApplication(sys.argv)
+    Form = QtWidgets.QWidget()
+    ui = AggiungiTrattView()
+    ui.setupUi(Form,app)
+    Form.show()
+    sys.exit(app.exec_())
+""" 
+test gestisci consulenza
 
     app = QtWidgets.QApplication(sys.argv)
     Form = QtWidgets.QWidget()
@@ -24,6 +31,7 @@ if __name__ == '__main__':
     ui.setupUi(Form,app)
     Form.show()
     sys.exit(app.exec_())
+"""
 
 
 
