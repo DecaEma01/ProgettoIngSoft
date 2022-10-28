@@ -9,6 +9,9 @@
 import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
+
+from TrattamentiConsulenze.ControllersTrattCons.TrattamentoController import TrattamentoController
 
 
 class AggiungiTrattView(object):
@@ -63,8 +66,13 @@ class AggiungiTrattView(object):
         self.labelClasse.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.labelClasse.setObjectName("labelClasse")
         self.horizontalLayoutClasse.addWidget(self.labelClasse)
+
         self.comboBoxClasse = QtWidgets.QComboBox(Form)
         self.comboBoxClasse.setObjectName("comboBoxClasse")
+        self.comboBoxClasse.addItems(["Fisio-estetica", "Fisioterapia strumentale", "Fisioterapia manuale",
+                                      "Fisioterapia posturale", "Fisioterapia neurologica", "Riabilitazione sportiva e performance" ,
+                                      "idrokinesiterapia","Realtà virtuale"])
+
         self.horizontalLayoutClasse.addWidget(self.comboBoxClasse)
         self.verticalLayoutDatiTrattamento.addLayout(self.horizontalLayoutClasse)
         self.horizontalLayoutCosto = QtWidgets.QHBoxLayout()
@@ -98,8 +106,13 @@ class AggiungiTrattView(object):
         self.verticalLayoutPrincipale.addLayout(self.verticalLayoutDatiTrattamento)
         spacerItem = QtWidgets.QSpacerItem(40, 350, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.verticalLayoutPrincipale.addItem(spacerItem)
+
         self.pushButtonSalva = QtWidgets.QPushButton(Form)
         self.pushButtonSalva.setObjectName("pushButtonSalva")
+
+        # salva i nuovi dati relativi alla consulenza e chiude la finestra
+        self.pushButtonSalva.clicked.connect(lambda: self.inoltroFormTrattamento(Form))
+
         self.verticalLayoutPrincipale.addWidget(self.pushButtonSalva)
         self.verticalLayout.addLayout(self.verticalLayoutPrincipale)
 
@@ -119,6 +132,18 @@ class AggiungiTrattView(object):
         self.labelDurata.setText(_translate("Form", "Durata:"))
         self.labelMinuti.setText(_translate("Form", "minuti"))
         self.pushButtonSalva.setText(_translate("Form", "Salva"))
+
+    def salvaTrattamento(self, Form):
+        if TrattamentoController().aggiungiTrattamento(str(self.lineEditNome.text()).strip(),str(self.comboBoxClasse.currentText()),
+                                                     str(self.lineEditCosto.text()).strip(), str(self.lineEditDurata.text().strip())):
+            self.chiudiFinestra(Form)
+        else:
+            errore = QMessageBox()
+            errore.setWindowTitle("Errore di inserimento")
+            errore.setText("Controlla che siano stati compilati tutti i campi e che nei campi 'costo' o 'durata' siano stati inseriti dei valori numerici.")
+            errore.setIcon(QMessageBox.Warning)
+            errore.setStandardButtons(QMessageBox.Ok)
+            errore.exec_()
 
     def chiudiFinestra(self,Form):
         Form.close()

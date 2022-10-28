@@ -7,11 +7,14 @@ class ConsulenzaController:
         if giornoSettimana and costo and durata:
             if costo.isdigit() and durata.isdigit():    #controllo che i parametri costo e durata inseriti liberamente sulla vista contengano solo numeri
                 consulenza = ConsulenzaModel()
-                consulenza.setInfoConsulenza(giornoSettimana.strip(), costo.strip(), durata.strip())
+                consulenza.setInfoConsulenza(giornoSettimana, costo, durata)
                 consulenza.salvaConsulenza()
+                return True
             else:
                 return False #costo o durata non contengono solo numeri
-        return True
+        else:
+            return False #ci sono valori nulli
+
 
     def getConsulenza(self):
         consulenza = ConsulenzaModel()

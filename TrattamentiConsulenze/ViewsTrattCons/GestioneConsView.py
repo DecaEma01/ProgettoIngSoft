@@ -124,12 +124,12 @@ class GestioneConsView(object):
 
 
     def inoltroFormConsulenza(self,Form):
-        if ConsulenzaController().modificaConsulenza(str(self.comboBoxGiorno.currentText()),str(self.lineEditCosto.text()),str(self.lineEditDurata.text())):
+        if ConsulenzaController().modificaConsulenza(str(self.comboBoxGiorno.currentText()),str(self.lineEditCosto.text()).strip(),str(self.lineEditDurata.text()).strip()):
             self.chiudiFinestra(Form)
         else:
             errore = QMessageBox()
             errore.setWindowTitle("Errore di inserimento")
-            errore.setText("Nei campi 'costo' o 'durata' sono stati inseriti dei valori non numerici.Inserisci solo valori numerici.")
+            errore.setText("Controlla che siano stati compilati tutti i campi e che nei campi 'costo' o 'durata' siano stati inseriti dei valori numerici.")
             errore.setIcon(QMessageBox.Warning)
             errore.setStandardButtons(QMessageBox.Ok)
             errore.exec_()
