@@ -125,7 +125,7 @@ class GestioneConsView(object):
 
     def inoltroFormConsulenza(self,Form):
         if ConsulenzaController().modificaConsulenza(str(self.comboBoxGiorno.currentText()),str(self.lineEditCosto.text()).strip(),str(self.lineEditDurata.text()).strip()):
-            self.chiudiFinestra(Form)
+            self.chiudiFinestra(Form) #chiudendosi la finestra viene mostrata nuovamente la finestra di gestione dei trattamenti che stava sotto
         else:
             errore = QMessageBox()
             errore.setWindowTitle("Errore di inserimento")

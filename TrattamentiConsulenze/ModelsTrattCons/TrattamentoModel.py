@@ -12,8 +12,8 @@ class TrattamentoModel:
         self.costo = ""
         self.durata = ""
 
-    def setInfoTrattamento(self, nome, classe, costo, durata):
-        self.codiceTrattamento = (ElencoTrattamentiModel().calcolaUltimoCodiceTra()+1)
+    def setInfoTrattamento(self, nome, classe, costo, durata):   #impostazione dei parametri per un nuovo trattamento
+        self.codiceTrattamento = int(ElencoTrattamentiModel().calcolaUltimoCodiceTra())+1
         self.nome = nome
         self.classe = classe
         self.costo = costo
@@ -22,16 +22,16 @@ class TrattamentoModel:
     def aggiungiTrattamento(self):
         trattamenti = {}
         try:
-            if os.path.isfile('Dati/Trattamenti.pickle'):
+            if os.path.isfile('Dati/Trattamenti.pickle') and os.path.getsize('Dati/Trattamenti.pickle') > 0:
                 with open('Dati/Trattamenti.pickle', 'rb') as file:
                     trattamenti = pickle.load(file)
-            trattamenti[self.codiceTrattamentoe] = self
+            trattamenti[self.codiceTrattamento] = self
             with open('Dati/Trattamenti.pickle', 'wb') as file:
                 pickle.dump(trattamenti, file, pickle.HIGHEST_PROTOCOL)
         except:
             print("Impossibile aprire il file")
 
-    def setInfoTrattamentoFile(self):
+    def setInfoTrattamentoFile(self):    #impostazione dei parametri per un trattamento già salvato
         try:
             with open('Dati/Consulenza.pickle', 'rb') as f:
                 consulenza = pickle.load(f)

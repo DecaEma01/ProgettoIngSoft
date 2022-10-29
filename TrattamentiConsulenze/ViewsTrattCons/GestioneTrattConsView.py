@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from TrattamentiConsulenze.ControllersTrattCons.ElencoTrattamentiController import ElencoTrattamentiController
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -46,8 +47,10 @@ class Ui_Form(object):
         self.pushButtonRicerca.setObjectName("pushButtonRicerca")
         self.gridLayoutRicerca.addWidget(self.pushButtonRicerca, 9, 0, 1, 2)
         self.verticalLayoutPrincipale.addLayout(self.gridLayoutRicerca)
+
         self.listViewTrattamenti = QtWidgets.QListView(Form)
         self.listViewTrattamenti.setObjectName("listViewTrattamenti")
+
         self.verticalLayoutPrincipale.addWidget(self.listViewTrattamenti)
         self.verticalLayoutNuovoTraGestisciCons = QtWidgets.QVBoxLayout()
         self.verticalLayoutNuovoTraGestisciCons.setObjectName("verticalLayoutNuovoTraGestisciCons")
@@ -73,6 +76,20 @@ class Ui_Form(object):
         self.pushButtonRicerca.setText(_translate("Form", "Ricerca"))
         self.pushButtonNuovoTra.setText(_translate("Form", "Nuovo Trattamento Fisioterapico"))
         self.pushButtonGestisciCons.setText(_translate("Form", "Gestisci Consulenza medica"))
+
+    def visualizzaListaTrattamenti(self):
+        self.trattamenti = ElencoTrattamentiController().getElencoTrattamenti()
+        listview_model = QStandardItemModel(self.list_view)
+        for cliente in self.clienti:
+            item = QStandardItem()
+            nome = f"{cliente.nome} {cliente.cognome} - {type(cliente).__name__} {cliente.codice}"
+            item.setText(nome)
+            item.setEditable(False)
+            font = item.font()
+            font.setPointSize(18)
+            item.setFont(font)
+            listview_model.appendRow(item)
+        self.list_view.setModel(listview_model)
 
 
 if __name__ == "__main__":

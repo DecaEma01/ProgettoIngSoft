@@ -111,7 +111,7 @@ class AggiungiTrattView(object):
         self.pushButtonSalva.setObjectName("pushButtonSalva")
 
         # salva i nuovi dati relativi alla consulenza e chiude la finestra
-        self.pushButtonSalva.clicked.connect(lambda: self.inoltroFormTrattamento(Form))
+        self.pushButtonSalva.clicked.connect(lambda: self.salvaTrattamento(Form))
 
         self.verticalLayoutPrincipale.addWidget(self.pushButtonSalva)
         self.verticalLayout.addLayout(self.verticalLayoutPrincipale)
@@ -134,9 +134,11 @@ class AggiungiTrattView(object):
         self.pushButtonSalva.setText(_translate("Form", "Salva"))
 
     def salvaTrattamento(self, Form):
-        if TrattamentoController().aggiungiTrattamento(str(self.lineEditNome.text()).strip(),str(self.comboBoxClasse.currentText()),
+        if TrattamentoController().aggiungiTrattamento(str(self.lineEditNome.text()).strip(), str(self.comboBoxClasse.currentText()),
                                                      str(self.lineEditCosto.text()).strip(), str(self.lineEditDurata.text().strip())):
-            self.chiudiFinestra(Form)
+            self.chiudiFinestra(Form) #chiudendosi la finestra viene mostrata nuovamente la finestra di gestione dei trattamenti che stava sotto
+                                      #la finestra della lista dei trattamenti si deve aggiornare per far comparire il trattamento appena aggiunto
+
         else:
             errore = QMessageBox()
             errore.setWindowTitle("Errore di inserimento")
