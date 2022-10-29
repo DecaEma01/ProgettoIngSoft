@@ -30,6 +30,10 @@ class ElencoTrattamentiModel:
             if os.path.isfile('Dati/Trattamenti.pickle') and os.path.getsize('Dati/Trattamenti.pickle') > 0:
                 with open('Dati/Trattamenti.pickle', 'rb') as file:
                     trattamenti = dict(pickle.load(file))
+            return trattamenti
         except:
             print(traceback.format_exc())
             print("Impossibile aprire il file")
+
+    def ricercaTrattamentoCodice(self, codiceTrattamento):
+        pass

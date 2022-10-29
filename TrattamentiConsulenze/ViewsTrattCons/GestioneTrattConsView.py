@@ -9,11 +9,19 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
 from TrattamentiConsulenze.ControllersTrattCons.ElencoTrattamentiController import ElencoTrattamentiController
+from TrattamentiConsulenze.ViewsTrattCons.VisualizzaTrattView import VisualizzaTrattView
 
-class Ui_Form(object):
-    def setupUi(self, Form):
+
+class GestioneTrattConsView(object):
+
+    def __init__(self):
+        self.trattamenti = None
+        self.vistaTrattamento = None
+
+    def setupUi(self, Form, app):
         Form.setObjectName("Form")
         Form.resize(900, 700)
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
@@ -54,6 +62,9 @@ class Ui_Form(object):
         self.verticalLayoutPrincipale.addWidget(self.listViewTrattamenti)
         self.verticalLayoutNuovoTraGestisciCons = QtWidgets.QVBoxLayout()
         self.verticalLayoutNuovoTraGestisciCons.setObjectName("verticalLayoutNuovoTraGestisciCons")
+        self.pushButtonVisualizzaTrattamento = QtWidgets.QPushButton(Form)
+        self.pushButtonVisualizzaTrattamento.setObjectName("pushButtonVisualizzaTrattamento")
+        self.verticalLayoutNuovoTraGestisciCons.addWidget(self.pushButtonVisualizzaTrattamento)
         self.pushButtonNuovoTra = QtWidgets.QPushButton(Form)
         self.pushButtonNuovoTra.setObjectName("pushButtonNuovoTra")
         self.verticalLayoutNuovoTraGestisciCons.addWidget(self.pushButtonNuovoTra)
@@ -66,6 +77,8 @@ class Ui_Form(object):
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
+        self.visualizzaListaTrattamenti()
+
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Amministratore"))
@@ -74,29 +87,43 @@ class Ui_Form(object):
         self.labelRicercaTraNome.setText(_translate("Form", "Ricerca per nome trattamento: "))
         self.labelRicercaTraClasse.setText(_translate("Form", "Ricerca per classe trattamento:"))
         self.pushButtonRicerca.setText(_translate("Form", "Ricerca"))
+        self.pushButtonVisualizzaTrattamento.setText(_translate("Form", "Visualizza trattamento selezionato"))
         self.pushButtonNuovoTra.setText(_translate("Form", "Nuovo Trattamento Fisioterapico"))
         self.pushButtonGestisciCons.setText(_translate("Form", "Gestisci Consulenza medica"))
 
+
     def visualizzaListaTrattamenti(self):
         self.trattamenti = ElencoTrattamentiController().getElencoTrattamenti()
-        listview_model = QStandardItemModel(self.list_view)
-        for cliente in self.clienti:
+        listview_model = QStandardItemModel(self.listViewTrattamenti)
+        for trattamento in self.trattamenti.values():
             item = QStandardItem()
-            nome = f"{cliente.nome} {cliente.cognome} - {type(cliente).__name__} {cliente.codice}"
-            item.setText(nome)
+            etichetta = f"{trattamento.nome} : {trattamento.classe} - {trattamento.codiceTrattamento}"
+            item.setText(etichetta)
             item.setEditable(False)
             font = item.font()
-            font.setPointSize(18)
+            font.setPointSize(16)
             item.setFont(font)
             listview_model.appendRow(item)
-        self.list_view.setModel(listview_model)
+        self.listViewTrattamenti.setModel(listview_model)
 
+    def visualizzaTrattamentoSelezionato(self):
+        try:
+            trattamentoSelezionato = self.listViewTrattamenti.selectedIndexes()[0].data()
+            codiceTrattamento = int(trattamentoSelezionato.split("-")[1].strip())
+            trattamento = ElencoTrattamentiController().ricercaTrattamento(codiceTrattamento)
+            self.vistaTrattamento = VisualizzaTrattView(trattamento, self.visualizzaListaTrattamenti)
+            self.vistaTrattamento.show()
+        except IndexError:
+            print("Non riesco a ottenere il codice del trattamento")
+            return
 
+"""
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Form = QtWidgets.QWidget()
-    ui = Ui_Form()
+    ui = GestioneTrattConsView()
     ui.setupUi(Form)
     Form.show()
     sys.exit(app.exec_())
+"""
