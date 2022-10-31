@@ -51,8 +51,10 @@ class TrattamentoModel:
 
     def getInfoTrattamento(self):
         return {
-            "giornoSettimana": self.giornoSettimana,
-            "costo": self.costo,
-            "durata": self.durata,
+            "codiceTrattamento": self.codiceTrattamento,
+            "nome":self.nome,
+            "classe":self.classe,
+            "costo" :self.costo,
+            "durata":self.durata,
         }
 

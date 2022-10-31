@@ -33,7 +33,28 @@ class ElencoTrattamentiModel:
             return trattamenti
         except:
             print(traceback.format_exc())
-            print("Impossibile aprire il file")
+            print("Impossibile aprire il file dei trattamenti")
 
-    def ricercaTrattamentoCodice(self, codiceTrattamento):
-        pass
+    def ricercaTrattamento(self, dictParametri):
+        trattamentiFile = self.getTrattamentiFile()
+        trattamentiRisultato = {}
+
+        try:
+            for codiceTrattamento in trattamentiFile.keys():
+                trovato = True
+                trattamentoFile = trattamentiFile[codiceTrattamento]
+                dictTrattamentoFile = trattamentoFile.getInfoTrattamento()
+                for chiaveParametro, valoreParametro in dictParametri.items():
+                    if valoreParametro != '':
+                        if valoreParametro != dictTrattamentoFile[chiaveParametro]:  #le chiavi del dizionario che è il trattamento devono coincidere con le chiavi dei dizionario dei parametri
+                            trovato = False
+                if trovato:
+                    trattamentiRisultato[codiceTrattamento] = trattamentoFile
+
+            return trattamentiRisultato
+
+        except:
+            print(traceback.format_exc())
+            print("Impossibile eseguire la ricerca")
+
+

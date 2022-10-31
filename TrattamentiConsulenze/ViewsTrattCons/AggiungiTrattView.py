@@ -69,9 +69,9 @@ class AggiungiTrattView(object):
 
         self.comboBoxClasse = QtWidgets.QComboBox(Form)
         self.comboBoxClasse.setObjectName("comboBoxClasse")
-        self.comboBoxClasse.addItems(["Fisio-estetica", "Fisioterapia strumentale", "Fisioterapia manuale",
+        self.comboBoxClasse.addItems(["Fisio estetica", "Fisioterapia strumentale", "Fisioterapia manuale",
                                       "Fisioterapia posturale", "Fisioterapia neurologica", "Riabilitazione sportiva e performance" ,
-                                      "idrokinesiterapia","Realtà virtuale"])
+                                      "Idrokinesiterapia","Realtà virtuale"])
 
         self.horizontalLayoutClasse.addWidget(self.comboBoxClasse)
         self.verticalLayoutDatiTrattamento.addLayout(self.horizontalLayoutClasse)
