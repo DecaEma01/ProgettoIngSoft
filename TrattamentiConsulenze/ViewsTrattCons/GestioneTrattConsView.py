@@ -10,6 +10,7 @@ import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
+from PyQt5.QtWidgets import QMessageBox
 
 from TrattamentiConsulenze.ControllersTrattCons.ElencoTrattamentiController import ElencoTrattamentiController
 from TrattamentiConsulenze.ViewsTrattCons.VisualizzaTrattView import VisualizzaTrattView
@@ -102,7 +103,7 @@ class GestioneTrattConsView(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Amministratore"))
+        Form.setWindowTitle(_translate("Form", "Amministratore - Gestisci trattamenti e consulenze"))
         self.pushButtonIndietro.setText(_translate("Form", "INDIETRO"))
         self.pushButtonLogout.setText(_translate("Form", "LOGOUT"))
         self.labelRicercaTraNome.setText(_translate("Form", "Ricerca per nome trattamento: "))
@@ -128,7 +129,7 @@ class GestioneTrattConsView(object):
         self.listViewTrattamenti.setModel(listview_model)
 
     def visualizzaTrattamentoSelezionato(self):
-
+        try:
             trattamentoSelezionato = self.listViewTrattamenti.selectedIndexes()[0].data()
             codiceTrattamento = int(trattamentoSelezionato.split("-")[1].strip())
             dictParametri = {}
@@ -136,9 +137,17 @@ class GestioneTrattConsView(object):
             trattamento = ElencoTrattamentiController().ricercaTrattamento(dictParametri)
 
             self.vistaTrattamento = QtWidgets.QWidget()
-            uiVistaTrattamento = VisualizzaTrattView(trattamento[codiceTrattamento], self.visualizzaListaTrattamenti, self.app)
-            uiVistaTrattamento.setupUi(self.vistaTrattamento)
+            uiVistaTrattamento = VisualizzaTrattView(trattamento[codiceTrattamento], self.visualizzaListaTrattamenti)
+            uiVistaTrattamento.setupUi(self.vistaTrattamento,self.app)
             self.vistaTrattamento.show()
+        except IndexError:
+            errore = QMessageBox()
+            errore.setWindowTitle("Nessun trattamento selezionato")
+            errore.setText(
+                "Controlla di aver selezionato uno dei trattamenti , poi fai clic sul bottone visualizza trattamento.")
+            errore.setIcon(QMessageBox.Warning)
+            errore.setStandardButtons(QMessageBox.Ok)
+            errore.exec_()
 
     def ricercaTrattamento(self):
         dictParametri={}

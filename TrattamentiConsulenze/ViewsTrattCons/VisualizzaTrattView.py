@@ -10,15 +10,16 @@ import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from TrattamentiConsulenze.ViewsTrattCons.ModificaTrattView import ModificaTrattView
+
 
 class VisualizzaTrattView(object):
 
-    def __init__(self , trattamento, aggiornaListaTrattamenti, app):
+    def __init__(self , trattamento, aggiornaListaTrattamenti):
         self.trattamento = trattamento
         self.aggiornaListaTrattamenti = aggiornaListaTrattamenti
-        self.app= app
 
-    def setupUi(self, Form):
+    def setupUi(self, Form, app):
         Form.setObjectName("Form")
         Form.resize(900, 700)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(Form)
@@ -30,10 +31,13 @@ class VisualizzaTrattView(object):
 
         self.pushButtonIndietro = QtWidgets.QPushButton(Form)
         self.pushButtonIndietro.setObjectName("pushButtonIndietro")
+        self.pushButtonIndietro.clicked.connect(lambda: self.chiudiFinestra(Form))
 
         self.horizontalLayoutIndietroLogout.addWidget(self.pushButtonIndietro)
         self.pushButtonLogout = QtWidgets.QPushButton(Form)
         self.pushButtonLogout.setObjectName("pushButtonLogout")
+        self.pushButtonLogout.clicked.connect(lambda: self.chiudiApp(app))
+
         self.horizontalLayoutIndietroLogout.addWidget(self.pushButtonLogout)
         self.verticalLayoutPrincipale.addLayout(self.horizontalLayoutIndietroLogout)
         self.labelDettagliTrattamento = QtWidgets.QLabel(Form)
@@ -49,30 +53,41 @@ class VisualizzaTrattView(object):
         self.horizontalLayoutNome.setObjectName("horizontalLayoutNome")
         self.labelNome = QtWidgets.QLabel(Form)
         self.labelNome.setObjectName("labelNome")
+        self.labelNome.setMaximumWidth(40)
         self.horizontalLayoutNome.addWidget(self.labelNome)
+
         self.labelNomeValue = QtWidgets.QLabel(Form)
-        self.labelNomeValue.setText("")
+        self.labelNomeValue.setText(str(self.trattamento.nome))
         self.labelNomeValue.setObjectName("labelNomeValue")
+
+
         self.horizontalLayoutNome.addWidget(self.labelNomeValue)
         self.verticalLayoutDatiTrattamento.addLayout(self.horizontalLayoutNome)
         self.horizontalLayoutClasse = QtWidgets.QHBoxLayout()
         self.horizontalLayoutClasse.setObjectName("horizontalLayoutClasse")
         self.labelClasse = QtWidgets.QLabel(Form)
         self.labelClasse.setObjectName("labelClasse")
+        self.labelClasse.setMaximumWidth(40)
         self.horizontalLayoutClasse.addWidget(self.labelClasse)
+
         self.labelClasseValue = QtWidgets.QLabel(Form)
-        self.labelClasseValue.setText("")
+        self.labelClasseValue.setText(str(self.trattamento.classe))
         self.labelClasseValue.setObjectName("labelClasseValue")
+
         self.horizontalLayoutClasse.addWidget(self.labelClasseValue)
         self.verticalLayoutDatiTrattamento.addLayout(self.horizontalLayoutClasse)
         self.horizontalLayoutCosto = QtWidgets.QHBoxLayout()
         self.horizontalLayoutCosto.setObjectName("horizontalLayoutCosto")
         self.labelCosto = QtWidgets.QLabel(Form)
         self.labelCosto.setObjectName("labelCosto")
+        self.labelCosto.setMaximumWidth(40)
         self.horizontalLayoutCosto.addWidget(self.labelCosto)
+
         self.labelCostoValue = QtWidgets.QLabel(Form)
-        self.labelCostoValue.setText("")
+        self.labelCostoValue.setText(str(self.trattamento.costo))
         self.labelCostoValue.setObjectName("labelCostoValue")
+        self.labelCostoValue.setMaximumWidth(20)
+
         self.horizontalLayoutCosto.addWidget(self.labelCostoValue)
         self.labelEuro = QtWidgets.QLabel(Form)
         self.labelEuro.setObjectName("labelEuro")
@@ -82,10 +97,14 @@ class VisualizzaTrattView(object):
         self.horizontalLayoutDurata.setObjectName("horizontalLayoutDurata")
         self.labelDurata = QtWidgets.QLabel(Form)
         self.labelDurata.setObjectName("labelDurata")
+        self.labelDurata.setMaximumWidth(40)
         self.horizontalLayoutDurata.addWidget(self.labelDurata)
+
         self.labelDurataValue = QtWidgets.QLabel(Form)
-        self.labelDurataValue.setText("")
+        self.labelDurataValue.setText(str(self.trattamento.durata))
         self.labelDurataValue.setObjectName("labelDurataValue")
+        self.labelDurataValue.setMaximumWidth(20)
+
         self.horizontalLayoutDurata.addWidget(self.labelDurataValue)
         self.labelMinuti = QtWidgets.QLabel(Form)
         self.labelMinuti.setObjectName("labelMinuti")
@@ -97,8 +116,11 @@ class VisualizzaTrattView(object):
         self.pushButtonEliminaTra = QtWidgets.QPushButton(Form)
         self.pushButtonEliminaTra.setObjectName("pushButtonEliminaTra")
         self.horizontalLayoutEliminaModificaTra.addWidget(self.pushButtonEliminaTra)
+
         self.pushButtonModificaTra = QtWidgets.QPushButton(Form)
         self.pushButtonModificaTra.setObjectName("pushButtonModificaTra")
+        self.pushButtonModificaTra.clicked.connect(lambda: self.modificaTrattamento(app))
+
         self.horizontalLayoutEliminaModificaTra.addWidget(self.pushButtonModificaTra)
         self.verticalLayoutPrincipale.addLayout(self.horizontalLayoutEliminaModificaTra)
         self.verticalLayout_2.addLayout(self.verticalLayoutPrincipale)
@@ -121,11 +143,20 @@ class VisualizzaTrattView(object):
         self.pushButtonEliminaTra.setText(_translate("Form", "Elimina trattamento"))
         self.pushButtonModificaTra.setText(_translate("Form", "Modifica trattamento"))
 
-        def chiudiFinestra(self, Form):
-            Form.close()
+    def modificaTrattamento(self, app):
+        self.vistaModificaTrattamento = QtWidgets.QWidget()
+        uivistaModificaTrattamento = ModificaTrattView(self.trattamento, self.aggiornaListaTrattamenti)
+        uivistaModificaTrattamento.setupUi(self.vistaModificaTrattamento, app)
+        self.vistaModificaTrattamento.show()
 
-        def chiudiApp(self, app):
-            sys.exit(app.exec_())
+    def eliminaTrattamento(self):
+        pass
+
+    def chiudiFinestra(self, Form):
+        Form.close()
+
+    def chiudiApp(self, app):
+        sys.exit(app.exec_())
 
 """
 if __name__ == "__main__":
