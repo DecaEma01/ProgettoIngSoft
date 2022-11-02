@@ -20,7 +20,7 @@ class TrattamentoController:
     def modificaTrattamento(self, trattamento, nome, classe, costo, durata):
         if nome and classe and costo and durata:
             if costo.isdigit() and durata.isdigit():  # controllo che i parametri costo e durata inseriti liberamente sulla vista contengano solo numeri
-                ElencoTrattamentiModel().modificaTrattamento(trattamento, nome,classe,costo,durata)
+                ElencoTrattamentiModel().modificaTrattamento(trattamento, nome, classe, costo, durata)
                 return True
             else:
                 return False  # costo o durata non contengono solo numeri

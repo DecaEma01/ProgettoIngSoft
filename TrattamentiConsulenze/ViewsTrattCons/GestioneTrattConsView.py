@@ -14,6 +14,7 @@ from PyQt5.QtWidgets import QMessageBox
 
 from TrattamentiConsulenze.ControllersTrattCons.ElencoTrattamentiController import ElencoTrattamentiController
 from TrattamentiConsulenze.ViewsTrattCons.AggiungiTrattView import AggiungiTrattView
+from TrattamentiConsulenze.ViewsTrattCons.GestioneConsView import GestioneConsView
 from TrattamentiConsulenze.ViewsTrattCons.VisualizzaTrattView import VisualizzaTrattView
 
 
@@ -92,8 +93,11 @@ class GestioneTrattConsView(object):
         self.pushButtonNuovoTra.clicked.connect(lambda: self.aggiungiTrattamento(app))
 
         self.verticalLayoutNuovoTraGestisciCons.addWidget(self.pushButtonNuovoTra)
+
         self.pushButtonGestisciCons = QtWidgets.QPushButton(Form)
         self.pushButtonGestisciCons.setObjectName("pushButtonGestisciCons")
+        self.pushButtonGestisciCons.clicked.connect(lambda: self.gestisciConsulenza(app))
+
         self.verticalLayoutNuovoTraGestisciCons.addWidget(self.pushButtonGestisciCons)
         self.verticalLayoutPrincipale.addLayout(self.verticalLayoutNuovoTraGestisciCons)
         self.verticalLayout.addLayout(self.verticalLayoutPrincipale)
@@ -155,6 +159,12 @@ class GestioneTrattConsView(object):
         uiVistaAggiungiTrattamento = AggiungiTrattView(self.visualizzaListaTrattamenti)
         uiVistaAggiungiTrattamento.setupUi(self.vistaAggiungiTrattamento, app)
         self.vistaAggiungiTrattamento.show()
+
+    def gestisciConsulenza(self, app):
+        self.vistaGestisciConsulenza = QtWidgets.QWidget()
+        uivistaGestisciConsulenza = GestioneConsView()
+        uivistaGestisciConsulenza.setupUi(self.vistaGestisciConsulenza, app)
+        self.vistaGestisciConsulenza.show()
 
     def ricercaTrattamento(self):
         dictParametri={}

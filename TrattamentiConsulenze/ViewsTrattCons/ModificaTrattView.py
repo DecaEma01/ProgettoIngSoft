@@ -118,7 +118,7 @@ class ModificaTrattView(object):
 
         self.pushButtonSalva = QtWidgets.QPushButton(Form)
         self.pushButtonSalva.setObjectName("pushButtonSalva")
-        self.pushButtonIndietro.clicked.connect(lambda: self.salvaModificaTrattamento(Form))
+        self.pushButtonSalva.clicked.connect(lambda: self.salvaModificaTrattamento(Form))
 
         self.verticalLayoutPrincipale.addWidget(self.pushButtonSalva)
         self.verticalLayout.addLayout(self.verticalLayoutPrincipale)

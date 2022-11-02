@@ -71,11 +71,11 @@ class ElencoTrattamentiModel:
             print(traceback.format_exc())
             print("Impossibile aprire il file dei trattamenti")
 
-    def modificaTrattamento(self,trattamento,nome,classe,costo,durata):
+    def modificaTrattamento(self, trattamento, nome, classe, costo, durata):
 
         trattamentiFile = self.getTrattamentiFile()
         trattamentoModifica=trattamentiFile[trattamento.codiceTrattamento]
-        trattamentoModifica.setInfotrattamento(nome,classe,costo,durata)
+        trattamentoModifica.modificaTrattamento(nome, classe, costo, durata)
         trattamentiFile[trattamentoModifica.codiceTrattamento]=trattamentoModifica
 
         try:
