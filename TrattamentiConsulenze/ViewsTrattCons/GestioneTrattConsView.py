@@ -13,6 +13,7 @@ from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QMessageBox
 
 from TrattamentiConsulenze.ControllersTrattCons.ElencoTrattamentiController import ElencoTrattamentiController
+from TrattamentiConsulenze.ViewsTrattCons.AggiungiTrattView import AggiungiTrattView
 from TrattamentiConsulenze.ViewsTrattCons.VisualizzaTrattView import VisualizzaTrattView
 
 
@@ -21,10 +22,8 @@ class GestioneTrattConsView(object):
     def __init__(self):
         self.trattamenti = None
         self.vistaTrattamento = None
-        self.app = None
 
     def setupUi(self, Form, app):
-        self.app = app
 
         Form.setObjectName("Form")
         Form.resize(900, 700)
@@ -84,11 +83,14 @@ class GestioneTrattConsView(object):
 
         self.pushButtonVisualizzaTrattamento = QtWidgets.QPushButton(Form)
         self.pushButtonVisualizzaTrattamento.setObjectName("pushButtonVisualizzaTrattamento")
-        self.pushButtonVisualizzaTrattamento.clicked.connect(self.visualizzaTrattamentoSelezionato)
+        self.pushButtonVisualizzaTrattamento.clicked.connect(lambda : self.visualizzaTrattamentoSelezionato(app))
 
         self.verticalLayoutNuovoTraGestisciCons.addWidget(self.pushButtonVisualizzaTrattamento)
+
         self.pushButtonNuovoTra = QtWidgets.QPushButton(Form)
         self.pushButtonNuovoTra.setObjectName("pushButtonNuovoTra")
+        self.pushButtonNuovoTra.clicked.connect(lambda: self.aggiungiTrattamento(app))
+
         self.verticalLayoutNuovoTraGestisciCons.addWidget(self.pushButtonNuovoTra)
         self.pushButtonGestisciCons = QtWidgets.QPushButton(Form)
         self.pushButtonGestisciCons.setObjectName("pushButtonGestisciCons")
@@ -128,7 +130,7 @@ class GestioneTrattConsView(object):
             listview_model.appendRow(item)
         self.listViewTrattamenti.setModel(listview_model)
 
-    def visualizzaTrattamentoSelezionato(self):
+    def visualizzaTrattamentoSelezionato(self, app):
         try:
             trattamentoSelezionato = self.listViewTrattamenti.selectedIndexes()[0].data()
             codiceTrattamento = int(trattamentoSelezionato.split("-")[1].strip())
@@ -138,16 +140,21 @@ class GestioneTrattConsView(object):
 
             self.vistaTrattamento = QtWidgets.QWidget()
             uiVistaTrattamento = VisualizzaTrattView(trattamento[codiceTrattamento], self.visualizzaListaTrattamenti)
-            uiVistaTrattamento.setupUi(self.vistaTrattamento,self.app)
+            uiVistaTrattamento.setupUi(self.vistaTrattamento,app)
             self.vistaTrattamento.show()
         except IndexError:
             errore = QMessageBox()
             errore.setWindowTitle("Nessun trattamento selezionato")
-            errore.setText(
-                "Controlla di aver selezionato uno dei trattamenti , poi fai clic sul bottone visualizza trattamento.")
+            errore.setText("Controlla di aver selezionato uno dei trattamenti , poi fai clic sul bottone visualizza trattamento.")
             errore.setIcon(QMessageBox.Warning)
             errore.setStandardButtons(QMessageBox.Ok)
             errore.exec_()
+
+    def aggiungiTrattamento(self, app):
+        self.vistaAggiungiTrattamento = QtWidgets.QWidget()
+        uiVistaAggiungiTrattamento = AggiungiTrattView(self.visualizzaListaTrattamenti)
+        uiVistaAggiungiTrattamento.setupUi(self.vistaAggiungiTrattamento, app)
+        self.vistaAggiungiTrattamento.show()
 
     def ricercaTrattamento(self):
         dictParametri={}

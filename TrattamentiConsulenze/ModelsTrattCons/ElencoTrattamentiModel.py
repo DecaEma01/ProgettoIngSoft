@@ -57,4 +57,35 @@ class ElencoTrattamentiModel:
             print(traceback.format_exc())
             print("Impossibile eseguire la ricerca")
 
+    def eliminaTrattamento(self,trattamento):
+
+        trattamentiFile = self.getTrattamentiFile()
+        del trattamentiFile[trattamento.codiceTrattamento]
+
+        try:
+            if os.path.isfile('Dati/Trattamenti.pickle') and os.path.getsize('Dati/Trattamenti.pickle') > 0:
+                with open('Dati/Trattamenti.pickle', 'wb') as file:
+                    pickle.dump(trattamentiFile, file, pickle.HIGHEST_PROTOCOL)
+            trattamento.eliminaTrattamento()
+        except:
+            print(traceback.format_exc())
+            print("Impossibile aprire il file dei trattamenti")
+
+    def modificaTrattamento(self,trattamento,nome,classe,costo,durata):
+
+        trattamentiFile = self.getTrattamentiFile()
+        trattamentoModifica=trattamentiFile[trattamento.codiceTrattamento]
+        trattamentoModifica.setInfotrattamento(nome,classe,costo,durata)
+        trattamentiFile[trattamentoModifica.codiceTrattamento]=trattamentoModifica
+
+        try:
+            if os.path.isfile('Dati/Trattamenti.pickle') and os.path.getsize('Dati/Trattamenti.pickle') > 0:
+                with open('Dati/Trattamenti.pickle', 'wb') as file:
+                    pickle.dump(trattamentiFile, file, pickle.HIGHEST_PROTOCOL)
+        except:
+            print(traceback.format_exc())
+            print("Impossibile aprire il file dei trattamenti")
+
+
+
 

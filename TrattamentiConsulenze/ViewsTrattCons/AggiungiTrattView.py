@@ -15,6 +15,9 @@ from TrattamentiConsulenze.ControllersTrattCons.TrattamentoController import Tra
 
 
 class AggiungiTrattView(object):
+    def __init__(self, aggiornaListaTrattamenti):
+        self.aggiornaListaTrattamenti = aggiornaListaTrattamenti
+
     def setupUi(self, Form , app):
         Form.setObjectName("Form")
         Form.resize(900, 700)
@@ -137,7 +140,7 @@ class AggiungiTrattView(object):
         if TrattamentoController().aggiungiTrattamento(str(self.lineEditNome.text()).strip(), str(self.comboBoxClasse.currentText()),
                                                      str(self.lineEditCosto.text()).strip(), str(self.lineEditDurata.text().strip())):
             self.chiudiFinestra(Form) #chiudendosi la finestra viene mostrata nuovamente la finestra di gestione dei trattamenti che stava sotto
-                                      #la finestra della lista dei trattamenti si deve aggiornare per far comparire il trattamento appena aggiunto
+            self.aggiornaListaTrattamenti() #la finestra della lista dei trattamenti si deve aggiornare per far comparire il trattamento appena aggiunto
 
         else:
             errore = QMessageBox()

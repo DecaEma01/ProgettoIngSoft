@@ -9,8 +9,10 @@
 import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 
 from TrattamentiConsulenze.ControllersTrattCons.ElencoTrattamentiController import ElencoTrattamentiController
+from TrattamentiConsulenze.ControllersTrattCons.TrattamentoController import TrattamentoController
 
 
 class ModificaTrattView(object):
@@ -113,8 +115,11 @@ class ModificaTrattView(object):
         self.verticalLayoutPrincipale.addLayout(self.verticalLayoutDatiTrattamento)
         spacerItem = QtWidgets.QSpacerItem(40, 350, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.verticalLayoutPrincipale.addItem(spacerItem)
+
         self.pushButtonSalva = QtWidgets.QPushButton(Form)
         self.pushButtonSalva.setObjectName("pushButtonSalva")
+        self.pushButtonIndietro.clicked.connect(lambda: self.salvaModificaTrattamento(Form))
+
         self.verticalLayoutPrincipale.addWidget(self.pushButtonSalva)
         self.verticalLayout.addLayout(self.verticalLayoutPrincipale)
 
@@ -136,13 +141,18 @@ class ModificaTrattView(object):
         self.pushButtonSalva.setText(_translate("Form", "Salva"))
 
     def salvaModificaTrattamento(self, Form):
-        codiceTrattamento = int(self.trattamento.codiceTrattamento)
-        dictParametri = {}
-        dictParametri["codiceTrattamento"] = codiceTrattamento
-        trattamento = ElencoTrattamentiController().ricercaTrattamento(dictParametri)
+        if TrattamentoController().modificaTrattamento(self.trattamento, str(self.lineEditNome.text()).strip(), str(self.comboBoxClasse.currentText()),
+                                                     str(self.lineEditCosto.text()).strip(), str(self.lineEditDurata.text().strip())):
+            self.chiudiFinestra(Form) #chiudendosi la finestra viene mostrata nuovamente la finestra di gestione dei trattamenti che stava sotto
+            self.aggiornaListaTrattamenti() #la finestra della lista dei trattamenti si deve aggiornare per far comparire il trattamento appena aggiunto
 
-        self.aggiornaListaTrattamenti()
-        self.chiudiFinestra(Form)
+        else:
+            errore = QMessageBox()
+            errore.setWindowTitle("Errore di inserimento")
+            errore.setText("Controlla che siano stati compilati tutti i campi e che nei campi 'costo' o 'durata' siano stati inseriti dei valori numerici.")
+            errore.setIcon(QMessageBox.Warning)
+            errore.setStandardButtons(QMessageBox.Ok)
+            errore.exec_()
 
     def chiudiFinestra(self, Form):
         Form.close()

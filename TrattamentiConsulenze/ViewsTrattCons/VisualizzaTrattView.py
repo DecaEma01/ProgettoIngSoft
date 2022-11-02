@@ -9,7 +9,9 @@
 import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 
+from TrattamentiConsulenze.ControllersTrattCons.TrattamentoController import TrattamentoController
 from TrattamentiConsulenze.ViewsTrattCons.ModificaTrattView import ModificaTrattView
 
 
@@ -114,12 +116,14 @@ class VisualizzaTrattView(object):
         self.horizontalLayoutEliminaModificaTra = QtWidgets.QHBoxLayout()
         self.horizontalLayoutEliminaModificaTra.setObjectName("horizontalLayoutEliminaModificaTra")
         self.pushButtonEliminaTra = QtWidgets.QPushButton(Form)
+
         self.pushButtonEliminaTra.setObjectName("pushButtonEliminaTra")
         self.horizontalLayoutEliminaModificaTra.addWidget(self.pushButtonEliminaTra)
+        self.pushButtonEliminaTra.clicked.connect(lambda: self.eliminaTrattamento(Form))
 
         self.pushButtonModificaTra = QtWidgets.QPushButton(Form)
         self.pushButtonModificaTra.setObjectName("pushButtonModificaTra")
-        self.pushButtonModificaTra.clicked.connect(lambda: self.modificaTrattamento(app))
+        self.pushButtonModificaTra.clicked.connect(lambda: self.modificaTrattamento(Form, app))
 
         self.horizontalLayoutEliminaModificaTra.addWidget(self.pushButtonModificaTra)
         self.verticalLayoutPrincipale.addLayout(self.horizontalLayoutEliminaModificaTra)
@@ -143,14 +147,23 @@ class VisualizzaTrattView(object):
         self.pushButtonEliminaTra.setText(_translate("Form", "Elimina trattamento"))
         self.pushButtonModificaTra.setText(_translate("Form", "Modifica trattamento"))
 
-    def modificaTrattamento(self, app):
+    def modificaTrattamento(self, Form, app):
         self.vistaModificaTrattamento = QtWidgets.QWidget()
         uivistaModificaTrattamento = ModificaTrattView(self.trattamento, self.aggiornaListaTrattamenti)
         uivistaModificaTrattamento.setupUi(self.vistaModificaTrattamento, app)
         self.vistaModificaTrattamento.show()
+        self.chiudiFinestra(Form)
 
-    def eliminaTrattamento(self):
-        pass
+    def eliminaTrattamento(self, Form):
+        popupConferma = QMessageBox()
+        popupConferma.setText("Sei sicuro di voler eliminare il trattamento visualizzato?")
+        popupConferma.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        popupConferma.setWindowTitle("Conferma eliminazione trattamento")
+        risposta = popupConferma.exec_()
+        if risposta == QMessageBox.Ok:
+            TrattamentoController().eliminaTrattamento(self.trattamento)
+            self.aggiornaListaTrattamenti()
+            self.chiudiFinestra(Form)
 
     def chiudiFinestra(self, Form):
         Form.close()

@@ -43,11 +43,20 @@ class TrattamentoModel:
             print("Impossibile aprire il file")
 
 
-    def modificaTrattamento(self):
-        pass
+    def modificaTrattamento(self,codiceTrattamento, nome, classe, costo, durata): #nuova impostazione dei parametri per un trattamento già registrato
+        self.codiceTrattamento = codiceTrattamento
+        self.nome = nome
+        self.classe = classe
+        self.costo = costo
+        self.durata = durata
 
     def eliminaTrattamento(self):
-        pass
+        self.codiceTrattamento = -1
+        self.nome = ""
+        self.classe = ""
+        self.costo = ""
+        self.durata = ""
+        del self
 
     def getInfoTrattamento(self):
         return {
