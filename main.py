@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 import sys
 
+from Pazienti.ViewsPazienti.GestionePazientiView import GestionePazientiView
 from TrattamentiConsulenze.ViewsTrattCons.AggiungiTrattView import AggiungiTrattView
 from TrattamentiConsulenze.ViewsTrattCons.GestioneConsView import GestioneConsView
 from TrattamentiConsulenze.ControllersTrattCons.ConsulenzaController import ConsulenzaController
@@ -16,7 +17,13 @@ def print_hi(name):
     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
 
 # Press the green button in the gutter to run the script.
-
+"""
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    view = GestionePazientiView()
+    view.show()
+    sys.exit(app.exec())
+"""
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
@@ -25,6 +32,7 @@ if __name__ == "__main__":
     ui.setupUi(Form,app)
     Form.show()
     sys.exit(app.exec_())
+
 
 """
 if __name__ == '__main__':
