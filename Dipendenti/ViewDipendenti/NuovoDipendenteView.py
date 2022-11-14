@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-from Amministratore.Dipendenti.ControllersDipendenti.GestioneDipendentiController import GestioneDipendentiController
+from Dipendenti.ControllersDipendenti.GestioneDipendentiController import GestioneDipendentiController
 
 class NuovoDipendenteView(QWidget):
 
