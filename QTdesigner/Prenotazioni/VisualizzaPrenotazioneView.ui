@@ -54,14 +54,20 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QLabel" name="label_4">
+          <widget class="QLabel" name="labelTipologia">
+           <property name="maximumSize">
+            <size>
+             <width>135</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string>Tipologia della seduta:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_6">
+          <widget class="QLabel" name="labelTipologiaValue">
            <property name="text">
             <string/>
            </property>
@@ -72,14 +78,20 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_8">
          <item>
-          <widget class="QLabel" name="label_9">
+          <widget class="QLabel" name="labelTrattamento">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string>Trattamento:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_10">
+          <widget class="QLabel" name="labelTrattamentoValue">
            <property name="text">
             <string/>
            </property>
@@ -91,6 +103,12 @@
         <layout class="QHBoxLayout" name="horizontalLayoutNome">
          <item>
           <widget class="QLabel" name="labelNome">
+           <property name="maximumSize">
+            <size>
+             <width>45</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string>Nome:</string>
            </property>
@@ -108,14 +126,20 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayoutClasse">
          <item>
-          <widget class="QLabel" name="labelClasse">
+          <widget class="QLabel" name="labelCognome">
+           <property name="maximumSize">
+            <size>
+             <width>65</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string>Cognome:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="labelClasseValue">
+          <widget class="QLabel" name="labelCognomeValue">
            <property name="text">
             <string/>
            </property>
@@ -126,14 +150,20 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="labelData">
+           <property name="maximumSize">
+            <size>
+             <width>110</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string>Data della seduta:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="labelDataValue">
            <property name="text">
             <string/>
            </property>
@@ -144,14 +174,20 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="labelOrario">
+           <property name="maximumSize">
+            <size>
+             <width>45</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string>Orario:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_5">
+          <widget class="QLabel" name="labelOrarioValue">
            <property name="text">
             <string/>
            </property>
@@ -163,6 +199,12 @@
         <layout class="QHBoxLayout" name="horizontalLayoutCosto">
          <item>
           <widget class="QLabel" name="labelCosto">
+           <property name="maximumSize">
+            <size>
+             <width>45</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string>Costo:</string>
            </property>
@@ -170,6 +212,12 @@
          </item>
          <item>
           <widget class="QLabel" name="labelCostoValue">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -188,6 +236,12 @@
         <layout class="QHBoxLayout" name="horizontalLayoutDurata">
          <item>
           <widget class="QLabel" name="labelDurata">
+           <property name="maximumSize">
+            <size>
+             <width>50</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string>Durata:</string>
            </property>
@@ -195,6 +249,12 @@
          </item>
          <item>
           <widget class="QLabel" name="labelDurataValue">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -212,7 +272,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton">
+      <widget class="QRadioButton" name="radioButtonSedutaEffettuata">
        <property name="text">
         <string>Seduta effettuata</string>
        </property>
