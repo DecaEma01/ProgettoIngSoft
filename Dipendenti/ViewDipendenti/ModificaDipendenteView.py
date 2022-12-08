@@ -1,17 +1,27 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
-from Amministratore.Dipendenti.ControllersDipendenti.GestioneDipendentiController import GestioneDipendentiController
+from Dipendenti.ControllersDipendenti.GestioneDipendentiController import GestioneDipendentiController
 
 class ModificaDipendenteView(QWidget):
 
-    def __init__(self, dipendente, callback):
+    def __init__(self, dipendente, bLogout, callback):
         super(ModificaDipendenteView, self).__init__()
 
+        self.bLogout = bLogout
         self.resize(900, 700)
 
+        layoutContenitore = QHBoxLayout()
         layoutVerticale = QVBoxLayout()     # LAYOUT MAIN
         layoutOrizButton = QHBoxLayout()
+
+        layoutBottoniSwitch = QHBoxLayout()
+        layoutBottoniSwitch.addWidget(self.generaBottone('Indietro', self.chiudiFinestra, False))
+        layoutBottoniSwitch.addWidget(self.generaBottone('Logout', self.logout, False))
+        layoutVerticale.addLayout(layoutBottoniSwitch)
+
+        layoutVerticale.addItem(QSpacerItem(50, 50))
+        layoutContenitore.addItem(QSpacerItem(50, 50))
 
         self.aggiornaListaDip = callback
         self.dipendente = dipendente
@@ -26,18 +36,27 @@ class ModificaDipendenteView(QWidget):
         layoutVerticale.addLayout(self.generaLineaIndirizzo())
 
         # contenitore dei certificati
-        if type(self.dipendente).__name__ == 'Fisioterapista':
-            layoutVerticale.addItem(QSpacerItem(75, 50))
+        if type(self.dipendente).__name__ == 'FisioterapistaModel':
+            layoutVerticale.addItem(QSpacerItem(35, 35))
             descrizione = QLabel('Certificazioni possedute:')
             layoutVerticale.addWidget(descrizione)
             layoutVerticale.addLayout(self.generaLayoutCertificazioni())
+            layoutVerticale.addItem(QSpacerItem(35, 35))
 
+        if type(self.dipendente).__name__ != 'FisioterapistaModel':
+            layoutVerticale.addStretch()
+
+        layoutOrizButton.addStretch()
         layoutOrizButton.addWidget(self.generaBottone('Ok', self.nuoviDatiDipendente, False, 90))
-        layoutOrizButton.addWidget(self.generaBottone('Cancel', self.chiudiFinestra, False, 90))
+        ##layoutOrizButton.addWidget(self.generaBottone('Cancel', self.chiudiFinestra, False, 90))
+
 
         layoutVerticale.addLayout(layoutOrizButton)
+        layoutVerticale.addItem(QSpacerItem(10, 10))
+        layoutContenitore.addLayout(layoutVerticale)
+        layoutContenitore.addItem(QSpacerItem(50, 50))
 
-        self.setLayout(layoutVerticale)
+        self.setLayout(layoutContenitore)
         self.setWindowTitle('Amministratore - Modifica dipendente')
 
     def generaLinea(self, nomeLabel, label, infoDip):# da aggiungere la var placeholder
@@ -47,11 +66,8 @@ class ModificaDipendenteView(QWidget):
         layoutOriz.addWidget(nLabel)
         testo = QLineEdit()
         testo.setText(infoDip)
-        #testo.setMaximumWidth(500)
         testo.setMinimumWidth(300)
-        #testo.setPlaceholderText() # da aggiungere la var placeholder
         layoutOriz.addWidget(testo)
-        layoutOriz.addStretch()
         self.attributiDipendente[nomeLabel] = testo
 
         return layoutOriz
@@ -65,22 +81,21 @@ class ModificaDipendenteView(QWidget):
         layoutOriz.addWidget(nomeRiga)
         via = QLineEdit()
         via.setPlaceholderText('Via')
-        via.setText(self.dipendente.indirizzoResidenza.via)
+        via.setText(self.dipendente.via)
         layoutOriz.addWidget(via)
         civico = QLineEdit()
         civico.setPlaceholderText('N°')
         civico.setFixedWidth(30)
-        civico.setText(self.dipendente.indirizzoResidenza.civico)
+        civico.setText(self.dipendente.civico)
         layoutOriz.addWidget(civico)
         citta = QLineEdit()
         citta.setPlaceholderText('Città')
-        citta.setText(self.dipendente.indirizzoResidenza.citta)
+        citta.setText(self.dipendente.citta)
         layoutOriz.addWidget(citta)
         provincia = QLineEdit()
         provincia.setPlaceholderText('Provincia')
-        provincia.setText(self.dipendente.indirizzoResidenza.regione)
+        provincia.setText(self.dipendente.provincia)
         layoutOriz.addWidget(provincia)
-        layoutOriz.addStretch()
         self.attributiDipendente['via'] = via
         self.attributiDipendente['numeroCivico'] = civico
         self.attributiDipendente['citta'] = citta
@@ -234,4 +249,8 @@ class ModificaDipendenteView(QWidget):
         self.controllerDipendente.modificaDipendente(self.dipendente, *args)
 
     def chiudiFinestra(self):
+        self.close()
+
+    def logout(self):
+        self.bLogout()
         self.close()

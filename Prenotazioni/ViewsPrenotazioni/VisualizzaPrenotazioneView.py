@@ -139,12 +139,12 @@ class Ui_Form(object):
         self.verticalLayoutPrincipale.addWidget(self.radioButtonSedutaEffettuata)
         self.horizontalLayoutEliminaModificaTra = QtWidgets.QHBoxLayout()
         self.horizontalLayoutEliminaModificaTra.setObjectName("horizontalLayoutEliminaModificaTra")
-        self.pushButtonEliminaTra = QtWidgets.QPushButton(Form)
-        self.pushButtonEliminaTra.setObjectName("pushButtonEliminaTra")
-        self.horizontalLayoutEliminaModificaTra.addWidget(self.pushButtonEliminaTra)
-        self.pushButtonModificaTra = QtWidgets.QPushButton(Form)
-        self.pushButtonModificaTra.setObjectName("pushButtonModificaTra")
-        self.horizontalLayoutEliminaModificaTra.addWidget(self.pushButtonModificaTra)
+        self.pushButtonEliminaPrenotazione = QtWidgets.QPushButton(Form)
+        self.pushButtonEliminaPrenotazione.setObjectName("pushButtonEliminaPrenotazione")
+        self.horizontalLayoutEliminaModificaTra.addWidget(self.pushButtonEliminaPrenotazione)
+        self.pushButtonModificaPrenotazione = QtWidgets.QPushButton(Form)
+        self.pushButtonModificaPrenotazione.setObjectName("pushButtonModificaPrenotazione")
+        self.horizontalLayoutEliminaModificaTra.addWidget(self.pushButtonModificaPrenotazione)
         self.verticalLayoutPrincipale.addLayout(self.horizontalLayoutEliminaModificaTra)
         self.verticalLayout.addLayout(self.verticalLayoutPrincipale)
 
@@ -168,8 +168,8 @@ class Ui_Form(object):
         self.labelDurata.setText(_translate("Form", "Durata:"))
         self.labelMinuti.setText(_translate("Form", "minuti"))
         self.radioButtonSedutaEffettuata.setText(_translate("Form", "Seduta effettuata"))
-        self.pushButtonEliminaTra.setText(_translate("Form", "Elimina prenotazione"))
-        self.pushButtonModificaTra.setText(_translate("Form", "modifica prenotazione"))
+        self.pushButtonEliminaPrenotazione.setText(_translate("Form", "Elimina prenotazione"))
+        self.pushButtonModificaPrenotazione.setText(_translate("Form", "modifica prenotazione"))
 
 
 if __name__ == "__main__":

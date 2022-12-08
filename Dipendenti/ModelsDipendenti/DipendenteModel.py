@@ -1,4 +1,4 @@
-from Amministratore.Dipendenti.ModelsDipendenti.ListaDipendentiModel import ListaDipendentiModel
+from Dipendenti.ModelsDipendenti.ListaDipendentiModel import ListaDipendentiModel
 
 import os
 import pickle

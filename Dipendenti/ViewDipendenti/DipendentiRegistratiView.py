@@ -1,8 +1,9 @@
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListView, QVBoxLayout, QPushButton, QLabel, QLineEdit, QComboBox, QMessageBox
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListView, QVBoxLayout, QPushButton, QLabel, QLineEdit, QComboBox, \
+    QMessageBox, QSpacerItem
 
-from Amministratore.Dipendenti.ControllersDipendenti.GestioneDipendentiController import GestioneDipendentiController
-from Amministratore.Dipendenti.ViewDipendenti.VisualizzaDipendenteView import VisualizzaDipendenteView
+from Dipendenti.ControllersDipendenti.GestioneDipendentiController import GestioneDipendentiController
+from Dipendenti.ViewDipendenti.VisualizzaDipendenteView import VisualizzaDipendenteView
 
 class DipendentiRegistratiView(QWidget):
 
@@ -22,18 +23,23 @@ class DipendentiRegistratiView(QWidget):
         layoutBottoniSwitch.addWidget(self.generaBottone('Indietro', self.chiudiFinestra))
         layoutBottoniSwitch.addWidget(self.generaBottone('Logout', self.logout))
         layoutVertMain.addLayout(layoutBottoniSwitch)       # Main
+        layoutVertMain.addItem(QSpacerItem(10, 10))
 
         # COMBOBOX
         layoutVertMain.addWidget(self.generaComboBox(self.selezionaProffessione, 'nessuna scelta', 'Medico', 'Fisioterapista', 'Segretario'))
 
         # QLABLE + QLINE + 1 QBUTTON (ricerca)
+        layoutVertMain.addItem(QSpacerItem(10, 10))
         layoutVertMain.addLayout(self.generaLinea('nome', 'Nome'))
         layoutVertMain.addLayout(self.generaLinea('cognome', 'Cognome'))
         layoutVertMain.addLayout(self.generaLinea('codicefiscale', 'Codice Fiscale'))
+        layoutVertMain.addItem(QSpacerItem(10, 10))
         layoutVertMain.addWidget(self.generaBottone('Ricerca', self.ricercaDipendente))     # Main
 
         # QLISTVIEW
+        layoutVertMain.addItem(QSpacerItem(10, 10))
         layoutVertMain.addWidget(self.listViewDipendenti)       # Main
+        layoutVertMain.addItem(QSpacerItem(10, 10))
 
         # QBUTTON (aggiorna e visualizza)
         layoutBottoni = QHBoxLayout()   # verticale per i bottoni
@@ -56,7 +62,7 @@ class DipendentiRegistratiView(QWidget):
         listViewModel = QStandardItemModel()# questa è una lista composta da QStandardItems(unica cella della lista definita con item model(definisce una riga))
         for dipendente in self.dipendenti:
             item = QStandardItem()
-            nome = f'{dipendente.nome} {dipendente.cognome} - {type(dipendente).__name__} {dipendente.codiceDipendente}'
+            nome = f'{dipendente.nome} {dipendente.cognome} - {dipendente.ruoloDipendente} {dipendente.codiceDipendente}'
             item.setText(nome)
             item.setEditable(False)
 
@@ -106,7 +112,7 @@ class DipendentiRegistratiView(QWidget):
 
             dipendente = GestioneDipendentiController.ricercaDipendente(GestioneDipendentiController, codiceDipendente = codice)[codice]
 
-            self.vistaDipendente = VisualizzaDipendenteView(dipendente, callback = self.aggiornaDipendenti)
+            self.vistaDipendente = VisualizzaDipendenteView(dipendente, self.logout, callback = self.aggiornaDipendenti)
             self.vistaDipendente.show()
 
         except IndexError:
@@ -145,4 +151,3 @@ class DipendentiRegistratiView(QWidget):
     def logout(self):
         self.bLogout()
         self.close()
-        pass

@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QSizePolicy, QHBoxLayout,  QVBoxLayout
-from Amministratore.Dipendenti.ViewDipendenti.DipendentiRegistratiView import DipendentiRegistratiView
-from Amministratore.Dipendenti.ViewDipendenti.NuovoDipendenteView import NuovoDipendenteView
+from Dipendenti.ViewDipendenti.DipendentiRegistratiView import DipendentiRegistratiView
+from Dipendenti.ViewDipendenti.NuovoDipendenteView import NuovoDipendenteView
+
 
 class GestioneDipendentiView(QWidget):
 
@@ -22,7 +23,8 @@ class GestioneDipendentiView(QWidget):
         gridLayot.addWidget(self.generaBottone('Nuovo Fisioterapista ', self.aggiungiFisioterapista), 1, 0)
         gridLayot.addWidget(self.generaBottone('Nuovo Medico', self.aggiungiMedico), 1, 1)
         gridLayot.addWidget(self.generaBottone('Nuovo Segretario', self.aggiungiSegretario), 1, 2)
-        #gridLayot.addWidget(self.generaBottone('Gestione Trattamenti', self.eseguiGestioneTrattamenti), 2, 0, 1, 3)
+
+
 
         layoutVertMain.addLayout(gridLayot)
         self.setLayout(layoutVertMain)

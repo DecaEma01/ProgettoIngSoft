@@ -11,7 +11,7 @@ class LoginView(QWidget):
 
     def __init__(self, parent = None):
         super(LoginView, self).__init__(parent)        # richiamiamo il costruttore di qWidget e li passiamo il parent none
-        self.resize(900,700)
+        self.resize(900, 700)
 
         self.parametriAutentificazione = {}
 

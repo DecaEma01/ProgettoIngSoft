@@ -5,17 +5,26 @@ from Dipendenti.ViewDipendenti.ModificaDipendenteView import ModificaDipendenteV
 from Dipendenti.ControllersDipendenti.GestioneDipendentiController import GestioneDipendentiController
 
 class VisualizzaDipendenteView(QWidget):
-    def __init__(self, dipendente, callback):
+    def __init__(self, dipendente, bLogout, callback):
         super(VisualizzaDipendenteView, self).__init__()
         self.aggiornaListaDip = callback
         self.dipendente = dipendente
+        self.bLogout = bLogout
         gestoreDipendenti = GestioneDipendentiController()
         self.attributiDipendente = gestoreDipendenti.visualizzaDipendente(self.dipendente)
 
         self.resize(900, 700)
 
+        layoutContenitore = QHBoxLayout()
         layoutVerticale = QVBoxLayout()
 
+        layoutBottoniSwitch = QHBoxLayout()
+        layoutBottoniSwitch.addWidget(self.generaBottone('Indietro', self.chiudiFinestra))
+        layoutBottoniSwitch.addWidget(self.generaBottone('Logout', self.logout))
+        layoutVerticale.addLayout(layoutBottoniSwitch)
+
+        layoutContenitore.addItem(QSpacerItem(50, 50))
+        layoutVerticale.addItem(QSpacerItem(50, 50))
         nome = f'{self.dipendente.nome} {self.dipendente.cognome}'
         labelNome = QLabel(nome)
         fontNome = labelNome.font()
@@ -30,7 +39,7 @@ class VisualizzaDipendenteView(QWidget):
         layoutVerticale.addLayout(self.generaLinea("Residenza:", self.attributiDipendente['indirizzoResidenza']))
         layoutVerticale.addLayout(self.generaLinea("Ruolo:", self.attributiDipendente['ruoloDipendente']))
 
-        if type(self.dipendente).__name__ == "Fisioterapista":
+        if type(self.dipendente).__name__ == "FisioterapistaModel":
             freeRow = QLabel('')
             layoutVerticale.addWidget(freeRow)
             descrizione = QLabel('Certificazioni possedute:')
@@ -41,14 +50,16 @@ class VisualizzaDipendenteView(QWidget):
             layoutVerticale.addItem(QSpacerItem(75, 50))
 
         layoutOrizontale = QHBoxLayout()
-        layoutOrizontale.addWidget(self.generaBottone('Cancel', self.chiudiFinestra))
         layoutOrizontale.addStretch()
         layoutOrizontale.addWidget(self.generaBottone('Modifica', self.modificaDipendente))
         layoutOrizontale.addWidget(self.generaBottone('Elimina', self.eliminaDipendente))
 
         layoutVerticale.addLayout(layoutOrizontale)
+        layoutVerticale.addItem(QSpacerItem(10, 10))
+        layoutContenitore.addLayout(layoutVerticale)
+        layoutContenitore.addItem(QSpacerItem(50, 50))
 
-        self.setLayout(layoutVerticale)
+        self.setLayout(layoutContenitore)
         self.setWindowTitle('Amministratore - Scheda del dipendente')
 
 
@@ -98,9 +109,13 @@ class VisualizzaDipendenteView(QWidget):
             self.close()
 
     def modificaDipendente(self):
-        self.modificaDipendente = ModificaDipendenteView(self.dipendente, callback=self.aggiornaListaDip)
+        self.modificaDipendente = ModificaDipendenteView(self.dipendente, self.bLogout, callback=self.aggiornaListaDip)
         self.modificaDipendente.show()
         self.close()
 
     def chiudiFinestra(self):
+        self.close()
+
+    def logout(self):
+        self.bLogout()
         self.close()

@@ -1,7 +1,7 @@
 import pickle
 import os
 
-from Amministratore.Dipendenti.ModelsDipendenti.DipendenteModel import DipendenteModel
+from Dipendenti.ModelsDipendenti.DipendenteModel import DipendenteModel
 
 class SegretarioModel(DipendenteModel):
 

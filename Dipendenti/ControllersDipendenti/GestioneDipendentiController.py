@@ -1,8 +1,8 @@
-from Amministratore.Dipendenti.ModelsDipendenti.DipendenteModel import ListaDipendentiModel
+from Dipendenti.ModelsDipendenti.DipendenteModel import ListaDipendentiModel
 
-from Amministratore.Dipendenti.ModelsDipendenti.MedicoModel import MedicoModel
-from Amministratore.Dipendenti.ModelsDipendenti.SegretarioModel import SegretarioModel
-from Amministratore.Dipendenti.ModelsDipendenti.FisioterapistaModel import FisioterapistaModel
+from Dipendenti.ModelsDipendenti.MedicoModel import MedicoModel
+from Dipendenti.ModelsDipendenti.SegretarioModel import SegretarioModel
+from Dipendenti.ModelsDipendenti.FisioterapistaModel import FisioterapistaModel
 
 class GestioneDipendentiController():
 

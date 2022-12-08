@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>1033</width>
-    <height>821</height>
+    <height>796</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Segretario -Nuova prenotazione - riepilogo prenotazione</string>
+   <string>Segretario - Nuova prenotazione - riepilogo prenotazione</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -35,7 +35,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QLabel" name="labelDettagliTrattamento">
+      <widget class="QLabel" name="labelDettagliPrenotazione">
        <property name="maximumSize">
         <size>
          <width>16777215</width>
@@ -56,9 +56,9 @@
       </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayoutDatiTrattamento">
+      <layout class="QVBoxLayout" name="verticalLayoutDatiPrenotazione">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <layout class="QHBoxLayout" name="horizontalLayoutTipologia">
          <item>
           <widget class="QLabel" name="labelTipologia">
            <property name="maximumSize">
@@ -106,7 +106,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayoutClasse">
+        <layout class="QHBoxLayout" name="horizontalLayoutCognome">
          <item>
           <widget class="QLabel" name="labelCognome">
            <property name="maximumSize">
@@ -130,7 +130,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <layout class="QHBoxLayout" name="horizontalLayoutTrattamento">
          <item>
           <widget class="QLabel" name="labelTrattamento">
            <property name="maximumSize">
@@ -145,12 +145,32 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="comboBoxTrattamentoFisioterapico"/>
+          <widget class="QComboBox" name="comboBoxTrattamento">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>50</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutData">
          <item>
           <widget class="QLabel" name="labelData">
            <property name="maximumSize">
@@ -165,12 +185,32 @@
           </widget>
          </item>
          <item>
-          <widget class="QDateEdit" name="dateEditDataSeduta"/>
+          <widget class="QDateEdit" name="dateEditDataSeduta">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>50</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayoutOrario">
          <item>
           <widget class="QLabel" name="labelOrario">
            <property name="maximumSize">
@@ -185,7 +225,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="comboBoxOrario"/>
+          <widget class="QComboBox" name="comboBoxOrario">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>50</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -266,9 +313,15 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayoutEliminaModificaTra">
+      <layout class="QHBoxLayout" name="horizontalLayoutSalvaPrenotazione">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+       <property name="rightMargin">
+        <number>11</number>
+       </property>
        <item>
-        <widget class="QPushButton" name="pushButtonEliminaTra">
+        <widget class="QPushButton" name="pushButtonSalvaPrenotazione">
          <property name="text">
           <string>Salva prenotazione</string>
          </property>
