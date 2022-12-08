@@ -1,8 +1,9 @@
+from Prenotazioni.ModelsPrenotazioni.ElencoPrenotazioniModel import ElencoPrenotazioniModel
 
 
 class PrenotazioneController:
 
-    def aggiungiTrattamento(self,nome,classe,costo,durata):
+    def aggiungiPrenotazione(self, tipologia, data, ora, completata, trattamento):
         if nome and classe and costo and durata:
             if costo.isdigit() and durata.isdigit():  # controllo che i parametri costo e durata inseriti liberamente sulla vista contengano solo numeri
                 trattamento = TrattamentoModel()
@@ -25,8 +26,5 @@ class PrenotazioneController:
         else:
             return False  # ci sono valori nulli
 
-    def eliminaTrattamento(self, trattamento):
-        ElencoTrattamentiModel().eliminaTrattamento(trattamento)
-
-    def visualizzaTrattamento(self):
-        pass
+    def eliminaTrattamento(self, prenotazione):
+        ElencoPrenotazioniModel().eliminaPrenotazione(prenotazione)

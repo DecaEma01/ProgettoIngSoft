@@ -2,8 +2,8 @@ from Prenotazioni.ModelsPrenotazioni.ElencoPrenotazioniModel import ElencoPrenot
 
 class ElencoPrenotazioniController:
 
-    def getElencoTrattamenti(self):
+    def getElencoPrenotazioni(self):
         return ElencoPrenotazioniModel().getTPrenotazioniFile()
 
-    def ricercaTrattamento(self,dictParametri):
+    def ricercaPrenotazione(self,dictParametri):
         return ElencoPrenotazioniModel().ricercaPrenotazione(dictParametri)

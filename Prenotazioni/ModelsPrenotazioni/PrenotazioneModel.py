@@ -15,7 +15,7 @@ class PrenotazioneModel:
         self.ora = ""
         self.completata = False
 
-    def setInfoPrenotazione(self, paziente, tipologia, data, ora, completata, trattamento=None):   #impostazione dei parametri per una nuova prenotazione
+    def setInfoPrenotazione(self, paziente, tipologia, data, ora, completata, trattamento):   #impostazione dei parametri per una nuova prenotazione
         self.codicePrenotazione = int(ElencoPrenotazioniModel().calcolaUltimoCodicePrenotazione())+1
         self.trattamento = trattamento
         self.paziente = paziente
@@ -24,18 +24,19 @@ class PrenotazioneModel:
         self.ora = ora
         self.completata = completata
 
-    def aggiungiTrattamento(self):
-        trattamenti = {}
+    def aggiungiPrenotazione(self):
+        prenotazioni = {}
         try:
-            if os.path.isfile('Dati/Trattamenti.pickle') and os.path.getsize('Dati/Trattamenti.pickle') > 0:
-                with open('Dati/Trattamenti.pickle', 'rb') as file:
-                    trattamenti = pickle.load(file)
-            trattamenti[self.codiceTrattamento] = self
-            with open('Dati/Trattamenti.pickle', 'wb') as file:
-                pickle.dump(trattamenti, file, pickle.HIGHEST_PROTOCOL)
+            if os.path.isfile('Dati/Prenotazioni.pickle') and os.path.getsize('Dati/Prenotazioni.pickle') > 0:
+                with open('Dati/Prenotazioni.pickle', 'rb') as file:
+                    prenotazioni = pickle.load(file)
+            prenotazioni[self.codicePrenotazione] = self
+            with open('Dati/Prenotazioni.pickle', 'wb') as file:
+                pickle.dump(prenotazioni, file, pickle.HIGHEST_PROTOCOL)
         except:
             print("Impossibile aprire il file")
 
+    """
     def setInfoTrattamentoFile(self):    #impostazione dei parametri per un trattamento già salvato
         try:
             with open('Dati/Consulenza.pickle', 'rb') as f:
@@ -46,13 +47,13 @@ class PrenotazioneModel:
             self.durata = consulenza.durata
         except:
             print("Impossibile aprire il file")
+    """
 
-
-    def modificaTrattamento(self, nome, classe, costo, durata): #nuova impostazione dei parametri per un trattamento già registrato
-        self.nome = nome
-        self.classe = classe
-        self.costo = costo
-        self.durata = durata
+    def modificaPrenotazione(self, data, ora, completata, trattamento): #nuova impostazione dei parametri per una prenotazione già registrata
+        self.trattamento = trattamento
+        self.data = data
+        self.ora = ora
+        self.completata = completata
 
     def eliminaPrenotazione(self):
         self.codicePrenotazione = -1

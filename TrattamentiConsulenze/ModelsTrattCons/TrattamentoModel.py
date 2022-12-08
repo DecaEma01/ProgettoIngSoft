@@ -31,6 +31,7 @@ class TrattamentoModel:
         except:
             print("Impossibile aprire il file")
 
+    """
     def setInfoTrattamentoFile(self):    #impostazione dei parametri per un trattamento già salvato
         try:
             with open('Dati/Consulenza.pickle', 'rb') as f:
@@ -41,7 +42,7 @@ class TrattamentoModel:
             self.durata = consulenza.durata
         except:
             print("Impossibile aprire il file")
-
+    """
 
     def modificaTrattamento(self, nome, classe, costo, durata): #nuova impostazione dei parametri per un trattamento già registrato
         self.nome = nome

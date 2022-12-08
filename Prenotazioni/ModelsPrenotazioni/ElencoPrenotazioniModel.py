@@ -54,32 +54,32 @@ class ElencoPrenotazioniModel:
             print(traceback.format_exc())
             print("Impossibile eseguire la ricerca")
 
-    def eliminaTrattamento(self,trattamento):
+    def eliminaPrenotazione(self,prenotazione):
 
-        trattamentiFile = self.getTrattamentiFile()
-        del trattamentiFile[trattamento.codiceTrattamento]
-
-        try:
-            if os.path.isfile('Dati/Trattamenti.pickle') and os.path.getsize('Dati/Trattamenti.pickle') > 0:
-                with open('Dati/Trattamenti.pickle', 'wb') as file:
-                    pickle.dump(trattamentiFile, file, pickle.HIGHEST_PROTOCOL)
-            trattamento.eliminaTrattamento()
-        except:
-            print(traceback.format_exc())
-            print("Impossibile aprire il file dei trattamenti")
-
-    def modificaTrattamento(self, trattamento, nome, classe, costo, durata):
-
-        trattamentiFile = self.getTrattamentiFile()
-        trattamentoModifica=trattamentiFile[trattamento.codiceTrattamento]
-        trattamentoModifica.modificaTrattamento(nome, classe, costo, durata)
-        trattamentiFile[trattamentoModifica.codiceTrattamento]=trattamentoModifica
+        prenotazioniFile = self.getPrenotazioniFile()
+        del prenotazioniFile[prenotazione.codicePrenotazione]
 
         try:
-            if os.path.isfile('Dati/Trattamenti.pickle') and os.path.getsize('Dati/Trattamenti.pickle') > 0:
-                with open('Dati/Trattamenti.pickle', 'wb') as file:
-                    pickle.dump(trattamentiFile, file, pickle.HIGHEST_PROTOCOL)
+            if os.path.isfile('Dati/Prenotazioni.pickle') and os.path.getsize('Dati/Prenotazioni.pickle') > 0:
+                with open('Dati/Prenotazioni.pickle', 'wb') as file:
+                    pickle.dump(prenotazioniFile, file, pickle.HIGHEST_PROTOCOL)
+            prenotazione.eliminaPrenotazione()
         except:
             print(traceback.format_exc())
-            print("Impossibile aprire il file dei trattamenti")
+            print("Impossibile aprire il file delle prenotazioni")
+
+    def modificaPrenotazione(self, prenotazione, data, ora, completata, trattamento):
+
+        prenotazioniFile = self.getPrenotazioniFile()
+        prenotazioneModifica=prenotazioniFile[prenotazione.codicePrenotazione]
+        prenotazioneModifica.modificaPrenotazione(data, ora, completata, trattamento)
+        prenotazioniFile[prenotazioneModifica.codiceTrattamento]=prenotazioneModifica
+
+        try:
+            if os.path.isfile('Dati/Prenotazioni.pickle') and os.path.getsize('Dati/Prenotazioni.pickle') > 0:
+                with open('Dati/Prenotazioni.pickle', 'wb') as file:
+                    pickle.dump(prenotazioniFile, file, pickle.HIGHEST_PROTOCOL)
+        except:
+            print(traceback.format_exc())
+            print("Impossibile aprire il file delle prenotazioni")
 
