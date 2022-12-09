@@ -11,6 +11,7 @@ import threading
 
 
 from Pazienti.ViewsPazienti.GestionePazientiView import GestionePazientiView
+from Prenotazioni.ViewsPrenotazioni.GestionePrenotazioniView import GestionePrenotazioniView
 from TrattamentiConsulenze.ViewsTrattCons.AggiungiTrattView import AggiungiTrattView
 from TrattamentiConsulenze.ViewsTrattCons.GestioneConsView import GestioneConsView
 from TrattamentiConsulenze.ControllersTrattCons.ConsulenzaController import ConsulenzaController
@@ -37,12 +38,12 @@ if __name__ == '__main__':
 
     # x = threading.Thread(target=backup)
     # x.start()
-    pass
-
-
-
-
-
+    app = QtWidgets.QApplication(sys.argv)
+    Form = QtWidgets.QWidget()
+    ui = GestionePrenotazioniView()
+    ui.setupUi(Form, app)
+    Form.show()
+    sys.exit(app.exec_())
 
 
 """
