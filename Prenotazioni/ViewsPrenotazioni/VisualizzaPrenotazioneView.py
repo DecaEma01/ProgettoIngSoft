@@ -169,7 +169,7 @@ class Ui_Form(object):
         self.labelMinuti.setText(_translate("Form", "minuti"))
         self.radioButtonSedutaEffettuata.setText(_translate("Form", "Seduta effettuata"))
         self.pushButtonEliminaPrenotazione.setText(_translate("Form", "Elimina prenotazione"))
-        self.pushButtonModificaPrenotazione.setText(_translate("Form", "modifica prenotazione"))
+        self.pushButtonModificaPrenotazione.setText(_translate("Form", "Modifica prenotazione"))
 
 
 if __name__ == "__main__":

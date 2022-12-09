@@ -37,7 +37,15 @@ if __name__ == '__main__':
 
     # x = threading.Thread(target=backup)
     # x.start()
+    pass
 
+
+
+
+
+
+
+"""
     if os.path.isfile('Dati/Pazienti.pickle') == False:
         paz = PazienteModel('Nicholas', 'Bradach', 'BRDNHL', '345', 'SN', '26', 'MSV', 'Ancona', {})
     pazienti = ElencoPazientiModel.visualizzaElencoPazientiM(PazienteModel)
@@ -48,6 +56,7 @@ if __name__ == '__main__':
     ui.setupUi(Form, app)
     Form.show()
     sys.exit(app.exec_())
+"""
 
 """
 if __name__ == "__main__":

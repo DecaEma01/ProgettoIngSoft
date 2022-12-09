@@ -1,30 +1,40 @@
 from Prenotazioni.ModelsPrenotazioni.ElencoPrenotazioniModel import ElencoPrenotazioniModel
+from Prenotazioni.ModelsPrenotazioni.PrenotazioneModel import PrenotazioneModel
 
 
 class PrenotazioneController:
 
-    def aggiungiPrenotazione(self, tipologia, data, ora, completata, trattamento):
-        if nome and classe and costo and durata:
-            if costo.isdigit() and durata.isdigit():  # controllo che i parametri costo e durata inseriti liberamente sulla vista contengano solo numeri
-                trattamento = TrattamentoModel()
-                trattamento.setInfoTrattamento(nome,classe,costo,durata)
-                trattamento.aggiungiTrattamento()
-                return True
+    def aggiungiPrenotazione(self, data, ora, completata, paziente, trattamento):
+        self.tipologia = ""
+        if data and ora and paziente :
+            prenotazione = PrenotazioneModel()
+            if not trattamento:
+                self.tipologia = "Seduta di consulenza medica"
             else:
-                return False #costo o durata non contengono solo numeri
+                self.tipologia = "Seduta di trattamento fisioterapico"
+
+            prenotazione.setInfoPrenotazione(self, paziente, self.tipologia, data, ora, completata, trattamento)
+            prenotazione.aggiungiPrenotazione()
+            return True
+        else:
+            return False #data o ora o paziente non hanno valore
+
+    """
         else:
             return False  #ci sono valori nulli
+    """
 
 
-    def modificaTrattamento(self, trattamento, nome, classe, costo, durata):
-        if nome and classe and costo and durata:
-            if costo.isdigit() and durata.isdigit():  # controllo che i parametri costo e durata inseriti liberamente sulla vista contengano solo numeri
-                ElencoTrattamentiModel().modificaTrattamento(trattamento, nome, classe, costo, durata)
-                return True
-            else:
-                return False  # costo o durata non contengono solo numeri
+    def modificaPrenotazione(self, prenotazione, data, ora, completata, trattamento):
+        if data and ora :
+            ElencoPrenotazioniModel().modificaPrenotazione(prenotazione, data, ora, completata, trattamento)
+            return True
+        else:
+            return False  # #data o ora non hanno valore
+    """
         else:
             return False  # ci sono valori nulli
+    """
 
-    def eliminaTrattamento(self, prenotazione):
+    def eliminaPrenotazione(self, prenotazione):
         ElencoPrenotazioniModel().eliminaPrenotazione(prenotazione)
