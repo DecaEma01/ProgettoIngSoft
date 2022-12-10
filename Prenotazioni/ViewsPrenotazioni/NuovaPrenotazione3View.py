@@ -116,7 +116,7 @@ class NuovaPrenotazione3View(object):
         self.labelData.setObjectName("labelData")
         self.horizontalLayoutData.addWidget(self.labelData)
         self.dateEditDataSeduta = QtWidgets.QDateEdit(Form)
-
+        self.dateEditDataSeduta.setDateTime(QtCore.QDateTime.currentDateTime())
 
         self.dateEditDataSeduta.setMinimumSize(QtCore.QSize(0, 30))
         self.dateEditDataSeduta.setObjectName("dateEditDataSeduta")
@@ -172,6 +172,8 @@ class NuovaPrenotazione3View(object):
         self.horizontalLayoutSalvaPrenotazione.setObjectName("horizontalLayoutSalvaPrenotazione")
         self.pushButtonSalvaPrenotazione = QtWidgets.QPushButton(Form)
         self.pushButtonSalvaPrenotazione.setObjectName("pushButtonSalvaPrenotazione")
+        self.pushButtonSalvaPrenotazione.clicked.connect(self.salvaPrenotazione)
+
         self.horizontalLayoutSalvaPrenotazione.addWidget(self.pushButtonSalvaPrenotazione)
         self.verticalLayoutPrincipale.addLayout(self.horizontalLayoutSalvaPrenotazione)
         self.verticalLayout.addLayout(self.verticalLayoutPrincipale)
@@ -183,6 +185,8 @@ class NuovaPrenotazione3View(object):
             self.aggiornaCostoDurataTrattamento()
         else:
             self.aggiornaCostoDurataConsulenza()
+
+        self.getDataInserita()
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -216,9 +220,10 @@ class NuovaPrenotazione3View(object):
             trattamento = self.getTrattamentoSelezionatoCombo()
         else:
             trattamento = None
+            self.controllaGiornoConsuleza()
 
         #data = self.dateEditDataSeduta.
-
+        """
         if PrenotazioneController().aggiungiPrenotazione(str(self.lineEditNome.text()).strip(),
                                                        str(self.comboBoxClasse.currentText()),
                                                        str(self.lineEditCosto.text()).strip(),
@@ -236,6 +241,7 @@ class NuovaPrenotazione3View(object):
             errore.setIcon(QMessageBox.Warning)
             errore.setStandardButtons(QMessageBox.Ok)
             errore.exec_()
+        """
 
     def getListaInfoTrattamenti(self):
         trattamenti = ElencoTrattamentiController().getElencoTrattamenti()
@@ -245,6 +251,61 @@ class NuovaPrenotazione3View(object):
             arrayComboBoxTrattamenti.append(etichetta)
         return arrayComboBoxTrattamenti
 
+    def getDataInserita(self):
+        dataInserita = self.dateEditDataSeduta.dateTime().date()
+        return dataInserita
+
+    def controllaGiornoConsuleza(self):
+        dataInserita = self.getDataInserita()
+        giornoSettimanaInserito = dataInserita.dayOfWeek()
+
+        consulenza = ConsulenzaController().getConsulenza()
+        giornoConsulenza = consulenza.giornoSettimana
+
+        if giornoSettimanaInserito >= 1 and giornoSettimanaInserito <=6:
+            numeroGiornoConsulenza = self.convertiGiornoSettimanaNumero(giornoConsulenza)
+        else:
+            numeroGiornoConsulenza = -1
+
+        if numeroGiornoConsulenza == giornoSettimanaInserito :
+            return True
+
+        if numeroGiornoConsulenza == -1:
+            errore = QMessageBox()
+            errore.setWindowTitle("Errore di inserimento")
+            errore.setText(
+                "Hai inserito una data corrispondente ad una domenica. Di domenica il centro è chiuso. Inserisci un'altra data")
+            errore.setIcon(QMessageBox.Warning)
+            errore.setStandardButtons(QMessageBox.Ok)
+            errore.exec_()
+            return False
+        elif numeroGiornoConsulenza != giornoSettimanaInserito :
+            errore = QMessageBox()
+            errore.setWindowTitle("Errore di inserimento")
+            errore.setText(
+                f"Hai inserito una data corrispondente ad un giorno della settimana , il {dataInserita.dayOfWeek()}"
+                f" che non coincide con quello attualmente previsto per le consulenze, il {giornoConsulenza},"
+                f" inserisci quindi una data corrispondente ad un {giornoConsulenza} .")
+            errore.setIcon(QMessageBox.Warning)
+            errore.setStandardButtons(QMessageBox.Ok)
+            errore.exec_()
+            return False
+
+    def convertiGiornoSettimanaNumero(self, giorno):
+        # è necessario ottenere il numero del giorno della settimana per confrontarlo col giorno della data inserita["lunedi","martedi","mercoledi","giovedi","venerdi","sabato"]
+        if giorno == "lunedi":
+            numeroGiorno = 1
+        if giorno == "martedi":
+            numeroGiorno = 2
+        if giorno == "mercoledi":
+            numeroGiorno = 3
+        if giorno == "giovedi":
+            numeroGiorno = 4
+        if giorno == "venerdi":
+            numeroGiorno = 5
+        if giorno == "sabato":
+            numeroGiorno = 6
+        return numeroGiorno
 
     def getTrattamentoSelezionatoCombo(self):
         etichettaTrattamento = self.comboBoxTrattamento.currentText()
