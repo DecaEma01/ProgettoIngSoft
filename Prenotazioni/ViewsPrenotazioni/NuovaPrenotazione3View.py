@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 from Prenotazioni.ControllersPrenotazioni.PrenotazioneController import PrenotazioneController
+from TrattamentiConsulenze.ControllersTrattCons.ConsulenzaController import ConsulenzaController
 from TrattamentiConsulenze.ControllersTrattCons.ElencoTrattamentiController import ElencoTrattamentiController
 
 
@@ -88,18 +89,25 @@ class NuovaPrenotazione3View(object):
         self.labelCognomeValue.setObjectName("labelCognomeValue")
         self.horizontalLayoutCognome.addWidget(self.labelCognomeValue)
         self.verticalLayoutDatiPrenotazione.addLayout(self.horizontalLayoutCognome)
-        self.horizontalLayoutTrattamento = QtWidgets.QHBoxLayout()
-        self.horizontalLayoutTrattamento.setObjectName("horizontalLayoutTrattamento")
-        self.labelTrattamento = QtWidgets.QLabel(Form)
-        self.labelTrattamento.setMaximumSize(QtCore.QSize(80, 16777215))
-        self.labelTrattamento.setObjectName("labelTrattamento")
-        self.horizontalLayoutTrattamento.addWidget(self.labelTrattamento)
-        self.comboBoxTrattamento = QtWidgets.QComboBox(Form)
-        self.comboBoxTrattamento.setMinimumSize(QtCore.QSize(0, 30))
-        self.comboBoxTrattamento.setObjectName("comboBoxTrattamento")
-        self.horizontalLayoutTrattamento.addWidget(self.comboBoxTrattamento)
-        self.verticalLayoutDatiPrenotazione.addLayout(self.horizontalLayoutTrattamento)
-        spacerItem = QtWidgets.QSpacerItem(40, 30, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+
+        if self.tipoPrenotazione:
+            self.horizontalLayoutTrattamento = QtWidgets.QHBoxLayout()
+            self.horizontalLayoutTrattamento.setObjectName("horizontalLayoutTrattamento")
+            self.labelTrattamento = QtWidgets.QLabel(Form)
+            self.labelTrattamento.setMaximumSize(QtCore.QSize(80, 16777215))
+            self.labelTrattamento.setObjectName("labelTrattamento")
+            self.horizontalLayoutTrattamento.addWidget(self.labelTrattamento)
+            self.comboBoxTrattamento = QtWidgets.QComboBox(Form)
+            self.comboBoxTrattamento.setMinimumSize(QtCore.QSize(0, 30))
+            self.comboBoxTrattamento.setObjectName("comboBoxTrattamento")
+            self.comboBoxTrattamento.addItems(self.getListaInfoTrattamenti())
+            self.comboBoxTrattamento.activated.connect(self.aggiornaCostoDurataTrattamento)
+
+            self.horizontalLayoutTrattamento.addWidget(self.comboBoxTrattamento)
+            self.verticalLayoutDatiPrenotazione.addLayout(self.horizontalLayoutTrattamento)
+
+
+        spacerItem = QtWidgets.QSpacerItem(40, 25, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.verticalLayoutDatiPrenotazione.addItem(spacerItem)
         self.horizontalLayoutData = QtWidgets.QHBoxLayout()
         self.horizontalLayoutData.setObjectName("horizontalLayoutData")
@@ -108,11 +116,13 @@ class NuovaPrenotazione3View(object):
         self.labelData.setObjectName("labelData")
         self.horizontalLayoutData.addWidget(self.labelData)
         self.dateEditDataSeduta = QtWidgets.QDateEdit(Form)
+
+
         self.dateEditDataSeduta.setMinimumSize(QtCore.QSize(0, 30))
         self.dateEditDataSeduta.setObjectName("dateEditDataSeduta")
         self.horizontalLayoutData.addWidget(self.dateEditDataSeduta)
         self.verticalLayoutDatiPrenotazione.addLayout(self.horizontalLayoutData)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 30, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 25, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.verticalLayoutDatiPrenotazione.addItem(spacerItem1)
         self.horizontalLayoutOrario = QtWidgets.QHBoxLayout()
         self.horizontalLayoutOrario.setObjectName("horizontalLayoutOrario")
@@ -169,6 +179,11 @@ class NuovaPrenotazione3View(object):
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
+        if self.tipoPrenotazione:
+            self.aggiornaCostoDurataTrattamento()
+        else:
+            self.aggiornaCostoDurataConsulenza()
+
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Segretario - Nuova prenotazione - riepilogo prenotazione"))
@@ -178,7 +193,10 @@ class NuovaPrenotazione3View(object):
         self.labelTipologia.setText(_translate("Form", "Tipologia della seduta:"))
         self.labelNome.setText(_translate("Form", "Nome:"))
         self.labelCognome.setText(_translate("Form", "Cognome:"))
-        self.labelTrattamento.setText(_translate("Form", "Trattamento:"))
+
+        if self.tipoPrenotazione:
+            self.labelTrattamento.setText(_translate("Form", "Trattamento:"))
+
         self.labelData.setText(_translate("Form", "Data della seduta:"))
         self.labelOrario.setText(_translate("Form", "Orario:"))
         self.labelCosto.setText(_translate("Form", "Costo:"))
@@ -194,13 +212,21 @@ class NuovaPrenotazione3View(object):
         sys.exit(app.exec_())
 
     def salvaPrenotazione(self, Form):
+        if self.tipoPrenotazione:
+            trattamento = self.getTrattamentoSelezionatoCombo()
+        else:
+            trattamento = None
+
+        #data = self.dateEditDataSeduta.
+
         if PrenotazioneController().aggiungiPrenotazione(str(self.lineEditNome.text()).strip(),
                                                        str(self.comboBoxClasse.currentText()),
                                                        str(self.lineEditCosto.text()).strip(),
                                                        str(self.lineEditDurata.text().strip())):
-            self.chiudiFinestra(
-                Form)  # chiudendosi la finestra viene mostrata nuovamente la finestra di gestione dei trattamenti che stava sotto
-            self.aggiornaListaTrattamenti()  # la finestra della lista dei trattamenti si deve aggiornare per far comparire il trattamento appena aggiunto
+            self.chiudiFinestra(Form)  # chiudendosi la finestra viene mostrata nuovamente la finestra di gestione dei trattamenti che stava sotto
+
+        if not trattamento:
+            pass
 
         else:
             errore = QMessageBox()
@@ -211,20 +237,32 @@ class NuovaPrenotazione3View(object):
             errore.setStandardButtons(QMessageBox.Ok)
             errore.exec_()
 
-    def getTrattamentiNomeClasse(self):
-        self.trattamenti = ElencoTrattamentiController().getElencoTrattamenti()
+    def getListaInfoTrattamenti(self):
+        trattamenti = ElencoTrattamentiController().getElencoTrattamenti()
         arrayComboBoxTrattamenti=[]
-        for trattamento in self.trattamenti.values():
-            etichetta = f"{trattamento.nome} : {trattamento.classe}"
+        for trattamento in trattamenti.values():
+            etichetta = f"{trattamento.nome} : {trattamento.classe} - {trattamento.codiceTrattamento}"
             arrayComboBoxTrattamenti.append(etichetta)
         return arrayComboBoxTrattamenti
 
-    def getDatiConsulenza(self):
-        pass
+
+    def getTrattamentoSelezionatoCombo(self):
+        etichettaTrattamento = self.comboBoxTrattamento.currentText()
+        codiceTrattamento = int(etichettaTrattamento.split("-")[1].strip())
+        dictParametri = {}
+        dictParametri["codiceTrattamento"] = codiceTrattamento
+        trattamentoRisultato = ElencoTrattamentiController().ricercaTrattamento(dictParametri)[codiceTrattamento]
+        return trattamentoRisultato
 
     def aggiornaCostoDurataTrattamento(self):
-        pass
+        trattamentoSelezionato = self.getTrattamentoSelezionatoCombo()
+        self.labelCostoValue.setText(trattamentoSelezionato.costo)
+        self.labelDurataValue.setText(trattamentoSelezionato.durata)
 
+    def aggiornaCostoDurataConsulenza(self):
+        consulenza = ConsulenzaController().getConsulenza()
+        self.labelCostoValue.setText(consulenza.costo)
+        self.labelDurataValue.setText(consulenza.durata)
 
 if __name__ == "__main__":
     import sys
