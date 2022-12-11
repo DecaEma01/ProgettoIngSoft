@@ -9,6 +9,11 @@
 import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
+from PyQt5.QtWidgets import QMessageBox
+
+from Prenotazioni.ControllersPrenotazioni.ElencoPrenotazioniController import ElencoPrenotazioniController
+from Prenotazioni.ViewsPrenotazioni.VisualizzaPrenotazioneView import VisualizzaPrenotazioneView
 
 
 class PrenotazioniRegistrateView(object):
@@ -23,8 +28,12 @@ class PrenotazioniRegistrateView(object):
         self.horizontalLayoutIndietroLogout.setObjectName("horizontalLayoutIndietroLogout")
         self.pushButtonIndietro = QtWidgets.QPushButton(Form)
         self.pushButtonIndietro.setObjectName("pushButtonIndietro")
+        self.pushButtonIndietro.clicked.connect(lambda: self.chiudiFinestra(Form))
+
         self.horizontalLayoutIndietroLogout.addWidget(self.pushButtonIndietro)
         self.pushButtonLogout = QtWidgets.QPushButton(Form)
+        self.pushButtonLogout.clicked.connect(lambda: self.chiudiApp(app))
+
         self.pushButtonLogout.setObjectName("pushButtonLogout")
         self.horizontalLayoutIndietroLogout.addWidget(self.pushButtonLogout)
         self.verticalLayoutPrincipale.addLayout(self.horizontalLayoutIndietroLogout)
@@ -84,6 +93,8 @@ class PrenotazioniRegistrateView(object):
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
+        self.visualizzaListaPrenotazioni()
+
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Segretario - Prenotazioni registrate"))
@@ -97,6 +108,67 @@ class PrenotazioniRegistrateView(object):
         self.labelRicercaDataInizio.setText(_translate("Form", "Ricerca per prenotazioni dalla data:"))
         self.labelRicercaCodiceFiscale.setText(_translate("Form", "Ricerca per codice fiscale paziente:"))
         self.pushButtonVisualizzaPrenotazione.setText(_translate("Form", "Visualizza prenotazione"))
+
+    def chiudiFinestra(self,Form):
+        Form.close()
+
+    def chiudiApp(self,app):
+        sys.exit(app.exec_())
+
+    def visualizzaListaPrenotazioni(self):
+        self.prenotazioni = ElencoPrenotazioniController().getElencoPrenotazioni()
+        listview_model = QStandardItemModel(self.listViewPrenotazioni)
+        for prenotazione in self.prenotazioni.values():
+            item = QStandardItem()
+            etichetta = f"{prenotazione.tipologia} per il paziente {prenotazione.paziente.nome} {prenotazione.paziente.cognome}" \
+                        f" in data {prenotazione.data.toString('dd/MM/yyyy')} - {prenotazione.codicePrenotazione}"
+            item.setText(etichetta)
+            item.setEditable(False)
+            font = item.font()
+            font.setPointSize(12)
+            item.setFont(font)
+            listview_model.appendRow(item)
+        self.listViewPrenotazioni.setModel(listview_model)
+
+    def ricercaPrenotazione(self): #da modificareeeeeeeeeeeeeeeeeeeeeee
+        dictParametri = {}
+        dictParametri["classe"] = str(self.comboBoxClasseTra.currentText())
+        dictParametri["nome"] = str(self.lineEditNomeTra.text()).strip()
+        if str(self.comboBoxClasseTra.currentText()) == "Tutte":
+            dictParametri["classe"] = ""
+        self.trattamentiRisultato = ElencoTrattamentiController().ricercaTrattamento(dictParametri)
+
+        listview_model = QStandardItemModel(self.listViewTrattamenti)
+        for trattamento in self.trattamentiRisultato.values():
+            item = QStandardItem()
+            etichetta = f"{trattamento.nome} : {trattamento.classe} - {trattamento.codiceTrattamento}"
+            item.setText(etichetta)
+            item.setEditable(False)
+            font = item.font()
+            font.setPointSize(16)
+            item.setFont(font)
+            listview_model.appendRow(item)
+        self.listViewTrattamenti.setModel(listview_model)
+
+    def visualizzaPrenotazioneSelezionata(self, app):
+        try:
+            prenotazioneSelezionata = self.listViewPrenotazioni.selectedIndexes()[0].data()
+            codicePrenotazione = int(prenotazioneSelezionata.split("-")[1].strip())
+            dictParametri = {}
+            dictParametri["codicePrenotazione"] = codicePrenotazione
+            prenotazione = ElencoPrenotazioniController().ricercaPrenotazione(dictParametri)
+
+            self.vistaPrenotazione = QtWidgets.QWidget()
+            uivistaPrenotazione = VisualizzaPrenotazioneView(prenotazione[codicePrenotazione], self.visualizzaListaPrenotazioni)
+            uivistaPrenotazione.setupUi(self.vistaPrenotazione,app)
+            self.vistaPrenotazione.show()
+        except IndexError:
+            errore = QMessageBox()
+            errore.setWindowTitle("Nessun trattamento selezionato")
+            errore.setText("Controlla di aver selezionato uno dei trattamenti , poi fai clic sul bottone visualizza trattamento.")
+            errore.setIcon(QMessageBox.Warning)
+            errore.setStandardButtons(QMessageBox.Ok)
+            errore.exec_()
 
 
 if __name__ == "__main__":

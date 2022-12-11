@@ -21,10 +21,6 @@ class PrenotazioneController:
             return True
         else:
             return False  # #data o ora non hanno valore
-    """
-        else:
-            return False  # ci sono valori nulli
-    """
 
     def eliminaPrenotazione(self, prenotazione):
         ElencoPrenotazioniModel().eliminaPrenotazione(prenotazione)

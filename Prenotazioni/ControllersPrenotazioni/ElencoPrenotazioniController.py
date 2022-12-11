@@ -3,7 +3,7 @@ from Prenotazioni.ModelsPrenotazioni.ElencoPrenotazioniModel import ElencoPrenot
 class ElencoPrenotazioniController:
 
     def getElencoPrenotazioni(self):
-        return ElencoPrenotazioniModel().getTPrenotazioniFile()
+        return ElencoPrenotazioniModel().getPrenotazioniFile()
 
     def ricercaPrenotazione(self,dictParametri):
         return ElencoPrenotazioniModel().ricercaPrenotazione(dictParametri)

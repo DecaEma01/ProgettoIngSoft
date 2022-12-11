@@ -36,18 +36,6 @@ class PrenotazioneModel:
         except:
             print("Impossibile aprire il file")
 
-    """
-    def setInfoTrattamentoFile(self):    #impostazione dei parametri per un trattamento già salvato
-        try:
-            with open('Dati/Consulenza.pickle', 'rb') as f:
-                consulenza = pickle.load(f)
-
-            self.giornoSettimana = consulenza.giornoSettimana
-            self.costo = consulenza.costo
-            self.durata = consulenza.durata
-        except:
-            print("Impossibile aprire il file")
-    """
 
     def modificaPrenotazione(self, data, ora, completata, trattamento): #nuova impostazione dei parametri per una prenotazione già registrata
         self.trattamento = trattamento

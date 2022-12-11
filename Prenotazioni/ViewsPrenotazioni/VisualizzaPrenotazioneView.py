@@ -9,9 +9,16 @@
 import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
+
+from Prenotazioni.ControllersPrenotazioni.PrenotazioneController import PrenotazioneController
 
 
 class VisualizzaPrenotazioneView(object):
+    def __init__(self , prenotazione, aggiornaListaPrenotazioni):
+        self.prenotazione = prenotazione
+        self.aggiornaListaPrenotazioni = aggiornaListaPrenotazioni
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(900, 700)
@@ -23,9 +30,13 @@ class VisualizzaPrenotazioneView(object):
         self.horizontalLayoutIndietroLogout.setObjectName("horizontalLayoutIndietroLogout")
         self.pushButtonIndietro = QtWidgets.QPushButton(Form)
         self.pushButtonIndietro.setObjectName("pushButtonIndietro")
+        self.pushButtonIndietro.clicked.connect(lambda: self.chiudiFinestra(Form))
+
         self.horizontalLayoutIndietroLogout.addWidget(self.pushButtonIndietro)
         self.pushButtonLogout = QtWidgets.QPushButton(Form)
         self.pushButtonLogout.setObjectName("pushButtonLogout")
+        self.pushButtonLogout.clicked.connect(lambda: self.chiudiApp(app))
+
         self.horizontalLayoutIndietroLogout.addWidget(self.pushButtonLogout)
         self.verticalLayoutPrincipale.addLayout(self.horizontalLayoutIndietroLogout)
         self.labelDettagliTrattamento = QtWidgets.QLabel(Form)
@@ -141,6 +152,8 @@ class VisualizzaPrenotazioneView(object):
         self.horizontalLayoutEliminaModificaTra.setObjectName("horizontalLayoutEliminaModificaTra")
         self.pushButtonEliminaPrenotazione = QtWidgets.QPushButton(Form)
         self.pushButtonEliminaPrenotazione.setObjectName("pushButtonEliminaPrenotazione")
+        self.pushButtonEliminaPrenotazione.clicked.connect(lambda: self.eliminaPrenotazione(Form))
+
         self.horizontalLayoutEliminaModificaTra.addWidget(self.pushButtonEliminaPrenotazione)
         self.pushButtonModificaPrenotazione = QtWidgets.QPushButton(Form)
         self.pushButtonModificaPrenotazione.setObjectName("pushButtonModificaPrenotazione")
@@ -170,6 +183,23 @@ class VisualizzaPrenotazioneView(object):
         self.radioButtonSedutaEffettuata.setText(_translate("Form", "Seduta effettuata"))
         self.pushButtonEliminaPrenotazione.setText(_translate("Form", "Elimina prenotazione"))
         self.pushButtonModificaPrenotazione.setText(_translate("Form", "Modifica prenotazione"))
+
+    def eliminaPrenotazione(self, Form):
+        popupConferma = QMessageBox()
+        popupConferma.setText("Sei sicuro di voler eliminare il trattamento visualizzato?")
+        popupConferma.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        popupConferma.setWindowTitle("Conferma eliminazione trattamento")
+        risposta = popupConferma.exec_()
+        if risposta == QMessageBox.Ok:
+            PrenotazioneController().eliminaPrenotazione(self.prenotazione)
+            self.aggiornaListaPrenotazioni()
+            self.chiudiFinestra(Form)
+
+    def chiudiFinestra(self, Form):
+        Form.close()
+
+    def chiudiApp(self, app):
+        sys.exit(app.exec_())
 
 
 if __name__ == "__main__":
