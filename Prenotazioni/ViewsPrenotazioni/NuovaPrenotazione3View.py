@@ -12,6 +12,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 from Prenotazioni.ControllersPrenotazioni.PrenotazioneController import PrenotazioneController
+#from Prenotazioni.ViewsPrenotazioni.GestionePrenotazioniView import GestionePrenotazioniView
+from Prenotazioni.ViewsPrenotazioni.PrenotazioniRegistrateView import PrenotazioniRegistrateView
 from TrattamentiConsulenze.ControllersTrattCons.ConsulenzaController import ConsulenzaController
 from TrattamentiConsulenze.ControllersTrattCons.ElencoTrattamentiController import ElencoTrattamentiController
 
@@ -25,7 +27,7 @@ class NuovaPrenotazione3View(object):
         else:
             self.tipologiaSeduta = "Seduta di consulenza medica"
 
-    def setupUi(self, Form, app):
+    def setupUi(self, Form, app, istanzaP2View, istanzaP1View, istanzaGestioneView):
         Form.setObjectName("Form")
         Form.resize(900, 700)
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
@@ -133,6 +135,9 @@ class NuovaPrenotazione3View(object):
         self.comboBoxOrario = QtWidgets.QComboBox(Form)
         self.comboBoxOrario.setMinimumSize(QtCore.QSize(0, 30))
         self.comboBoxOrario.setObjectName("comboBoxOrario")
+        self.comboBoxOrario.addItems(["8:00","9:00", "10:00", "11:00", "12:00",
+                                    "14:00", "15:00","16:00","17:00", "18:00"])
+
         self.horizontalLayoutOrario.addWidget(self.comboBoxOrario)
         self.verticalLayoutDatiPrenotazione.addLayout(self.horizontalLayoutOrario)
         self.horizontalLayoutCosto = QtWidgets.QHBoxLayout()
@@ -172,7 +177,7 @@ class NuovaPrenotazione3View(object):
         self.horizontalLayoutSalvaPrenotazione.setObjectName("horizontalLayoutSalvaPrenotazione")
         self.pushButtonSalvaPrenotazione = QtWidgets.QPushButton(Form)
         self.pushButtonSalvaPrenotazione.setObjectName("pushButtonSalvaPrenotazione")
-        self.pushButtonSalvaPrenotazione.clicked.connect(self.salvaPrenotazione)
+        self.pushButtonSalvaPrenotazione.clicked.connect(lambda: self.salvaPrenotazione(Form, istanzaP2View, istanzaP1View, istanzaGestioneView))
 
         self.horizontalLayoutSalvaPrenotazione.addWidget(self.pushButtonSalvaPrenotazione)
         self.verticalLayoutPrincipale.addLayout(self.horizontalLayoutSalvaPrenotazione)
@@ -186,7 +191,7 @@ class NuovaPrenotazione3View(object):
         else:
             self.aggiornaCostoDurataConsulenza()
 
-        self.getDataInserita()
+        #self.getDataInserita()
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -215,33 +220,25 @@ class NuovaPrenotazione3View(object):
     def chiudiApp(self,app):
         sys.exit(app.exec_())
 
-    def salvaPrenotazione(self, Form):
+    def salvaPrenotazione(self, Form, istanzaP2View, istanzaP1View, istanzaGestioneView):
         if self.tipoPrenotazione:
             trattamento = self.getTrattamentoSelezionatoCombo()
         else:
             trattamento = None
-            self.controllaGiornoConsuleza()
 
-        #data = self.dateEditDataSeduta.
-        """
-        if PrenotazioneController().aggiungiPrenotazione(str(self.lineEditNome.text()).strip(),
-                                                       str(self.comboBoxClasse.currentText()),
-                                                       str(self.lineEditCosto.text()).strip(),
-                                                       str(self.lineEditDurata.text().strip())):
-            self.chiudiFinestra(Form)  # chiudendosi la finestra viene mostrata nuovamente la finestra di gestione dei trattamenti che stava sotto
+        if self.controllaGiornoConsuleza():
+            data = self.getDataInserita()
+            orario = self.comboBoxOrario.currentText()
+            paziente = self.paziente
 
-        if not trattamento:
-            pass
+            PrenotazioneController().aggiungiPrenotazione(data, orario, paziente, trattamento)
 
-        else:
-            errore = QMessageBox()
-            errore.setWindowTitle("Errore di inserimento")
-            errore.setText(
-                "Controlla che siano stati compilati tutti i campi e che nei campi 'costo' o 'durata' siano stati inseriti dei valori numerici.")
-            errore.setIcon(QMessageBox.Warning)
-            errore.setStandardButtons(QMessageBox.Ok)
-            errore.exec_()
-        """
+            Form.close()
+            istanzaP2View.close()
+            istanzaP1View.close()
+            #istanzaGestioneView.close()
+
+
 
     def getListaInfoTrattamenti(self):
         trattamenti = ElencoTrattamentiController().getElencoTrattamenti()
@@ -283,7 +280,8 @@ class NuovaPrenotazione3View(object):
             errore = QMessageBox()
             errore.setWindowTitle("Errore di inserimento")
             errore.setText(
-                f"Hai inserito una data corrispondente ad un giorno della settimana , il {dataInserita.dayOfWeek()}"
+                f"Hai inserito una data corrispondente ad un giorno della settimana ,"
+                f" il {self.convertiNumeroSettimanaGiorno(dataInserita.dayOfWeek())},"
                 f" che non coincide con quello attualmente previsto per le consulenze, il {giornoConsulenza},"
                 f" inserisci quindi una data corrispondente ad un {giornoConsulenza} .")
             errore.setIcon(QMessageBox.Warning)
@@ -306,6 +304,21 @@ class NuovaPrenotazione3View(object):
         if giorno == "sabato":
             numeroGiorno = 6
         return numeroGiorno
+
+    def convertiNumeroSettimanaGiorno(self, numeroGiorno):
+        if numeroGiorno == 1:
+            giorno = "lunedi"
+        if numeroGiorno == 2:
+            giorno = "martedi"
+        if numeroGiorno == 3:
+            giorno = "mercoledi"
+        if numeroGiorno == 4:
+            giorno = "giovedi"
+        if numeroGiorno == 5:
+            giorno = "venerdi"
+        if numeroGiorno == 6:
+            giorno = "sabato"
+        return giorno
 
     def getTrattamentoSelezionatoCombo(self):
         etichettaTrattamento = self.comboBoxTrattamento.currentText()

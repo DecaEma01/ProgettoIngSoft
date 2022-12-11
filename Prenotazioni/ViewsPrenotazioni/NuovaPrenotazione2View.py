@@ -17,7 +17,7 @@ class NuovaPrenotazione2View(object):
     def __init__(self, paziente):
         self.paziente = paziente
 
-    def setupUi(self, Form, app):
+    def setupUi(self, Form, app, istanzaP1View, istanzaGestioneView):
         Form.setObjectName("Form")
         Form.resize(900, 700)
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
@@ -48,13 +48,13 @@ class NuovaPrenotazione2View(object):
         self.pushButtonPrenotazioneTrattamento = QtWidgets.QPushButton(Form)
         self.pushButtonPrenotazioneTrattamento.setMinimumSize(QtCore.QSize(0, 200))
         self.pushButtonPrenotazioneTrattamento.setObjectName("pushButtonPrenotazioneTrattamento")
-        self.pushButtonPrenotazioneTrattamento.clicked.connect(lambda: self.NuovaPrenotazioneTrattamento(app))
+        self.pushButtonPrenotazioneTrattamento.clicked.connect(lambda: self.NuovaPrenotazioneTrattamento(app, Form, istanzaP1View, istanzaGestioneView))
 
         self.verticalLayoutPrincipale.addWidget(self.pushButtonPrenotazioneTrattamento)
         self.pushButtonPrenotazioneConsulenza = QtWidgets.QPushButton(Form)
         self.pushButtonPrenotazioneConsulenza.setMinimumSize(QtCore.QSize(0, 200))
         self.pushButtonPrenotazioneConsulenza.setObjectName("pushButtonPrenotazioneConsulenza")
-        self.pushButtonPrenotazioneConsulenza.clicked.connect(lambda: self.NuovaPrenotazioneConsulenza(app))
+        self.pushButtonPrenotazioneConsulenza.clicked.connect(lambda: self.NuovaPrenotazioneConsulenza(app, Form, istanzaP1View, istanzaGestioneView))
 
         self.verticalLayoutPrincipale.addWidget(self.pushButtonPrenotazioneConsulenza)
         self.verticalLayout.addLayout(self.verticalLayoutPrincipale)
@@ -77,16 +77,16 @@ class NuovaPrenotazione2View(object):
     def chiudiApp(self,app):
         sys.exit(app.exec_())
 
-    def NuovaPrenotazioneTrattamento(self, app):
+    def NuovaPrenotazioneTrattamento(self, app, Form , istanzaP1View, istanzaGestioneView):
         self.vistaNuovaPrenotazione3 = QtWidgets.QWidget()
         uivistaNuovaPrenotazione3 = NuovaPrenotazione3View(self.paziente,True)
-        uivistaNuovaPrenotazione3.setupUi(self.vistaNuovaPrenotazione3, app)
+        uivistaNuovaPrenotazione3.setupUi(self.vistaNuovaPrenotazione3, app, Form , istanzaP1View, istanzaGestioneView)
         self.vistaNuovaPrenotazione3.show()
 
-    def NuovaPrenotazioneConsulenza(self,app):
+    def NuovaPrenotazioneConsulenza(self,app, Form, istanzaP1View, istanzaGestioneView):
         self.vistaNuovaPrenotazione3 = QtWidgets.QWidget()
         uivistaNuovaPrenotazione3 = NuovaPrenotazione3View(self.paziente, False)
-        uivistaNuovaPrenotazione3.setupUi(self.vistaNuovaPrenotazione3, app)
+        uivistaNuovaPrenotazione3.setupUi(self.vistaNuovaPrenotazione3, app, Form, istanzaP1View, istanzaGestioneView)
         self.vistaNuovaPrenotazione3.show()
 
 if __name__ == "__main__":

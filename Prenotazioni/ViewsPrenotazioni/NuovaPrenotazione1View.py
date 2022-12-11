@@ -17,7 +17,7 @@ from Prenotazioni.ViewsPrenotazioni.NuovaPrenotazione2View import NuovaPrenotazi
 
 
 class NuovaPrenotazione1View(object):
-    def setupUi(self, Form, app):
+    def setupUi(self, Form, app, istanzaGestioneView):
         Form.setObjectName("Form")
         Form.resize(900, 700)
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
@@ -83,7 +83,7 @@ class NuovaPrenotazione1View(object):
         self.verticalLayoutVisualizzaPrenotazione.setObjectName("verticalLayoutVisualizzaPrenotazione")
         self.pushButtonSelezionaPaziente = QtWidgets.QPushButton(Form)
         self.pushButtonSelezionaPaziente.setObjectName("pushButtonSelezionaPaziente")
-        self.pushButtonSelezionaPaziente.clicked.connect(lambda: self.selezionaPaziente(app))
+        self.pushButtonSelezionaPaziente.clicked.connect(lambda: self.selezionaPaziente(app, Form, istanzaGestioneView))
 
         self.verticalLayoutVisualizzaPrenotazione.addWidget(self.pushButtonSelezionaPaziente)
         self.verticalLayoutPrincipale.addLayout(self.verticalLayoutVisualizzaPrenotazione)
@@ -150,7 +150,7 @@ class NuovaPrenotazione1View(object):
             listviewModel.appendRow(item)
         self.listViewPrenotazioni.setModel(listviewModel)
 
-    def selezionaPaziente(self, app):
+    def selezionaPaziente(self, app, Form, istanzaGestioneView):
         try:
             pazienteSelezionato = self.listViewPrenotazioni.selectedIndexes()[0].data()
             codicePaziente = int(pazienteSelezionato.split("-")[1].strip())
@@ -158,7 +158,7 @@ class NuovaPrenotazione1View(object):
 
             self.vistaNuovaPrenotazione2 = QtWidgets.QWidget()
             uiNuovaPrenotazione2 = NuovaPrenotazione2View(paziente)
-            uiNuovaPrenotazione2.setupUi(self.vistaNuovaPrenotazione2,app)
+            uiNuovaPrenotazione2.setupUi(self.vistaNuovaPrenotazione2,app, Form, istanzaGestioneView)
             self.vistaNuovaPrenotazione2.show()
 
         except IndexError:

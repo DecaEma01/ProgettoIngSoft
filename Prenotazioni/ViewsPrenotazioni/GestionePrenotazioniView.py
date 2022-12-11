@@ -50,7 +50,7 @@ class GestionePrenotazioniView(object):
         font.setPointSize(12)
         self.pushButtonNuovaPrenotazione.setFont(font)
         self.pushButtonNuovaPrenotazione.setObjectName("pushButtonNuovaPrenotazione")
-        self.pushButtonNuovaPrenotazione.clicked.connect(lambda: self.inserisciNuovaPrenotazione(app))
+        self.pushButtonNuovaPrenotazione.clicked.connect(lambda: self.inserisciNuovaPrenotazione(app, Form))
         self.verticalLayoutPrincipale.addWidget(self.pushButtonNuovaPrenotazione)
         self.verticalLayout.addLayout(self.verticalLayoutPrincipale)
 
@@ -72,10 +72,10 @@ class GestionePrenotazioniView(object):
         uivistaPrenotazioniRegistrate.setupUi(self.vistaPrenotazioniRegistrate, app)
         self.vistaPrenotazioniRegistrate.show()
 
-    def inserisciNuovaPrenotazione(self, app):
+    def inserisciNuovaPrenotazione(self, app, Form):
         self.vistaNuovaPrenotazione1 = QtWidgets.QWidget()
         uivistaNuovaPrenotazione1 = NuovaPrenotazione1View()
-        uivistaNuovaPrenotazione1.setupUi(self.vistaNuovaPrenotazione1, app)
+        uivistaNuovaPrenotazione1.setupUi(self.vistaNuovaPrenotazione1, app, Form)
         self.vistaNuovaPrenotazione1.show()
 
     def chiudiFinestra(self,Form):

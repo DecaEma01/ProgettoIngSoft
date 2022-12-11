@@ -4,25 +4,15 @@ from Prenotazioni.ModelsPrenotazioni.PrenotazioneModel import PrenotazioneModel
 
 class PrenotazioneController:
 
-    def aggiungiPrenotazione(self, data, ora, completata, paziente, trattamento):
-        self.tipologia = ""
-        if data and ora and paziente :
-            prenotazione = PrenotazioneModel()
-            if not trattamento:
-                self.tipologia = "Seduta di consulenza medica"
-            else:
-                self.tipologia = "Seduta di trattamento fisioterapico"
-
-            prenotazione.setInfoPrenotazione(self, paziente, self.tipologia, data, ora, completata, trattamento)
-            prenotazione.aggiungiPrenotazione()
-            return True
+    def aggiungiPrenotazione(self, data, ora, paziente, trattamento):
+        prenotazione = PrenotazioneModel()
+        if not trattamento:
+            self.tipologia = "Seduta di consulenza medica"
         else:
-            return False #data o ora o paziente non hanno valore
+            self.tipologia = "Seduta di trattamento fisioterapico"
+        prenotazione.setInfoPrenotazione(paziente, self.tipologia, data, ora, False, trattamento)
+        prenotazione.aggiungiPrenotazione()
 
-    """
-        else:
-            return False  #ci sono valori nulli
-    """
 
 
     def modificaPrenotazione(self, prenotazione, data, ora, completata, trattamento):
