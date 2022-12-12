@@ -86,6 +86,8 @@ class PrenotazioniRegistrateView(object):
         self.verticalLayputVisualizzaPrenotazione.setObjectName("verticalLayputVisualizzaPrenotazione")
         self.pushButtonVisualizzaPrenotazione = QtWidgets.QPushButton(Form)
         self.pushButtonVisualizzaPrenotazione.setObjectName("pushButtonVisualizzaPrenotazione")
+        self.pushButtonVisualizzaPrenotazione.clicked.connect(lambda: self.visualizzaPrenotazioneSelezionata(app))
+
         self.verticalLayputVisualizzaPrenotazione.addWidget(self.pushButtonVisualizzaPrenotazione)
         self.verticalLayoutPrincipale.addLayout(self.verticalLayputVisualizzaPrenotazione)
         self.verticalLayout.addLayout(self.verticalLayoutPrincipale)
@@ -164,8 +166,8 @@ class PrenotazioniRegistrateView(object):
             self.vistaPrenotazione.show()
         except IndexError:
             errore = QMessageBox()
-            errore.setWindowTitle("Nessun trattamento selezionato")
-            errore.setText("Controlla di aver selezionato uno dei trattamenti , poi fai clic sul bottone visualizza trattamento.")
+            errore.setWindowTitle("Nessuna prenotazione selezionata")
+            errore.setText("Controlla di aver selezionato una prenotazione , poi fai clic sul bottone visualizza prenotazione.")
             errore.setIcon(QMessageBox.Warning)
             errore.setStandardButtons(QMessageBox.Ok)
             errore.exec_()

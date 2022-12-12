@@ -67,7 +67,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditTipologia"/>
+          <widget class="QLabel" name="labelTipologiaValue">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -87,7 +91,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditTrattamento"/>
+          <widget class="QComboBox" name="comboBoxTrattamento"/>
          </item>
         </layout>
        </item>
@@ -107,7 +111,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditNome"/>
+          <widget class="QLabel" name="labelNomeValue">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -127,7 +135,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditCognome"/>
+          <widget class="QLabel" name="labelCognomeValue">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -147,7 +159,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditData"/>
+          <widget class="QDateEdit" name="dateEditDataSeduta"/>
          </item>
         </layout>
        </item>
@@ -167,7 +179,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditOrario"/>
+          <widget class="QComboBox" name="comboBoxOrario"/>
          </item>
         </layout>
        </item>
@@ -187,7 +199,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditCosto"/>
+          <widget class="QLabel" name="labelCostoValue">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLabel" name="labelEuro">
@@ -214,7 +230,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEditDurata"/>
+          <widget class="QLabel" name="labelDurataValue">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLabel" name="labelMinuti">

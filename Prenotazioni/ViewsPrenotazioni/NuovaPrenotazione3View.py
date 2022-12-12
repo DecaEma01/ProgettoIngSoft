@@ -191,7 +191,6 @@ class NuovaPrenotazione3View(object):
         else:
             self.aggiornaCostoDurataConsulenza()
 
-        #self.getDataInserita()
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate

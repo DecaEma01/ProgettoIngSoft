@@ -13,8 +13,6 @@ class PrenotazioneController:
         prenotazione.setInfoPrenotazione(paziente, self.tipologia, data, ora, False, trattamento)
         prenotazione.aggiungiPrenotazione()
 
-
-
     def modificaPrenotazione(self, prenotazione, data, ora, completata, trattamento):
         if data and ora :
             ElencoPrenotazioniModel().modificaPrenotazione(prenotazione, data, ora, completata, trattamento)
