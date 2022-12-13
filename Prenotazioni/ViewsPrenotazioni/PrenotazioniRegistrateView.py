@@ -62,6 +62,8 @@ class PrenotazioniRegistrateView(object):
         self.gridLayoutRicerca.addWidget(self.comboBoxTipologiaPrenotazione, 1, 1, 1, 1)
         self.pushButtonRicerca = QtWidgets.QPushButton(Form)
         self.pushButtonRicerca.setObjectName("pushButtonRicerca")
+        self.pushButtonRicerca.clicked.connect(lambda: self.ricercaPrenotazione())
+
         self.gridLayoutRicerca.addWidget(self.pushButtonRicerca, 10, 0, 1, 2)
         self.dateEditDataInizio = QtWidgets.QDateEdit(Form)
         self.dateEditDataInizio.setObjectName("dateEditDataInizio")
@@ -151,13 +153,9 @@ class PrenotazioniRegistrateView(object):
         self.listViewPrenotazioni.setModel(listview_model)
 
     def ricercaPrenotazione(self):
-        if self.comboBoxTipologiaPrenotazione.currentText()=="Seduta di trattamento fisioterapico":
-            trattamento = True
-        else:
-            trattamento = None
 
         dictParametri = {}
-        dictParametri["trattamento"] = trattamento
+        dictParametri["tipologiaPrenotazione"] = self.comboBoxTipologiaPrenotazione.currentText()
         dictParametri["nomePaziente"] = self.lineEditRicercaNome.text().strip()
         dictParametri["cognomePaziente"] = self.lineEditRicercaCognome.text().strip()
         dictParametri["codiceFiscalePaziente"] = self.lineEditRicercaCodiceFiscale.text().strip()
@@ -186,7 +184,7 @@ class PrenotazioniRegistrateView(object):
             codicePrenotazione = int(prenotazioneSelezionata.split("-")[1].strip())
             dictParametri = {}
             dictParametri["codicePrenotazione"] = codicePrenotazione
-            prenotazione = ElencoPrenotazioniController().ricercaPrenotazione(dictParametri)
+            prenotazione = ElencoPrenotazioniController().ricercaPrenotazioneCodice(dictParametri)
 
             self.vistaPrenotazione = QtWidgets.QWidget()
             uivistaPrenotazione = VisualizzaPrenotazioneView(prenotazione[codicePrenotazione], self.visualizzaListaPrenotazioni)

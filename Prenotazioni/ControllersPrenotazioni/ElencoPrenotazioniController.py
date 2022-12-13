@@ -7,3 +7,6 @@ class ElencoPrenotazioniController:
 
     def ricercaPrenotazione(self,dictParametri):
         return ElencoPrenotazioniModel().ricercaPrenotazione(dictParametri)
+
+    def ricercaPrenotazioneCodice(self, dictParametri):
+        return ElencoPrenotazioniModel().ricercaPrenotazioneCodice(dictParametri)

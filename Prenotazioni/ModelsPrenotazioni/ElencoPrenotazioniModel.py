@@ -40,10 +40,58 @@ class ElencoPrenotazioniModel:
             for codicePrenotazione in prenotazioniFile.keys():
                 trovato = True
                 prenotazioneFile = prenotazioniFile[codicePrenotazione]
-                dictPrenotazioneFile = prenotazioneFile.getInfoPrenotazione()
+                #dictPrenotazioneFile = prenotazioneFile.getInfoPrenotazione()
+
+                if dictParametri["tipologiaPrenotazione"]=="Seduta di trattamento fisioterapico":
+                    if not prenotazioneFile.trattamento:
+                        trovato = False
+                if dictParametri["tipologiaPrenotazione"]=="Seduta di consulenza medica":
+                    if prenotazioneFile.trattamento:
+                        trovato = False
+                if dictParametri["nomePaziente"]!= str(prenotazioneFile.paziente.nome) and dictParametri["nomePaziente"]!="" :
+                    trovato = False
+                if dictParametri["cognomePaziente"]!= str(prenotazioneFile.paziente.cognome) and dictParametri["cognomePaziente"]!="" :
+                    trovato = False
+                if dictParametri["codiceFiscalePaziente"]!= str(prenotazioneFile.paziente.codicefiscale) and dictParametri["codiceFiscalePaziente"]!="":
+                    trovato = False
+                if dictParametri["dataInizio"] > prenotazioneFile.data:
+                    trovato = False
+                if dictParametri["dataFine"] < prenotazioneFile.data:
+                    trovato = False
+
+                if trovato:
+                    prenotazioniRisultato[codicePrenotazione] = prenotazioneFile
+
+                """
                 for chiaveParametro, valoreParametro in dictParametri.items():
                     if valoreParametro != '':
                         if valoreParametro != dictPrenotazioneFile[chiaveParametro]:  #le chiavi del dizionario che è la prenotazione devono coincidere con le chiavi dei dizionario dei parametri
+                            trovato = False
+                if trovato:
+                    prenotazioniRisultato[codicePrenotazione] = prenotazioneFile
+                """
+
+            return prenotazioniRisultato
+
+        except:
+            print(traceback.format_exc())
+            print("Impossibile eseguire la ricerca")
+
+    #def ricercaPrenotazioneCodice(self, dictParametri):
+    #    return ElencoPrenotazioniModel().ricercaPrenotazione(dictParametri)
+    def ricercaPrenotazioneCodice(self, dictParametri):
+        prenotazioniFile = self.getPrenotazioniFile()
+        prenotazioniRisultato = {}
+
+        try:
+            for codicePrenotazione in prenotazioniFile.keys():
+                trovato = True
+                prenotazioneFile = prenotazioniFile[codicePrenotazione]
+                dictPrenotazioneFile = prenotazioneFile.getInfoPrenotazione()
+                for chiaveParametro, valoreParametro in dictParametri.items():
+                    if valoreParametro != '':
+                        if valoreParametro != dictPrenotazioneFile[
+                            chiaveParametro]:  # le chiavi del dizionario che è la prenotazione devono coincidere con le chiavi dei dizionario dei parametri
                             trovato = False
                 if trovato:
                     prenotazioniRisultato[codicePrenotazione] = prenotazioneFile

@@ -99,6 +99,19 @@ class VisualizzaPrenotazioneView(object):
         self.labelCognomeValue.setObjectName("labelCognomeValue")
         self.horizontalLayoutClasse.addWidget(self.labelCognomeValue)
         self.verticalLayoutDatiTrattamento.addLayout(self.horizontalLayoutClasse)
+
+        self.horizontalLayoutCodiceFiscale = QtWidgets.QHBoxLayout()
+        self.horizontalLayoutCodiceFiscale.setObjectName("horizontalLayoutCodiceFiscale")
+        self.labelCodiceFiscale = QtWidgets.QLabel(Form)
+        self.labelCodiceFiscale.setMaximumSize(QtCore.QSize(85, 16777215))
+        self.labelCodiceFiscale.setObjectName("labelCodiceFiscale")
+        self.horizontalLayoutCodiceFiscale.addWidget(self.labelCodiceFiscale)
+        self.labelCodiceFiscaleValue = QtWidgets.QLabel(Form)
+        self.labelCodiceFiscaleValue.setText(str(self.prenotazione.paziente.codicefiscale))
+        self.labelCodiceFiscaleValue.setObjectName("labelCodiceFiscaleValue")
+        self.horizontalLayoutCodiceFiscale.addWidget(self.labelCodiceFiscaleValue)
+        self.verticalLayoutDatiTrattamento.addLayout(self.horizontalLayoutCodiceFiscale)
+
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.labelData = QtWidgets.QLabel(Form)
@@ -204,6 +217,7 @@ class VisualizzaPrenotazioneView(object):
 
         self.labelNome.setText(_translate("Form", "Nome:"))
         self.labelCognome.setText(_translate("Form", "Cognome:"))
+        self.labelCodiceFiscale.setText(_translate("Form", "Codice fiscale:"))
         self.labelData.setText(_translate("Form", "Data della seduta:"))
         self.labelOrario.setText(_translate("Form", "Orario:"))
         self.labelCosto.setText(_translate("Form", "Costo:"))
@@ -256,7 +270,7 @@ class VisualizzaPrenotazioneView(object):
     def chiudiApp(self, app):
         sys.exit(app.exec_())
 
-
+"""
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -265,3 +279,4 @@ if __name__ == "__main__":
     ui.setupUi(Form)
     Form.show()
     sys.exit(app.exec_())
+"""
