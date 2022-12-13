@@ -21,9 +21,14 @@ class GestionePazientiView(object):
         
         # PUSH BUTTON
         
+        self.indietroButton = QtWidgets.QPushButton(Form)
+        self.indietroButton.setObjectName("indietroButton")
+        self.gridLayout.addWidget(self.indietroButton, 0, 0, 1, 1)
+        self.indietroButton.clicked.connect(Form.close)
+        
         self.logoutButton = QtWidgets.QPushButton(Form)
         self.logoutButton.setObjectName("logoutButton")
-        self.gridLayout.addWidget(self.logoutButton, 1, 0, 1, 2)
+        self.gridLayout.addWidget(self.logoutButton, 0, 1, 1, 1)
         self.logoutButton.clicked.connect(exit)
         
         self.registroButton = QtWidgets.QPushButton(Form)
@@ -33,7 +38,7 @@ class GestionePazientiView(object):
         sizePolicy.setHeightForWidth(self.registroButton.sizePolicy().hasHeightForWidth())
         self.registroButton.setSizePolicy(sizePolicy)
         self.registroButton.setObjectName("registroButton")
-        self.gridLayout.addWidget(self.registroButton, 2, 0, 1, 2)
+        self.gridLayout.addWidget(self.registroButton, 1, 0, 1, 2)
         self.registroButton.clicked.connect(lambda: self.exRegistro(app))
 
         self.nuovoButton = QtWidgets.QPushButton(Form)
@@ -43,7 +48,7 @@ class GestionePazientiView(object):
         sizePolicy.setHeightForWidth(self.nuovoButton.sizePolicy().hasHeightForWidth())
         self.nuovoButton.setSizePolicy(sizePolicy)
         self.nuovoButton.setObjectName("nuovoButton")
-        self.gridLayout.addWidget(self.nuovoButton, 3, 0, 1, 2)
+        self.gridLayout.addWidget(self.nuovoButton, 2, 0, 1, 2)
         self.nuovoButton.clicked.connect(lambda: self.exNuovo(app))
 
         self.retranslateUi(Form)
@@ -52,6 +57,7 @@ class GestionePazientiView(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Segretario - Gestione pazienti"))
+        self.indietroButton.setText(_translate("Form", "INDIETRO"))
         self.logoutButton.setText(_translate("Form", "LOGOUT"))
         self.registroButton.setText(_translate("Form", "Registro pazienti"))
         self.nuovoButton.setText(_translate("Form", "Nuovo paziente"))

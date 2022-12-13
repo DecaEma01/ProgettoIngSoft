@@ -177,6 +177,7 @@ class ModificaPrenotazioneView(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
         self.caricaCostoDurataPrenotazione()
+        self.setSedutaCompletata()
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -199,6 +200,10 @@ class ModificaPrenotazioneView(object):
         self.labelMinuti.setText(_translate("Form", "minuti"))
         self.radioButtonSedutaEffettuata.setText(_translate("Form", "Seduta effettuata"))
         self.pushButtonModificaSalva.setText(_translate("Form", "Salva"))
+
+    def setSedutaCompletata(self):
+        if self.prenotazione.completata:
+            self.radioButtonSedutaEffettuata.toggle()
 
     def getListaInfoTrattamenti(self):
         trattamenti = ElencoTrattamentiController().getElencoTrattamenti()

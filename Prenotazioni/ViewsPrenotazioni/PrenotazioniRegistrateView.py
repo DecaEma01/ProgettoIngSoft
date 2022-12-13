@@ -9,6 +9,7 @@
 import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QDate
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QMessageBox
 
@@ -44,6 +45,7 @@ class PrenotazioniRegistrateView(object):
         self.gridLayoutRicerca.addWidget(self.labelRicercaCognome, 3, 0, 1, 1)
         self.dateEditDataFine = QtWidgets.QDateEdit(Form)
         self.dateEditDataFine.setObjectName("dateEditDataFine")
+        self.dateEditDataFine.setDate(QDate(2100, 1, 1))
         self.gridLayoutRicerca.addWidget(self.dateEditDataFine, 6, 1, 1, 1)
         self.labelRicercaDataFine = QtWidgets.QLabel(Form)
         self.labelRicercaDataFine.setObjectName("labelRicercaDataFine")
@@ -56,6 +58,7 @@ class PrenotazioniRegistrateView(object):
         self.gridLayoutRicerca.addWidget(self.lineEditRicercaNome, 2, 1, 1, 1)
         self.comboBoxTipologiaPrenotazione = QtWidgets.QComboBox(Form)
         self.comboBoxTipologiaPrenotazione.setObjectName("comboBoxTipologiaPrenotazione")
+        self.comboBoxTipologiaPrenotazione.addItems(["Tutte","Seduta di trattamento fisioterapico","Seduta di consulenza medica"])
         self.gridLayoutRicerca.addWidget(self.comboBoxTipologiaPrenotazione, 1, 1, 1, 1)
         self.pushButtonRicerca = QtWidgets.QPushButton(Form)
         self.pushButtonRicerca.setObjectName("pushButtonRicerca")
@@ -88,6 +91,11 @@ class PrenotazioniRegistrateView(object):
         self.pushButtonVisualizzaPrenotazione.setObjectName("pushButtonVisualizzaPrenotazione")
         self.pushButtonVisualizzaPrenotazione.clicked.connect(lambda: self.visualizzaPrenotazioneSelezionata(app))
 
+        self.pushButtonAzzeraFiltri = QtWidgets.QPushButton(Form)
+        self.pushButtonAzzeraFiltri.setObjectName("pushButtonAzzeraFiltri")
+        self.pushButtonAzzeraFiltri.clicked.connect(lambda: self.azzeraFiltri())
+
+        self.verticalLayputVisualizzaPrenotazione.addWidget(self.pushButtonAzzeraFiltri)
         self.verticalLayputVisualizzaPrenotazione.addWidget(self.pushButtonVisualizzaPrenotazione)
         self.verticalLayoutPrincipale.addLayout(self.verticalLayputVisualizzaPrenotazione)
         self.verticalLayout.addLayout(self.verticalLayoutPrincipale)
@@ -109,6 +117,7 @@ class PrenotazioniRegistrateView(object):
         self.labelRicercaPrenotazioneTipo.setText(_translate("Form", "Ricerca per tipologia prenotazione:"))
         self.labelRicercaDataInizio.setText(_translate("Form", "Ricerca per prenotazioni dalla data:"))
         self.labelRicercaCodiceFiscale.setText(_translate("Form", "Ricerca per codice fiscale paziente:"))
+        self.pushButtonAzzeraFiltri.setText(_translate("Form", "Azzera filtri"))
         self.pushButtonVisualizzaPrenotazione.setText(_translate("Form", "Visualizza prenotazione"))
 
     def chiudiFinestra(self,Form):
@@ -116,6 +125,15 @@ class PrenotazioniRegistrateView(object):
 
     def chiudiApp(self,app):
         sys.exit(app.exec_())
+
+    def azzeraFiltri(self):
+        self.comboBoxTipologiaPrenotazione.setCurrentText("Tutte")
+        self.lineEditRicercaNome.setText("")
+        self.lineEditRicercaCognome.setText("")
+        self.lineEditRicercaCodiceFiscale.setText("")
+        self.dateEditDataInizio.setDate(QDate(2000, 1, 1))
+        self.dateEditDataFine.setDate(QDate(2100, 1, 1))
+
 
     def visualizzaListaPrenotazioni(self):
         self.prenotazioni = ElencoPrenotazioniController().getElencoPrenotazioni()
@@ -132,25 +150,35 @@ class PrenotazioniRegistrateView(object):
             listview_model.appendRow(item)
         self.listViewPrenotazioni.setModel(listview_model)
 
-    def ricercaPrenotazione(self): #da modificareeeeeeeeeeeeeeeeeeeeeee
-        dictParametri = {}
-        dictParametri["classe"] = str(self.comboBoxClasseTra.currentText())
-        dictParametri["nome"] = str(self.lineEditNomeTra.text()).strip()
-        if str(self.comboBoxClasseTra.currentText()) == "Tutte":
-            dictParametri["classe"] = ""
-        self.trattamentiRisultato = ElencoTrattamentiController().ricercaTrattamento(dictParametri)
+    def ricercaPrenotazione(self):
+        if self.comboBoxTipologiaPrenotazione.currentText()=="Seduta di trattamento fisioterapico":
+            trattamento = True
+        else:
+            trattamento = None
 
-        listview_model = QStandardItemModel(self.listViewTrattamenti)
-        for trattamento in self.trattamentiRisultato.values():
+        dictParametri = {}
+        dictParametri["trattamento"] = trattamento
+        dictParametri["nomePaziente"] = self.lineEditRicercaNome.text().strip()
+        dictParametri["cognomePaziente"] = self.lineEditRicercaCognome.text().strip()
+        dictParametri["codiceFiscalePaziente"] = self.lineEditRicercaCodiceFiscale.text().strip()
+        dictParametri["dataInizio"] = self.dateEditDataInizio.date()
+        dictParametri["dataFine"] = self.dateEditDataFine.date()
+
+
+        self.prenotazioniRisultato = ElencoPrenotazioniController().ricercaPrenotazione(dictParametri)
+
+        listview_model = QStandardItemModel(self.listViewPrenotazioni)
+        for prenotazione in self.prenotazioniRisultato.values():
             item = QStandardItem()
-            etichetta = f"{trattamento.nome} : {trattamento.classe} - {trattamento.codiceTrattamento}"
+            etichetta = f"{prenotazione.tipologia} per il paziente {prenotazione.paziente.nome} {prenotazione.paziente.cognome}" \
+                        f" in data {prenotazione.data.toString('dd/MM/yyyy')} - {prenotazione.codicePrenotazione}"
             item.setText(etichetta)
             item.setEditable(False)
             font = item.font()
-            font.setPointSize(16)
+            font.setPointSize(12)
             item.setFont(font)
             listview_model.appendRow(item)
-        self.listViewTrattamenti.setModel(listview_model)
+        self.listViewPrenotazioni.setModel(listview_model)
 
     def visualizzaPrenotazioneSelezionata(self, app):
         try:

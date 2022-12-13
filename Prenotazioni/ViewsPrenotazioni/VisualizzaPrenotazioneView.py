@@ -161,7 +161,7 @@ class VisualizzaPrenotazioneView(object):
         self.horizontalLayoutSedutaCompletata = QtWidgets.QHBoxLayout()
         self.horizontalLayoutSedutaCompletata.setObjectName("horizontalLayoutSedutaCompletata")
         self.labelSedutaCompletata = QtWidgets.QLabel(Form)
-        self.labelSedutaCompletata.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.labelSedutaCompletata.setMaximumSize(QtCore.QSize(150, 16777215))
         self.labelSedutaCompletata.setObjectName("labelSedutaCompletata")
         self.horizontalLayoutSedutaCompletata.addWidget(self.labelSedutaCompletata)
         self.labelSedutaCompletataValue = QtWidgets.QLabel(Form)
@@ -189,6 +189,7 @@ class VisualizzaPrenotazioneView(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
         self.caricaCostoDurataPrenotazione()
+        self.setSedutaCompletata()
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
@@ -213,6 +214,12 @@ class VisualizzaPrenotazioneView(object):
         self.labelSedutaCompletata.setText(_translate("Form", "Stato della prenotazione:"))
         self.pushButtonEliminaPrenotazione.setText(_translate("Form", "Elimina prenotazione"))
         self.pushButtonModificaPrenotazione.setText(_translate("Form", "Modifica prenotazione"))
+
+    def setSedutaCompletata(self):
+        if self.prenotazione.completata:
+            self.labelSedutaCompletataValue.setText("Seduta effettuta")
+        else:
+            self.labelSedutaCompletataValue.setText("Seduta non ancora effettuata")
 
     def eliminaPrenotazione(self, Form):
         popupConferma = QMessageBox()
