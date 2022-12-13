@@ -1,4 +1,4 @@
-# Progetto di Ingegeria del software 
+# Progetto di Ingegneria del software 
 ## Autori:
 ### Emanuele De Caro
 ### Nicholas Bradach
