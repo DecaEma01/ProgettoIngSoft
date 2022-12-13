@@ -73,7 +73,7 @@ class ElencoPrenotazioniModel:
         prenotazioniFile = self.getPrenotazioniFile()
         prenotazioneModifica=prenotazioniFile[prenotazione.codicePrenotazione]
         prenotazioneModifica.modificaPrenotazione(data, ora, completata, trattamento)
-        prenotazioniFile[prenotazioneModifica.codiceTrattamento]=prenotazioneModifica
+        prenotazioniFile[prenotazioneModifica.codicePrenotazione]=prenotazioneModifica
 
         try:
             if os.path.isfile('Dati/Prenotazioni.pickle') and os.path.getsize('Dati/Prenotazioni.pickle') > 0:

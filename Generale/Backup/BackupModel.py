@@ -8,23 +8,23 @@ class BackupModel():
     def eseguiBackup(cls):
 
         now = datetime.now()
-        current_time = now.strftime("%M:%S")
+        current_time = now.strftime("%H:%M:%S")
 
-        if cls.backupDone == False and current_time == '32:00':
+        if cls.backupDone == False and current_time == '22:00:00':
             print('backup ...')
             try:
-                shutil.copy2('Dati/Dipendenti.pickle', 'Backup/autentificazione.json')
-                shutil.copy2('Dati/Consulenza.pickle', 'Backup/Consulenza.pickle')
-                shutil.copy2('Dati/Dipendenti.pickle', 'Backup/Dipendenti.pickle')
-                shutil.copy2('Dati/Pazienti.pickle', 'Backup/Pazienti.pickle')
-                shutil.copy2('Dati/Trattamentu.pickle', 'Backup/Trattamenti.pickle')
-                shutil.copy2('Dati/Prenotazioni.pickle', 'Backup/Prenotazioni.pickle')
+                shutil.copy2('Dati/Dipendenti.pickle', 'DataBackup/autentificazione.json')
+                shutil.copy2('Dati/Consulenza.pickle', 'DataBackup/Consulenza.pickle')
+                shutil.copy2('Dati/Dipendenti.pickle', 'DataBackup/Dipendenti.pickle')
+                shutil.copy2('Dati/Pazienti.pickle', 'DataBackup/Pazienti.pickle')
+                shutil.copy2('Dati/Trattamenti.pickle', 'DataBackup/Trattamenti.pickle')
+                shutil.copy2('Dati/Prenotazioni.pickle', 'DataBackup/Prenotazioni.pickle')
                 print('backup eseguito')
                 cls.backupDone = True
             except IndexError:
                 print("Errore di backup ...")
 
 
-        if current_time == '32:01':
+        if current_time == '22:00:01':
             cls.backupDone = False
 

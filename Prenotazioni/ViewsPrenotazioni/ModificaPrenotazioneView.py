@@ -167,6 +167,8 @@ class ModificaPrenotazioneView(object):
         self.horizontalLayoutEliminaModificaTra.setObjectName("horizontalLayoutEliminaModificaTra")
         self.pushButtonModificaSalva = QtWidgets.QPushButton(Form)
         self.pushButtonModificaSalva.setObjectName("pushButtonModificaSalva")
+        self.pushButtonModificaSalva.clicked.connect(lambda: self.salvaModificaPrenotazione(Form))
+
         self.horizontalLayoutEliminaModificaTra.addWidget(self.pushButtonModificaSalva)
         self.verticalLayoutPrincipale.addLayout(self.horizontalLayoutEliminaModificaTra)
         self.verticalLayout.addLayout(self.verticalLayoutPrincipale)
@@ -207,10 +209,30 @@ class ModificaPrenotazioneView(object):
         return arrayComboBoxTrattamenti
 
     def salvaModificaPrenotazione(self, Form):
-        PrenotazioneController().modificaPrenotazione(self.trattamento, str(self.lineEditNome.text()).strip(), str(self.comboBoxClasse.currentText()),
-                                                      str(self.lineEditCosto.text()).strip(), str(self.lineEditDurata.text().strip()))
-        self.chiudiFinestra(Form) #chiudendosi la finestra viene mostrata nuovamente la finestra di gestione dei trattamenti che stava sotto
-        self.aggiornaListaTrattamenti() #la finestra della lista dei trattamenti si deve aggiornare per far comparire il trattamento appena aggiunto
+        sedutaEffettuata = self.getRadioSedutaEffettuata()
+
+        if self.prenotazione.trattamento:
+            trattamento = self.getTrattamentoSelezionatoCombo()
+        else:
+            trattamento = None
+
+        PrenotazioneController().modificaPrenotazione(self.prenotazione, self.dateEditDataSeduta.date(), self.comboBoxOrario.currentText(),
+                                                      sedutaEffettuata, trattamento)
+
+        self.chiudiFinestra(Form) #chiudendosi la finestra viene mostrata nuovamente la finestra della lista delle prenotazioni che stava sotto
+        self.aggiornaListaPrenotazioni() #la finestra della lista delle prenotazioni si deve aggiornare per far comparire il trattamento appena aggiunto
+
+        """
+        if self.tipoPrenotazione:
+            trattamento = self.getTrattamentoSelezionatoCombo()
+        else:
+            trattamento = None
+
+        if self.controllaGiornoConsuleza():
+            data = self.getDataInserita()
+            orario = self.comboBoxOrario.currentText()
+            paziente = self.paziente
+        """
 
     def caricaCostoDurataPrenotazione(self):
         if self.prenotazione.trattamento:
@@ -228,6 +250,12 @@ class ModificaPrenotazioneView(object):
         dictParametri["codiceTrattamento"] = codiceTrattamento
         trattamentoRisultato = ElencoTrattamentiController().ricercaTrattamento(dictParametri)[codiceTrattamento]
         return trattamentoRisultato
+
+    def getRadioSedutaEffettuata(self):
+        if self.radioButtonSedutaEffettuata.isChecked() == True:
+            return True
+        else:
+            return False
 
     def aggiornaCostoDurataTrattamento(self):
         trattamentoSelezionato = self.getTrattamentoSelezionatoCombo()

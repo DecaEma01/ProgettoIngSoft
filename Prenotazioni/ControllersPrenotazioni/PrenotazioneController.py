@@ -14,11 +14,7 @@ class PrenotazioneController:
         prenotazione.aggiungiPrenotazione()
 
     def modificaPrenotazione(self, prenotazione, data, ora, completata, trattamento):
-        if data and ora :
-            ElencoPrenotazioniModel().modificaPrenotazione(prenotazione, data, ora, completata, trattamento)
-            return True
-        else:
-            return False  # #data o ora non hanno valore
+        ElencoPrenotazioniModel().modificaPrenotazione(prenotazione, data, ora, completata, trattamento)
 
     def eliminaPrenotazione(self, prenotazione):
         ElencoPrenotazioniModel().eliminaPrenotazione(prenotazione)

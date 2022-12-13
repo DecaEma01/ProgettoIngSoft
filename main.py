@@ -36,8 +36,8 @@ def backup():
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
 
-    # x = threading.Thread(target=backup)
-    # x.start()
+    #x = threading.Thread(target=backup)
+    #x.start()
     app = QtWidgets.QApplication(sys.argv)
     Form = QtWidgets.QWidget()
     ui = GestionePrenotazioniView()
