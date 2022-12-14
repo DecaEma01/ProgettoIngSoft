@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSpacerItem, QHBoxLayout, QPushButton, QMessageBox, QListView
 
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-from Dipendenti.ViewDipendenti.ModificaDipendenteView import ModificaDipendenteView
+from Dipendenti.ViewsDipendenti.ModificaDipendenteView import ModificaDipendenteView
 from Dipendenti.ControllersDipendenti.GestioneDipendentiController import GestioneDipendentiController
 
 class VisualizzaDipendenteView(QWidget):

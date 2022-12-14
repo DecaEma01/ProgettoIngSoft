@@ -7,9 +7,7 @@ import threading
 
 # Press Maiusc+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-
+from Generale.GeneraleViews.LoginView import LoginView
 from Pazienti.ViewsPazienti.GestionePazientiView import GestionePazientiView
 from Prenotazioni.ViewsPrenotazioni.GestionePrenotazioniView import GestionePrenotazioniView
 from TrattamentiConsulenze.ViewsTrattCons.AggiungiTrattView import AggiungiTrattView
@@ -38,13 +36,21 @@ if __name__ == '__main__':
 
     #x = threading.Thread(target=backup)
     #x.start()
+    app = QApplication(sys.argv)
+    vistaLogin = LoginView(app)
+    vistaLogin.show()
+    sys.exit(app.exec())
+
+
+
+"""
     app = QtWidgets.QApplication(sys.argv)
     Form = QtWidgets.QWidget()
     ui = GestionePrenotazioniView()
     ui.setupUi(Form, app)
     Form.show()
     sys.exit(app.exec_())
-
+"""
 
 """
     if os.path.isfile('Dati/Pazienti.pickle') == False:

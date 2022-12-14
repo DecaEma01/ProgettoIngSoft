@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QSizePolicy, QHBoxLayout,  QVBoxLayout
-from Dipendenti.ViewDipendenti.DipendentiRegistratiView import DipendentiRegistratiView
-from Dipendenti.ViewDipendenti.NuovoDipendenteView import NuovoDipendenteView
+from Dipendenti.ViewsDipendenti.DipendentiRegistratiView import DipendentiRegistratiView
+from Dipendenti.ViewsDipendenti.NuovoDipendenteView import NuovoDipendenteView
 
 
 class GestioneDipendentiView(QWidget):
@@ -59,4 +59,4 @@ class GestioneDipendentiView(QWidget):
     def logout(self):
         self.bLogout()
         self.close()
-        pass#semplice chiusura della finestra da passare come attributo al costruttore di VistaDipendenti registrati
+        #semplice chiusura della finestra da passare come attributo al costruttore di VistaDipendenti registrati

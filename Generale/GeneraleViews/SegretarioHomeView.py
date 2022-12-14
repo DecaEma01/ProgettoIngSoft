@@ -1,21 +1,26 @@
+import sys
 from PyQt5.QtWidgets import QWidget, QPushButton, QSizePolicy, QHBoxLayout, QVBoxLayout, QLineEdit, QLabel, QSpacerItem
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+from Pazienti.ViewsPazienti.GestionePazientiView import GestionePazientiView
+from Prenotazioni.ViewsPrenotazioni.GestionePrenotazioniView import GestionePrenotazioniView
 
 
 class SegretarioHomeView(QWidget):
 
-    def __init__(self, parent = None):
-        super(SegretarioHomeView, self).__init__(parent)        # richiamiamo il costruttore di qWidget e li passiamo il parent none
+    def __init__(self,app,  parent = None):
+        super(SegretarioHomeView, self).__init__(parent)
 
         self.parametriAutentificazione = {}
 
         layoutVertMain = QVBoxLayout()
 
         layoutBottoneLogOut = QHBoxLayout()
-        layoutVertMain.addWidget(self.generaBottone('Logout', self.chiudiFinestra, False))
+        layoutVertMain.addWidget(self.generaBottone('LOGOUT', lambda: self.chiudiApp(app), False))
         layoutVertMain.addLayout(layoutBottoneLogOut)
 
-        layoutVertMain.addWidget(self.generaBottone('Gestione Prenotazioni', self.gestionePrenotazioni))
-        layoutVertMain.addWidget(self.generaBottone('Gestione Clienti', self.amministrazioneClienti))
+        layoutVertMain.addWidget(self.generaBottone('Gestione Prenotazioni', lambda: self.gestionePrenotazioni(app)))
+        layoutVertMain.addWidget(self.generaBottone('Gestione Pazienti', lambda: self.gestionePazienti(app)))
 
         self.setLayout(layoutVertMain)
         self.resize(900, 700)
@@ -30,11 +35,22 @@ class SegretarioHomeView(QWidget):
         button.clicked.connect(onClick)
         return button
 
-    def chiudiFinestra(self):
-        self.close()
+    def chiudiApp(self, app):
+        sys.exit(app.exec_())
 
-    def gestionePrenotazioni(self):
-        return
+    def gestionePrenotazioni(self,app):
+        self.vistaGestionePrenotazioni = QtWidgets.QWidget()
+        uivistaGestionePrenotazioni = GestionePrenotazioniView()
+        uivistaGestionePrenotazioni.setupUi(self.vistaGestionePrenotazioni, app)
+        self.vistaGestionePrenotazioni.show()
 
-    def amministrazioneClienti(self):
-        return
+        #Form = QtWidgets.QWidget()
+        #ui = GestionePrenotazioniView()
+        #ui.setupUi(Form, app)
+        #Form.show()
+
+    def gestionePazienti(self,app):
+        self.vistaGestionePrenotazioni = QtWidgets.QWidget()
+        uivistaGestionePrenotazioni = GestionePazientiView()
+        uivistaGestionePrenotazioni.setupUi(self.vistaGestionePrenotazioni, app)
+        self.vistaGestionePrenotazioni.show()

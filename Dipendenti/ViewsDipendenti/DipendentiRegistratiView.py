@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListView, QVBoxLayout, QPushB
     QMessageBox, QSpacerItem
 
 from Dipendenti.ControllersDipendenti.GestioneDipendentiController import GestioneDipendentiController
-from Dipendenti.ViewDipendenti.VisualizzaDipendenteView import VisualizzaDipendenteView
+from Dipendenti.ViewsDipendenti.VisualizzaDipendenteView import VisualizzaDipendenteView
 
 class DipendentiRegistratiView(QWidget):
 

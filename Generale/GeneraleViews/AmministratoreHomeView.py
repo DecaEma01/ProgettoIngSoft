@@ -1,9 +1,14 @@
+import sys
 from PyQt5.QtWidgets import QWidget, QPushButton, QSizePolicy, QHBoxLayout, QVBoxLayout, QLineEdit, QLabel, QSpacerItem
-from Amministratore.Dipendenti.ViewDipendenti.GestioneDipendentiView import GestioneDipendentiView
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+from Dipendenti.ViewsDipendenti.GestioneDipendentiView import GestioneDipendentiView
+from TrattamentiConsulenze.ViewsTrattCons.GestioneTrattConsView import GestioneTrattConsView
+
 
 class AmministratoreHomeView(QWidget):
 
-    def __init__(self, parent = None):
+    def __init__(self, app, parent = None):
         super(AmministratoreHomeView, self).__init__(parent)        # richiamiamo il costruttore di qWidget e li passiamo il parent none
         self.resize(900, 700)
 
@@ -12,11 +17,11 @@ class AmministratoreHomeView(QWidget):
         layoutVertMain = QVBoxLayout()
 
         layoutBottoneLogOut = QHBoxLayout()
-        layoutVertMain.addWidget(self.generaBottone('Logout', self.logOut, False))
+        layoutVertMain.addWidget(self.generaBottone('LOGOUT', self.logOut, False))
         layoutVertMain.addLayout(layoutBottoneLogOut)
 
-        layoutVertMain.addWidget(self.generaBottone('Gestione Trattamenti', self.gestioneTrattamenti))
-        layoutVertMain.addWidget(self.generaBottone('Gestione Dipendenti', self.amministrazioneDipendenti))
+        layoutVertMain.addWidget(self.generaBottone('Gestione Trattamenti', lambda: self.gestioneTrattamenti(app)))
+        layoutVertMain.addWidget(self.generaBottone('Gestione Dipendenti', self.gestioneDipendenti))
 
         self.setLayout(layoutVertMain)
 
@@ -31,10 +36,13 @@ class AmministratoreHomeView(QWidget):
         button.clicked.connect(onClick)
         return button
 
-    def gestioneTrattamenti(self):
-        return
+    def gestioneTrattamenti(self,app):
+        Form = QtWidgets.QWidget()
+        ui = GestioneTrattConsView()
+        ui.setupUi(Form, app)
+        Form.show()
 
-    def amministrazioneDipendenti(self):
+    def gestioneDipendenti(self):
         self.vistaAmministrazioneDipendenti = GestioneDipendentiView(self.logOut)
         self.vistaAmministrazioneDipendenti.show()
 

@@ -8,11 +8,6 @@
     },
     {
       "ruolo": "Segretario",
-      "login": "segretario2",
-      "password": "segretario2"
-    },
-    {
-      "ruolo": "Segretario",
       "login": "segretario",
       "password": "segretario"
     }
