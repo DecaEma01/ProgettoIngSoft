@@ -6,7 +6,8 @@ from Dipendenti.ViewsDipendenti.NuovoDipendenteView import NuovoDipendenteView
 class GestioneDipendentiView(QWidget):
 
     def __init__(self, bLogout, parent = None):
-        super(GestioneDipendentiView, self).__init__(parent)
+        super(GestioneDipendentiView, self).__init__(parent)        # richiamiamo il costruttore di qWidget e li passiamo il parent none
+
         self.bLogout = bLogout
 
         self.resize(900, 700)

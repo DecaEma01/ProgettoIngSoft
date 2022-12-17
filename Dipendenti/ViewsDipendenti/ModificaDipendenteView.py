@@ -16,8 +16,8 @@ class ModificaDipendenteView(QWidget):
         layoutOrizButton = QHBoxLayout()
 
         layoutBottoniSwitch = QHBoxLayout()
-        layoutBottoniSwitch.addWidget(self.generaBottone('Indietro', self.chiudiFinestra, False))
-        layoutBottoniSwitch.addWidget(self.generaBottone('Logout', self.logout, False))
+        layoutBottoniSwitch.addWidget(self.generaBottone('INDIETRO', self.chiudiFinestra, False))
+        layoutBottoniSwitch.addWidget(self.generaBottone('LOGOUT', self.logout, False))
         layoutVerticale.addLayout(layoutBottoniSwitch)
 
         layoutVerticale.addItem(QSpacerItem(50, 50))
@@ -47,7 +47,10 @@ class ModificaDipendenteView(QWidget):
             layoutVerticale.addStretch()
 
         layoutOrizButton.addStretch()
-        layoutOrizButton.addWidget(self.generaBottone('Ok', self.nuoviDatiDipendente, False, 90))
+        #bottoneSalva = self.generaBottone('Salva', self.nuoviDatiDipendente, False, 90)
+        #bottoneSalva.setFixedWidth(700)
+        layoutOrizButton.addWidget(self.generaBottone('Salva', self.nuoviDatiDipendente, False, 780))
+
         ##layoutOrizButton.addWidget(self.generaBottone('Cancel', self.chiudiFinestra, False, 90))
 
 
@@ -62,7 +65,7 @@ class ModificaDipendenteView(QWidget):
     def generaLinea(self, nomeLabel, label, infoDip):# da aggiungere la var placeholder
         layoutOriz = QHBoxLayout()
         nLabel = QLabel(label)
-        nLabel.setFixedWidth(100)
+        nLabel.setFixedWidth(130)
         layoutOriz.addWidget(nLabel)
         testo = QLineEdit()
         testo.setText(infoDip)
@@ -77,7 +80,7 @@ class ModificaDipendenteView(QWidget):
         #indirizzoCompleto = QLineEdit()
         layoutOriz = QHBoxLayout()
         nomeRiga = QLabel('Indirizzo Residenza:')
-        nomeRiga.setFixedWidth(100)
+        nomeRiga.setFixedWidth(130)
         layoutOriz.addWidget(nomeRiga)
         via = QLineEdit()
         via.setPlaceholderText('Via')

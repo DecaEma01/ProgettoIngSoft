@@ -7,6 +7,7 @@ import threading
 
 # Press Maiusc+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from Dipendenti.ModelsDipendenti.SegretarioModel import SegretarioModel
 from Generale.GeneraleViews.LoginView import LoginView
 from Pazienti.ViewsPazienti.GestionePazientiView import GestionePazientiView
 from Prenotazioni.ViewsPrenotazioni.GestionePrenotazioniView import GestionePrenotazioniView
@@ -36,10 +37,17 @@ if __name__ == '__main__':
 
     #x = threading.Thread(target=backup)
     #x.start()
+
+    if os.path.isfile('Dati/Dipendenti.pickle') == False:
+        dipendente1 = SegretarioModel('Giuseppe', 'Falcone', 'HGGIUH', '3285610013', 'spalato', '12', 'Pescara',
+                                      'Abruzzo')
+
     app = QApplication(sys.argv)
     vistaLogin = LoginView(app)
     vistaLogin.show()
     sys.exit(app.exec())
+
+
 
 
 

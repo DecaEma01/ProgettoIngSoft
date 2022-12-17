@@ -20,26 +20,19 @@ class DipendentiRegistratiView(QWidget):
 
         # QBUTTON (gestione account)
         layoutBottoniSwitch = QHBoxLayout()
-        layoutBottoniSwitch.addWidget(self.generaBottone('INDIETRO', self.chiudiFinestra))
-        layoutBottoniSwitch.addWidget(self.generaBottone('LOGOUT', self.logout))
+        layoutBottoniSwitch.addWidget(self.generaBottone('Indietro', self.chiudiFinestra))
+        layoutBottoniSwitch.addWidget(self.generaBottone('Logout', self.logout))
         layoutVertMain.addLayout(layoutBottoniSwitch)       # Main
         layoutVertMain.addItem(QSpacerItem(10, 10))
 
         # COMBOBOX
-        layoutCombo = QHBoxLayout()
-        nLabel = QLabel("Ruolo:")
-        nLabel.setMinimumWidth(100)
-        layoutCombo.addWidget(nLabel)
-        comboProfessione= self.generaComboBox(self.selezionaProffessione, 'nessuna scelta', 'Medico', 'Fisioterapista', 'Segretario')
-        comboProfessione.setMinimumWidth(766)
-        layoutCombo.addWidget(comboProfessione)
-        layoutVertMain.addLayout(layoutCombo)
+        layoutVertMain.addWidget(self.generaComboBox(self.selezionaProffessione, 'nessuna scelta', 'Medico', 'Fisioterapista', 'Segretario'))
 
         # QLABLE + QLINE + 1 QBUTTON (ricerca)
-        #layoutVertMain.addItem(QSpacerItem(10, 10))
-        layoutVertMain.addLayout(self.generaLinea('nome', 'Nome:'))
-        layoutVertMain.addLayout(self.generaLinea('cognome', 'Cognome:'))
-        layoutVertMain.addLayout(self.generaLinea('codicefiscale', 'Codice Fiscale:'))
+        layoutVertMain.addItem(QSpacerItem(10, 10))
+        layoutVertMain.addLayout(self.generaLinea('nome', 'Nome'))
+        layoutVertMain.addLayout(self.generaLinea('cognome', 'Cognome'))
+        layoutVertMain.addLayout(self.generaLinea('codicefiscale', 'Codice Fiscale'))
         layoutVertMain.addItem(QSpacerItem(10, 10))
         layoutVertMain.addWidget(self.generaBottone('Ricerca', self.ricercaDipendente))     # Main
 
@@ -49,14 +42,10 @@ class DipendentiRegistratiView(QWidget):
         layoutVertMain.addItem(QSpacerItem(10, 10))
 
         # QBUTTON (aggiorna e visualizza)
-        layoutBottoni = QHBoxLayout()
-        BottoneReset = self.generaBottone('Ricerca senza filtri', self.aggiornaDipendenti)
-        BottoneReset.setFixedWidth(415)
-        layoutBottoni.addWidget(BottoneReset)
+        layoutBottoni = QHBoxLayout()   # verticale per i bottoni
+        layoutBottoni.addWidget(self.generaBottone('Aggiorna', self.aggiornaDipendenti))
         layoutBottoni.addStretch()
-        BottoneVisualizza = self.generaBottone('Visualizza dipendente', self.visualizzaDipendente)
-        BottoneVisualizza.setFixedWidth(415)
-        layoutBottoni.addWidget(BottoneVisualizza)
+        layoutBottoni.addWidget(self.generaBottone('Visualizza', self.visualizzaDipendente))
         layoutVertMain.addLayout(layoutBottoni)     # Main
 
         # set Main Widget
@@ -88,6 +77,7 @@ class DipendentiRegistratiView(QWidget):
             self.parametriRicerca['ruoloDipendente'] = l
         else:
             del self.parametriRicerca['ruoloDipendente']
+        pass
 
     def ricercaDipendente(self):#DEVE MODIFICARE LA self.listViewDipendenti essenziale
         parametri = {}
@@ -97,7 +87,7 @@ class DipendentiRegistratiView(QWidget):
                 parametri[chiave] = self.parametriRicerca[chiave].text()
                 print(parametri[chiave])
 
-        print('LISTA DEI PARAMETRI:')
+        print('LISTA DEI PARAMETRI:::::::::::::::')
         for chiave in parametri:
             print(parametri[chiave])
 
@@ -127,7 +117,7 @@ class DipendentiRegistratiView(QWidget):
 
         except IndexError:
             print("IndexError")
-            QMessageBox.critical(self, 'Errore', 'Selezionare un dipendente! ', QMessageBox.Ok)
+            QMessageBox.critical(self, 'Errore', 'Selezionare un dipendente specifico! ', QMessageBox.Ok)
             return
 
     def generaComboBox(self, onText, *args):
@@ -146,10 +136,9 @@ class DipendentiRegistratiView(QWidget):
     def generaLinea(self, nomeLabel, label):# da aggiungere la var placeholder
         layoutOriz = QHBoxLayout()
         nLabel = QLabel(label)
-        nLabel.setMinimumWidth(100)
+        nLabel.setFixedWidth(100)
         layoutOriz.addWidget(nLabel)
         testo = QLineEdit(self)
-        testo.setMinimumWidth(755)
         layoutOriz.addWidget(testo)
         layoutOriz.addStretch()
         self.parametriRicerca[nomeLabel] = testo

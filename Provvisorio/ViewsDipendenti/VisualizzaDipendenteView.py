@@ -19,8 +19,8 @@ class VisualizzaDipendenteView(QWidget):
         layoutVerticale = QVBoxLayout()
 
         layoutBottoniSwitch = QHBoxLayout()
-        layoutBottoniSwitch.addWidget(self.generaBottone('INDIETRO', self.chiudiFinestra))
-        layoutBottoniSwitch.addWidget(self.generaBottone('LOGOUT', self.logout))
+        layoutBottoniSwitch.addWidget(self.generaBottone('Indietro', self.chiudiFinestra))
+        layoutBottoniSwitch.addWidget(self.generaBottone('Logout', self.logout))
         layoutVerticale.addLayout(layoutBottoniSwitch)
 
         layoutContenitore.addItem(QSpacerItem(50, 50))
@@ -51,12 +51,8 @@ class VisualizzaDipendenteView(QWidget):
 
         layoutOrizontale = QHBoxLayout()
         layoutOrizontale.addStretch()
-        BottoneModifica = self.generaBottone('Modifica', self.modificaDipendente)
-        BottoneModifica.setFixedWidth(395)
-        BottoneElimina = self.generaBottone('Elimina', self.eliminaDipendente)
-        BottoneElimina.setFixedWidth(395)
-        layoutOrizontale.addWidget(BottoneModifica)
-        layoutOrizontale.addWidget(BottoneElimina)
+        layoutOrizontale.addWidget(self.generaBottone('Modifica', self.modificaDipendente))
+        layoutOrizontale.addWidget(self.generaBottone('Elimina', self.eliminaDipendente))
 
         layoutVerticale.addLayout(layoutOrizontale)
         layoutVerticale.addItem(QSpacerItem(10, 10))

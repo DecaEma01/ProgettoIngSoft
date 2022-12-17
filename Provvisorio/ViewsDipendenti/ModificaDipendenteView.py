@@ -1,57 +1,55 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
+
 from Dipendenti.ControllersDipendenti.GestioneDipendentiController import GestioneDipendentiController
 
-class NuovoDipendenteView(QWidget):
+class ModificaDipendenteView(QWidget):
 
-    def __init__(self, proffessioneDipendente):
-        super(NuovoDipendenteView, self).__init__()
+    def __init__(self, dipendente, bLogout, callback):
+        super(ModificaDipendenteView, self).__init__()
 
+        self.bLogout = bLogout
         self.resize(900, 700)
 
-        #self.callback = callback
-        self.proffessioneDipendente = proffessioneDipendente
         layoutContenitore = QHBoxLayout()
         layoutVerticale = QVBoxLayout()     # LAYOUT MAIN
         layoutOrizButton = QHBoxLayout()
 
-        self.attributiDipendente = {}
-
         layoutBottoniSwitch = QHBoxLayout()
-        layoutBottoniSwitch.addWidget(self.generaBottone('INDIETRO', self.chiudiFinestra, False))
-        layoutBottoniSwitch.addWidget(self.generaBottone('LOGOUT', self.logout, False))
+        layoutBottoniSwitch.addWidget(self.generaBottone('Indietro', self.chiudiFinestra, False))
+        layoutBottoniSwitch.addWidget(self.generaBottone('Logout', self.logout, False))
         layoutVerticale.addLayout(layoutBottoniSwitch)
 
-        #dati sensibili
         layoutVerticale.addItem(QSpacerItem(50, 50))
-        layoutVerticale.addLayout(self.generaLinea('nome', 'Nome: '))
-        layoutVerticale.addLayout(self.generaLinea('cognome', 'Cognome: '))
-        layoutVerticale.addLayout(self.generaLinea('codicefiscale', 'Codice Fiscale: '))
-        layoutVerticale.addLayout(self.generaLinea('telefono', 'Telefono: '))
+        layoutContenitore.addItem(QSpacerItem(50, 50))
+
+        self.aggiornaListaDip = callback
+        self.dipendente = dipendente
+        self.controllerDipendente = GestioneDipendentiController()
+        self.attributiDipendente = self.controllerDipendente.visualizzaDipendente(self.dipendente)
+
+        layoutVerticale.addLayout(self.generaLinea('nome', 'Nome: ', self.attributiDipendente['nome']))
+        layoutVerticale.addLayout(self.generaLinea('cognome', 'Cognome: ', self.attributiDipendente['cognome']))
+        layoutVerticale.addLayout(self.generaLinea('codicefiscale', 'Codice Fiscale: ', self.attributiDipendente['codicefiscale']))
+        layoutVerticale.addLayout(self.generaLinea('telefono', 'Telefono: ', self.attributiDipendente['telefono']))
 
         layoutVerticale.addLayout(self.generaLineaIndirizzo())
 
-        layoutContenitore.addItem(QSpacerItem(50, 50))
-
         # contenitore dei certificati
-        if self.proffessioneDipendente == 'Fisioterapista':
+        if type(self.dipendente).__name__ == 'FisioterapistaModel':
             layoutVerticale.addItem(QSpacerItem(35, 35))
             descrizione = QLabel('Certificazioni possedute:')
             layoutVerticale.addWidget(descrizione)
             layoutVerticale.addLayout(self.generaLayoutCertificazioni())
             layoutVerticale.addItem(QSpacerItem(35, 35))
 
-        layoutOrizButton.addStretch()
-
-        buttonSalva = QPushButton('Salva')
-        buttonSalva.setFixedWidth(780)
-        buttonSalva.clicked.connect(self.nuovoDipendente)
-        layoutOrizButton.addWidget(buttonSalva)
-        #layoutOrizButton.addWidget(self.generaBottone('Salva', self.nuovoDipendente))
-        #layoutOrizButton.addWidget(self.generaBottone('Annulla', self.chiudiFinestra))
-
-        if self.proffessioneDipendente != 'Fisioterapista':
+        if type(self.dipendente).__name__ != 'FisioterapistaModel':
             layoutVerticale.addStretch()
+
+        layoutOrizButton.addStretch()
+        layoutOrizButton.addWidget(self.generaBottone('Ok', self.nuoviDatiDipendente, False, 90))
+        ##layoutOrizButton.addWidget(self.generaBottone('Cancel', self.chiudiFinestra, False, 90))
+
 
         layoutVerticale.addLayout(layoutOrizButton)
         layoutVerticale.addItem(QSpacerItem(10, 10))
@@ -59,26 +57,17 @@ class NuovoDipendenteView(QWidget):
         layoutContenitore.addItem(QSpacerItem(50, 50))
 
         self.setLayout(layoutContenitore)
-        self.setWindowTitle('Amministratore - crea ' + self.proffessioneDipendente)
+        self.setWindowTitle('Amministratore - Modifica dipendente')
 
-    def generaBottone(self, titolo, onClick, fixed = True):
-        button = QPushButton(titolo)
-        if fixed:
-            button.setFixedWidth(90)
-        button.clicked.connect(onClick)
-        return button
-
-    def generaLinea(self, nomeLabel, label):# da aggiungere la var placeholder
+    def generaLinea(self, nomeLabel, label, infoDip):# da aggiungere la var placeholder
         layoutOriz = QHBoxLayout()
         nLabel = QLabel(label)
-        nLabel.setFixedWidth(130)
+        nLabel.setFixedWidth(100)
         layoutOriz.addWidget(nLabel)
-        testo = QLineEdit(self)
-        #testo.setMaximumWidth(500)
-        #testo.setMinimumWidth(300)
-        #testo.setPlaceholderText() # da aggiungere la var placeholder
+        testo = QLineEdit()
+        testo.setText(infoDip)
+        testo.setMinimumWidth(300)
         layoutOriz.addWidget(testo)
-        #layoutOriz.addStretch()
         self.attributiDipendente[nomeLabel] = testo
 
         return layoutOriz
@@ -88,28 +77,42 @@ class NuovoDipendenteView(QWidget):
         #indirizzoCompleto = QLineEdit()
         layoutOriz = QHBoxLayout()
         nomeRiga = QLabel('Indirizzo Residenza:')
-        nomeRiga.setFixedWidth(130)
+        nomeRiga.setFixedWidth(100)
         layoutOriz.addWidget(nomeRiga)
         via = QLineEdit()
         via.setPlaceholderText('Via')
+        via.setText(self.dipendente.via)
         layoutOriz.addWidget(via)
         civico = QLineEdit()
         civico.setPlaceholderText('N°')
         civico.setFixedWidth(30)
+        civico.setText(self.dipendente.civico)
         layoutOriz.addWidget(civico)
         citta = QLineEdit()
         citta.setPlaceholderText('Città')
+        citta.setText(self.dipendente.citta)
         layoutOriz.addWidget(citta)
         provincia = QLineEdit()
         provincia.setPlaceholderText('Provincia')
+        provincia.setText(self.dipendente.provincia)
         layoutOriz.addWidget(provincia)
-        #layoutOriz.addStretch()
         self.attributiDipendente['via'] = via
         self.attributiDipendente['numeroCivico'] = civico
         self.attributiDipendente['citta'] = citta
         self.attributiDipendente['provincia'] = provincia
 
         return layoutOriz
+
+    def generaBottone(self, titolo, onClick,expanding = True, width = None):
+        button = QPushButton(titolo)
+
+        if expanding:
+            button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        if width != None:
+            button.setFixedWidth(width)
+
+        button.clicked.connect(onClick)
+        return button
 
     def generaLayoutCertificazioni(self):
         layoutOrizzontale = QHBoxLayout()
@@ -118,10 +121,19 @@ class NuovoDipendenteView(QWidget):
         self.listaCertificazioni = QListView()
         self.listViewModel = QStandardItemModel()
 
+        if len(self.attributiDipendente['listaCertificazioni']) != 0:
+            for certificazione in self.attributiDipendente['listaCertificazioni']:
+                item = QStandardItem()
+                nome = f'Certificazione: {certificazione}'
+                item.setText(nome)
+                item.setEditable(False)
+                self.listViewModel.appendRow(item)
+                self.listaCertificazioni.setModel(self.listViewModel)
+
         layoutOrizzontale.addWidget(self.listaCertificazioni)
 
-        layoutVerticale.addWidget(self.generaBottone('Aggiungi', self.aggiungiCertificazione))
-        layoutVerticale.addWidget(self.generaBottone('Elimina', self.eliminaCertificazione))
+        layoutVerticale.addWidget(self.generaBottone('Aggiungi', self.aggiungiCertificazione, False))
+        layoutVerticale.addWidget(self.generaBottone('Elimina', self.eliminaCertificazione, False))
         layoutVerticale.addStretch()
 
         layoutOrizzontale.addLayout(layoutVerticale)
@@ -131,8 +143,8 @@ class NuovoDipendenteView(QWidget):
     def aggiungiCertificazione(self):
 
         window = QWidget()
-        window.resize(100, 100)
-        window.setWindowTitle("CodersLegacy")
+        window.resize(500, 400)
+        window.setWindowTitle("Aggiungi certificazione")
 
         options = ("Magnetoterapia", "Elettroterapia", "Tecar-terapia", "Onde_d’urto", "Frems-terapia", "Laser-terapia",
                    "Ultrasuono-terapia", "utilizzo Formetric")
@@ -153,9 +165,8 @@ class NuovoDipendenteView(QWidget):
             item.setEditable(False)
 
             self.listViewModel.appendRow(item)
+            # self.generaListaCertificazioni()
             self.listaCertificazioni.setModel(self.listViewModel)
-
-
 
     def eliminaCertificazione(self):
         try:
@@ -174,13 +185,14 @@ class NuovoDipendenteView(QWidget):
             QMessageBox.critical(self, 'Errore', 'Selezionare una certificazione! ', QMessageBox.Ok)
             return
 
-    def nuovoDipendente(self):
+    def nuoviDatiDipendente(self):
 
         # controllo campi inseriti
         try:
             for chiave in self.attributiDipendente:
-                if self.attributiDipendente[chiave].text() == '':
-                    raise Exception()
+                if type(self.attributiDipendente[chiave]).__name__ !='list' :
+                    if self.attributiDipendente[chiave] == '':
+                        raise Exception()
         except:
             QMessageBox.critical(self, 'Errore', 'Tutti i campi sono obbligatori! ', QMessageBox.Ok)
             return
@@ -190,14 +202,14 @@ class NuovoDipendenteView(QWidget):
             elencoDip = GestioneDipendentiController.listaDipendenti(GestioneDipendentiController)
 
             for chiave in elencoDip:
-                if elencoDip[chiave].codicefiscale == self.attributiDipendente['codicefiscale'].text():
-                    raise Exception()
-
+                if elencoDip[chiave].codiceDipendente != self.dipendente.codiceDipendente:
+                    if elencoDip[chiave].codicefiscale == self.attributiDipendente['codicefiscale'].text():
+                        raise Exception()
         except:
             QMessageBox.critical(self, 'Errore', 'Esiste già un dipendente con lo stesso CF. Per inserirne uno nuovo,bisogna eliminare il vecchio! ', QMessageBox.Ok)
             return
 
-        #controllo numero telefonico
+        #controllo numero di telefono
         try:
 
             for valore in self.attributiDipendente['telefono'].text():
@@ -208,14 +220,12 @@ class NuovoDipendenteView(QWidget):
             QMessageBox.critical(self, 'Errore', 'Il numero di telefono contiene dei valori scorretti ', QMessageBox.Ok)
             return
 
-        for chiave5 in self.attributiDipendente:
-            print(self.attributiDipendente[chiave5].text())
-
-        self.creaDipendente()
-        print('son qui')
+        self.modificaDipendente()
+        print('modificato')
+        self.aggiornaListaDip()
         self.close()
 
-    def creaDipendente(self):
+    def modificaDipendente(self):
 
         args = []
         args.append(self.attributiDipendente['nome'].text())
@@ -227,7 +237,7 @@ class NuovoDipendenteView(QWidget):
         args.append(self.attributiDipendente['citta'].text())
         args.append(self.attributiDipendente['provincia'].text())
 
-        if self.proffessioneDipendente == 'Fisioterapista':
+        if type(self.dipendente).__name__ == 'Fisioterapista':
             listaCertificazioni = []
 
             if self.listViewModel.rowCount() != 0:
@@ -236,8 +246,7 @@ class NuovoDipendenteView(QWidget):
 
             args.append(listaCertificazioni)
 
-        GestioneDipendentiController.creaDipendete(GestioneDipendentiController, self.proffessioneDipendente, *args)
-
+        self.controllerDipendente.modificaDipendente(self.dipendente, *args)
 
     def chiudiFinestra(self):
         self.close()

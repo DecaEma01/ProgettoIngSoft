@@ -18,8 +18,8 @@ class NuovoDipendenteView(QWidget):
         self.attributiDipendente = {}
 
         layoutBottoniSwitch = QHBoxLayout()
-        layoutBottoniSwitch.addWidget(self.generaBottone('INDIETRO', self.chiudiFinestra, False))
-        layoutBottoniSwitch.addWidget(self.generaBottone('LOGOUT', self.logout, False))
+        layoutBottoniSwitch.addWidget(self.generaBottone('Indietro', self.chiudiFinestra, False))
+        layoutBottoniSwitch.addWidget(self.generaBottone('Logout', self.logout, False))
         layoutVerticale.addLayout(layoutBottoniSwitch)
 
         #dati sensibili
@@ -43,12 +43,8 @@ class NuovoDipendenteView(QWidget):
 
         layoutOrizButton.addStretch()
 
-        buttonSalva = QPushButton('Salva')
-        buttonSalva.setFixedWidth(780)
-        buttonSalva.clicked.connect(self.nuovoDipendente)
-        layoutOrizButton.addWidget(buttonSalva)
-        #layoutOrizButton.addWidget(self.generaBottone('Salva', self.nuovoDipendente))
-        #layoutOrizButton.addWidget(self.generaBottone('Annulla', self.chiudiFinestra))
+        layoutOrizButton.addWidget(self.generaBottone('Ok', self.nuovoDipendente))
+        layoutOrizButton.addWidget(self.generaBottone('Cancel', self.chiudiFinestra))
 
         if self.proffessioneDipendente != 'Fisioterapista':
             layoutVerticale.addStretch()
