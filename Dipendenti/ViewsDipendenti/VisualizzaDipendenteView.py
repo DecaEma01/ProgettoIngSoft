@@ -37,7 +37,7 @@ class VisualizzaDipendenteView(QWidget):
         layoutVerticale.addWidget(labelNome)
         layoutVerticale.addLayout(self.generaLinea("Nome:", self.attributiDipendente['nome']))
         layoutVerticale.addLayout(self.generaLinea("Cognome:", self.attributiDipendente['cognome']))
-        layoutVerticale.addLayout(self.generaLinea("CF:", self.attributiDipendente['codicefiscale']))
+        layoutVerticale.addLayout(self.generaLinea("Codice Fiscale:", self.attributiDipendente['codicefiscale']))
         layoutVerticale.addLayout(self.generaLinea("Telefono:", self.attributiDipendente['telefono']))
         layoutVerticale.addLayout(self.generaLinea("Residenza:", self.attributiDipendente['indirizzoResidenza']))
         layoutVerticale.addLayout(self.generaLinea("Ruolo:", self.attributiDipendente['ruoloDipendente']))

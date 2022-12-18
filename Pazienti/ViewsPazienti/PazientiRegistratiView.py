@@ -161,7 +161,7 @@ class PazientiRegistratiView(object):
         listviewModel = QStandardItemModel(self.listView)
         for paziente in self.pazienti:
             item = QStandardItem()
-            nome = f'{paziente.codicePaziente} - {paziente.nome} {paziente.cognome}'
+            nome = f'{paziente.codicePaziente} - {paziente.nome} {paziente.cognome} : {paziente.codicefiscale}'
             item.setText(nome)
             item.setEditable(False)
 
@@ -182,7 +182,7 @@ class PazientiRegistratiView(object):
 
         for paziente in lTrovati:
             item = QStandardItem()
-            nome = f'{paziente.codicePaziente} - {paziente.nome} {paziente.cognome}'
+            nome = f'{paziente.codicePaziente} - {paziente.nome} {paziente.cognome} : {paziente.codicefiscale}'
             item.setText(nome)
             item.setEditable(False)
 
@@ -202,5 +202,5 @@ class PazientiRegistratiView(object):
             self.viewVisualizza.show()
 
         except IndexError:
-            QtWidgets.QMessageBox.critical(form, 'Errore', 'Selezionare un paziente specifico! ', QtWidgets.QMessageBox.Ok)
+            QtWidgets.QMessageBox.critical(form, 'Errore', 'Selezionare un paziente! ', QtWidgets.QMessageBox.Ok)
             return

@@ -75,7 +75,7 @@ class DipendentiRegistratiView(QWidget):
         listViewModel = QStandardItemModel()# questa è una lista composta da QStandardItems(unica cella della lista definita con item model(definisce una riga))
         for dipendente in self.dipendenti:
             item = QStandardItem()
-            nome = f'{dipendente.nome} {dipendente.cognome} - {dipendente.ruoloDipendente} {dipendente.codiceDipendente}'
+            nome = f'{dipendente.nome} {dipendente.cognome} : {dipendente.codicefiscale} - {dipendente.ruoloDipendente} {dipendente.codiceDipendente}'
             item.setText(nome)
             item.setEditable(False)
 
@@ -110,7 +110,7 @@ class DipendentiRegistratiView(QWidget):
 
         for dipendente in lTrovati:
             item = QStandardItem()
-            nome = f'{dipendente.nome} {dipendente.cognome} - {type(dipendente).__name__} {dipendente.codiceDipendente}'
+            nome = f'{dipendente.nome} {dipendente.cognome} : {dipendente.codicefiscale} - {type(dipendente).__name__} {dipendente.codiceDipendente}'
             item.setText(nome)
             item.setEditable(False)
 
