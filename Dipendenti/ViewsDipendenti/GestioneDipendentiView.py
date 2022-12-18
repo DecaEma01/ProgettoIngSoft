@@ -1,3 +1,5 @@
+import sys
+
 from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QSizePolicy, QHBoxLayout,  QVBoxLayout
 from Dipendenti.ViewsDipendenti.DipendentiRegistratiView import DipendentiRegistratiView
 from Dipendenti.ViewsDipendenti.NuovoDipendenteView import NuovoDipendenteView
@@ -5,16 +7,17 @@ from Dipendenti.ViewsDipendenti.NuovoDipendenteView import NuovoDipendenteView
 
 class GestioneDipendentiView(QWidget):
 
-    def __init__(self, bLogout, parent = None):
+    def __init__(self, app, parent = None):
         super(GestioneDipendentiView, self).__init__(parent)
-        self.bLogout = bLogout
+        self.app = app
+        #self.bLogout = bLogout
 
         self.resize(900, 700)
 
         layoutVertMain = QVBoxLayout()
         layoutBottoniSwitch = QHBoxLayout()
-        layoutBottoniSwitch.addWidget(self.generaBottone('Indietro', self.chiudiFinestra, False))
-        layoutBottoniSwitch.addWidget(self.generaBottone('Logout', self.logout, False))
+        layoutBottoniSwitch.addWidget(self.generaBottone('INDIETRO', self.chiudiFinestra, False))
+        layoutBottoniSwitch.addWidget(self.generaBottone('LOGOUT', self.logout, False))
         layoutVertMain.addLayout(layoutBottoniSwitch)
 
         gridLayot = QGridLayout()
@@ -37,25 +40,25 @@ class GestioneDipendentiView(QWidget):
         return button
 
     def eseguiDipendentiRegistrati(self):
-        self.vistaDip = DipendentiRegistratiView(self.logout)
+        self.vistaDip = DipendentiRegistratiView(self.app)
         self.vistaDip.show()
 
     def aggiungiFisioterapista(self):
-        self.vistaCreaDipendente = NuovoDipendenteView('Fisioterapista')
+        self.vistaCreaDipendente = NuovoDipendenteView('Fisioterapista',self.app)
         self.vistaCreaDipendente.show()
 
     def aggiungiMedico(self):
-        self.vistaCreaDipendente = NuovoDipendenteView('Medico')
+        self.vistaCreaDipendente = NuovoDipendenteView('Medico',self.app)
         self.vistaCreaDipendente.show()
 
     def aggiungiSegretario(self):
-        self.vistaCreaDipendente = NuovoDipendenteView('Segretario')
+        self.vistaCreaDipendente = NuovoDipendenteView('Segretario',self.app)
         self.vistaCreaDipendente.show()
 
     def chiudiFinestra(self):
         self.close()
 
     def logout(self):
-        self.bLogout()
-        self.close()
-        #semplice chiusura della finestra da passare come attributo al costruttore di VistaDipendenti registrati
+        sys.exit(self.app.exec_())
+        #self.bLogout()
+        #self.close()

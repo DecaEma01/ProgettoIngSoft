@@ -17,11 +17,11 @@ class AmministratoreHomeView(QWidget):
         layoutVertMain = QVBoxLayout()
 
         layoutBottoneLogOut = QHBoxLayout()
-        layoutVertMain.addWidget(self.generaBottone('LOGOUT', self.logOut, False))
+        layoutVertMain.addWidget(self.generaBottone('LOGOUT',lambda: self.logOut(app), False))
         layoutVertMain.addLayout(layoutBottoneLogOut)
 
         layoutVertMain.addWidget(self.generaBottone('Gestione Trattamenti', lambda: self.gestioneTrattamenti(app)))
-        layoutVertMain.addWidget(self.generaBottone('Gestione Dipendenti', self.gestioneDipendenti))
+        layoutVertMain.addWidget(self.generaBottone('Gestione Dipendenti', lambda: self.gestioneDipendenti(app)))
 
         self.setLayout(layoutVertMain)
 
@@ -42,9 +42,10 @@ class AmministratoreHomeView(QWidget):
         ui.setupUi(Form, app)
         Form.show()
 
-    def gestioneDipendenti(self):
-        self.vistaAmministrazioneDipendenti = GestioneDipendentiView(self.logOut)
+    def gestioneDipendenti(self,app):
+        self.vistaAmministrazioneDipendenti = GestioneDipendentiView(app)
         self.vistaAmministrazioneDipendenti.show()
 
-    def logOut(self):
-        self.close()
+    def logOut(self,app):
+        sys.exit(app.exec_())
+    #   self.close()

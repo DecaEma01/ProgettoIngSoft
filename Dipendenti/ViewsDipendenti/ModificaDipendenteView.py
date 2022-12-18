@@ -1,3 +1,5 @@
+import sys
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
@@ -5,10 +7,11 @@ from Dipendenti.ControllersDipendenti.GestioneDipendentiController import Gestio
 
 class ModificaDipendenteView(QWidget):
 
-    def __init__(self, dipendente, bLogout, callback):
+    def __init__(self, dipendente, app, callback):
         super(ModificaDipendenteView, self).__init__()
 
-        self.bLogout = bLogout
+        self.app=app
+        #self.bLogout = bLogout
         self.resize(900, 700)
 
         layoutContenitore = QHBoxLayout()
@@ -255,5 +258,4 @@ class ModificaDipendenteView(QWidget):
         self.close()
 
     def logout(self):
-        self.bLogout()
-        self.close()
+        sys.exit(self.app.exec_())

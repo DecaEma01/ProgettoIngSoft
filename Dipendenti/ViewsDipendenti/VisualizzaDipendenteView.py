@@ -1,3 +1,5 @@
+import sys
+
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSpacerItem, QHBoxLayout, QPushButton, QMessageBox, QListView
 
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
@@ -5,11 +7,12 @@ from Dipendenti.ViewsDipendenti.ModificaDipendenteView import ModificaDipendente
 from Dipendenti.ControllersDipendenti.GestioneDipendentiController import GestioneDipendentiController
 
 class VisualizzaDipendenteView(QWidget):
-    def __init__(self, dipendente, bLogout, callback):
+    def __init__(self, dipendente, app, callback):
         super(VisualizzaDipendenteView, self).__init__()
         self.aggiornaListaDip = callback
         self.dipendente = dipendente
-        self.bLogout = bLogout
+        self.app = app
+        #self.bLogout = bLogout
         gestoreDipendenti = GestioneDipendentiController()
         self.attributiDipendente = gestoreDipendenti.visualizzaDipendente(self.dipendente)
 
@@ -113,7 +116,7 @@ class VisualizzaDipendenteView(QWidget):
             self.close()
 
     def modificaDipendente(self):
-        self.modificaDipendente = ModificaDipendenteView(self.dipendente, self.bLogout, callback=self.aggiornaListaDip)
+        self.modificaDipendente = ModificaDipendenteView(self.dipendente, self.app, callback=self.aggiornaListaDip)
         self.modificaDipendente.show()
         self.close()
 
@@ -121,5 +124,4 @@ class VisualizzaDipendenteView(QWidget):
         self.close()
 
     def logout(self):
-        self.bLogout()
-        self.close()
+        sys.exit(self.app.exec_())

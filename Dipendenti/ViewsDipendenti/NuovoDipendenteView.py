@@ -1,16 +1,19 @@
+import sys
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from Dipendenti.ControllersDipendenti.GestioneDipendentiController import GestioneDipendentiController
 
 class NuovoDipendenteView(QWidget):
 
-    def __init__(self, proffessioneDipendente):
+    def __init__(self, professioneDipendente,app):
         super(NuovoDipendenteView, self).__init__()
 
         self.resize(900, 700)
+        self.app = app
 
         #self.callback = callback
-        self.proffessioneDipendente = proffessioneDipendente
+        self.proffessioneDipendente = professioneDipendente
         layoutContenitore = QHBoxLayout()
         layoutVerticale = QVBoxLayout()     # LAYOUT MAIN
         layoutOrizButton = QHBoxLayout()
@@ -243,5 +246,4 @@ class NuovoDipendenteView(QWidget):
         self.close()
 
     def logout(self):
-        self.bLogout()
-        self.close()
+        sys.exit(self.app.exec_())

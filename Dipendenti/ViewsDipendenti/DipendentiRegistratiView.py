@@ -1,3 +1,5 @@
+import sys
+
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QListView, QVBoxLayout, QPushButton, QLabel, QLineEdit, QComboBox, \
     QMessageBox, QSpacerItem
@@ -7,10 +9,10 @@ from Dipendenti.ViewsDipendenti.VisualizzaDipendenteView import VisualizzaDipend
 
 class DipendentiRegistratiView(QWidget):
 
-    def __init__(self, bLogout, parent=None):
+    def __init__(self, app, parent=None):
         super(DipendentiRegistratiView, self).__init__(parent)
-
-        self.bLogout = bLogout
+        self.app = app
+        #self.bLogout = bLogout
         layoutVertMain = QVBoxLayout()                          # layout MAIN quello principale utilizzato dalla  vista
         self.listViewDipendenti = QListView()
         self.parametriRicerca = {}                              # è un dizionario contenente tutti i parametri aggiornati in tempo reale(per comodità tutti i parametri sono QLineEdit)
@@ -122,7 +124,7 @@ class DipendentiRegistratiView(QWidget):
 
             dipendente = GestioneDipendentiController.ricercaDipendente(GestioneDipendentiController, codiceDipendente = codice)[codice]
 
-            self.vistaDipendente = VisualizzaDipendenteView(dipendente, self.logout, callback = self.aggiornaDipendenti)
+            self.vistaDipendente = VisualizzaDipendenteView(dipendente, self.app, callback = self.aggiornaDipendenti)
             self.vistaDipendente.show()
 
         except IndexError:
@@ -160,5 +162,6 @@ class DipendentiRegistratiView(QWidget):
         self.close()
 
     def logout(self):
-        self.bLogout()
-        self.close()
+        sys.exit(self.app.exec_())
+        #self.bLogout()
+        #self.close()
