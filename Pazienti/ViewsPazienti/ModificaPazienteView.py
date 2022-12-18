@@ -183,7 +183,7 @@ class ModificaPazienteView(object):
         self.salvaButton = QtWidgets.QPushButton(Form)
         self.salvaButton.setObjectName("salvaButton")
         self.gridLayout.addWidget(self.salvaButton, 11, 0, 1, 5)
-        self.salvaButton.clicked.connect(lambda: self.nuoviDatiPaziente(Form, self.paziente))
+        self.salvaButton.clicked.connect(lambda: self.exSalvaNuoviDatiPaziente(Form, self.paziente))
 
         self.aggiornaPrescrizioni(self.prescrizioni)
   
@@ -256,7 +256,7 @@ class ModificaPazienteView(object):
             self.prescrizioni[self.prescrizioniLayout.rowCount()] = self.prescrEdit.text()
             self.prescrEdit.setText('')
 
-    def nuoviDatiPaziente(self, form, paziente):
+    def exSalvaNuoviDatiPaziente(self, form, paziente):
         
         self.attributiPaziente = {'nome' : self.nomeEdit.text(),'cognome':self.cognomeEdit.text(),'codicefiscale':self.codiceEdit.text(),'telefono':self.cellulareEdit.text(),
             'via':self.viaEdit.text(),'numeroCivico':self.numCivEdit.text(),'citta':self.cittaEdit.text(),'provincia':self.regioneEdit.text(), 'prescrizioni':self.prescrizioni}        

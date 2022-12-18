@@ -13,7 +13,7 @@ class TrattamentoModel:
         self.durata = ""
 
     def setInfoTrattamento(self, nome, classe, costo, durata):   #impostazione dei parametri per un nuovo trattamento
-        self.codiceTrattamento = int(ElencoTrattamentiModel().calcolaUltimoCodiceTra())+1
+        self.codiceTrattamento = int(ElencoTrattamentiModel().calcolaUltimoCodiceTrattamento()) + 1
         self.nome = nome
         self.classe = classe
         self.costo = costo

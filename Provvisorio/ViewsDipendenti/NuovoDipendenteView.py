@@ -183,7 +183,7 @@ class NuovoDipendenteView(QWidget):
 
         # controllo esistenza dipendente con lo stesso codice fiscale
         try:
-            elencoDip = GestioneDipendentiController.listaDipendenti(GestioneDipendentiController)
+            elencoDip = GestioneDipendentiController.visualizzaElencoDipendenti(GestioneDipendentiController)
 
             for chiave in elencoDip:
                 if elencoDip[chiave].codicefiscale == self.attributiDipendente['codicefiscale'].text():
@@ -232,7 +232,7 @@ class NuovoDipendenteView(QWidget):
 
             args.append(listaCertificazioni)
 
-        GestioneDipendentiController.creaDipendete(GestioneDipendentiController, self.proffessioneDipendente, *args)
+        GestioneDipendentiController.creaDipendente(GestioneDipendentiController, self.proffessioneDipendente, *args)
 
 
     def chiudiFinestra(self):

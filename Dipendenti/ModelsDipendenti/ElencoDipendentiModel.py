@@ -1,18 +1,18 @@
 import os
 import pickle
 
-class ListaDipendentiModel():
+class ElencoDipendentiModel():
 
     numDipendenti = 0
 
-    def visualizzaElencoDipendente(cls):
+    def visualizzaElencoDipendenti(cls):
         if os.path.isfile('Dati/Dipendenti.pickle'):
             with open('Dati/Dipendenti.pickle', 'rb') as file:
                 dipendenti = dict(pickle.load(file))
         return dipendenti
 
     def ricercaDipendente(cls,**kwargs):
-        dipendenti = ListaDipendentiModel.visualizzaElencoDipendente(ListaDipendentiModel)
+        dipendenti = ElencoDipendentiModel.visualizzaElencoDipendenti(ElencoDipendentiModel)
         trovato = None
         dipendentiTrovati = {}
 
@@ -29,7 +29,7 @@ class ListaDipendentiModel():
 
         return dipendentiTrovati
 
-    def codiceDip(cls):
+    def calcolaUltimoCodiceDipendente(cls):
 
         dipendenti = {}
         if os.path.isfile('Dati/Dipendenti.pickle'):

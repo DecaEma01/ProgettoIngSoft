@@ -8,7 +8,7 @@ class ElencoTrattamentiModel:
     def __init__(self):
         pass
 
-    def calcolaUltimoCodiceTra(self):
+    def calcolaUltimoCodiceTrattamento(self):
         trattamenti = {}
         codiceMax = 0
         try:

@@ -1,4 +1,4 @@
-from Dipendenti.ModelsDipendenti.ElencoDipendentiModel import ListaDipendentiModel
+from Dipendenti.ModelsDipendenti.ElencoDipendentiModel import ElencoDipendentiModel
 
 import os
 import pickle
@@ -7,7 +7,7 @@ class DipendenteModel:
 
     def __init__(self, nome, cognome, codicefiscale, telefono, via, civico, citta, provincia, ruoloDipendente):
 
-        codiceDipendente = ListaDipendentiModel.codiceDip(ListaDipendentiModel)
+        codiceDipendente = ElencoDipendentiModel.calcolaUltimoCodiceDipendente(ElencoDipendentiModel)
 
         self.codiceDipendente = codiceDipendente + 1
         self.nome = nome

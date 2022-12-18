@@ -38,7 +38,7 @@ class ElencoPazientiModel():
         
         return trovato
     
-    def codicePazM(cls):
+    def calcolaUltimoCodicePazienteM(cls):
         pazienti = {}
         if os.path.isfile('Dati/Pazienti.pickle'):
             with open('Dati/Pazienti.pickle', 'rb') as file:

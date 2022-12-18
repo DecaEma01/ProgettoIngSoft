@@ -48,9 +48,9 @@ class NuovoDipendenteView(QWidget):
 
         buttonSalva = QPushButton('Salva')
         buttonSalva.setFixedWidth(780)
-        buttonSalva.clicked.connect(self.nuovoDipendente)
+        buttonSalva.clicked.connect(self.salvaNuovoDipendente)
         layoutOrizButton.addWidget(buttonSalva)
-        #layoutOrizButton.addWidget(self.generaBottone('Salva', self.nuovoDipendente))
+        #layoutOrizButton.addWidget(self.generaBottone('Salva', self.salvaNuovoDipendente))
         #layoutOrizButton.addWidget(self.generaBottone('Annulla', self.chiudiFinestra))
 
         if self.proffessioneDipendente != 'Fisioterapista':
@@ -177,7 +177,7 @@ class NuovoDipendenteView(QWidget):
             QMessageBox.critical(self, 'Errore', 'Selezionare una certificazione! ', QMessageBox.Ok)
             return
 
-    def nuovoDipendente(self):
+    def salvaNuovoDipendente(self):
 
         # controllo campi inseriti
         try:
@@ -190,7 +190,7 @@ class NuovoDipendenteView(QWidget):
 
         # controllo esistenza dipendente con lo stesso codice fiscale
         try:
-            elencoDip = GestioneDipendentiController.listaDipendenti(GestioneDipendentiController)
+            elencoDip = GestioneDipendentiController.visualizzaElencoDipendenti(GestioneDipendentiController)
 
             for chiave in elencoDip:
                 if elencoDip[chiave].codicefiscale == self.attributiDipendente['codicefiscale'].text():
@@ -239,7 +239,7 @@ class NuovoDipendenteView(QWidget):
 
             args.append(listaCertificazioni)
 
-        GestioneDipendentiController.creaDipendete(GestioneDipendentiController, self.proffessioneDipendente, *args)
+        GestioneDipendentiController.creaDipendente(GestioneDipendentiController, self.proffessioneDipendente, *args)
 
 
     def chiudiFinestra(self):

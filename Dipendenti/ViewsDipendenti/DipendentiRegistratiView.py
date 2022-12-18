@@ -66,7 +66,7 @@ class DipendentiRegistratiView(QWidget):
         self.setWindowTitle('Amministratore - Dipendenti Registrati')
 
     def caricaDipendenti(self):
-                dipendenti = GestioneDipendentiController.listaDipendenti(GestioneDipendentiController)#dict(pickle.load(file))
+                dipendenti = GestioneDipendentiController.visualizzaElencoDipendenti(GestioneDipendentiController)#dict(pickle.load(file))
                 self.dipendenti.extend(dipendenti.values())
 
     def aggiornaDipendenti(self):

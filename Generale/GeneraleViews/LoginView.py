@@ -31,7 +31,7 @@ class LoginView(QWidget):
         layoutVertMain.addLayout(self.generaLinea("Username:", "login"))
         layoutVertMain.addLayout(self.generaLinea("Password:", "password", True))
         layoutBottoniSwitch = QHBoxLayout()
-        layoutBottoniSwitch.addWidget(self.generaBottone('Entra', self.accesso, False, 400))
+        layoutBottoniSwitch.addWidget(self.generaBottone('Entra', self.eseguiLogin, False, 400))
         layoutBottoniSwitch.addWidget(self.generaBottone('Esci', self.chiudiFinestra, False, 400))
         layoutVertMain.addLayout(layoutBottoniSwitch)
         layoutVertMain.addItem(QSpacerItem(100, 75))
@@ -75,7 +75,7 @@ class LoginView(QWidget):
 
         return utente
 
-    def accesso(self):
+    def eseguiLogin(self):
         utente = self.verificaCredenziali()
 
         if utente == None:

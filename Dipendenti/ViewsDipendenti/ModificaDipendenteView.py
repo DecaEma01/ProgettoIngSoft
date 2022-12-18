@@ -50,9 +50,9 @@ class ModificaDipendenteView(QWidget):
             layoutVerticale.addStretch()
 
         layoutOrizButton.addStretch()
-        #bottoneSalva = self.generaBottone('Salva', self.nuoviDatiDipendente, False, 90)
+        #bottoneSalva = self.generaBottone('Salva', self.salvaNuoviDatiDipendente, False, 90)
         #bottoneSalva.setFixedWidth(700)
-        layoutOrizButton.addWidget(self.generaBottone('Salva', self.nuoviDatiDipendente, False, 780))
+        layoutOrizButton.addWidget(self.generaBottone('Salva', self.salvaNuoviDatiDipendente, False, 780))
 
         ##layoutOrizButton.addWidget(self.generaBottone('Cancel', self.chiudiFinestra, False, 90))
 
@@ -191,7 +191,7 @@ class ModificaDipendenteView(QWidget):
             QMessageBox.critical(self, 'Errore', 'Selezionare una certificazione! ', QMessageBox.Ok)
             return
 
-    def nuoviDatiDipendente(self):
+    def salvaNuoviDatiDipendente(self):
 
         # controllo campi inseriti
         try:
@@ -205,7 +205,7 @@ class ModificaDipendenteView(QWidget):
 
         # controllo esistenza dipendente con lo stesso codice fiscale
         try:
-            elencoDip = GestioneDipendentiController.listaDipendenti(GestioneDipendentiController)
+            elencoDip = GestioneDipendentiController.visualizzaElencoDipendenti(GestioneDipendentiController)
 
             for chiave in elencoDip:
                 if elencoDip[chiave].codiceDipendente != self.dipendente.codiceDipendente:

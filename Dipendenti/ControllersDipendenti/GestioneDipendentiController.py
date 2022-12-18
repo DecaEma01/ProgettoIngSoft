@@ -1,4 +1,4 @@
-from Dipendenti.ModelsDipendenti.DipendenteModel import ListaDipendentiModel
+from Dipendenti.ModelsDipendenti.DipendenteModel import ElencoDipendentiModel
 
 from Dipendenti.ModelsDipendenti.MedicoModel import MedicoModel
 from Dipendenti.ModelsDipendenti.SegretarioModel import SegretarioModel
@@ -6,13 +6,13 @@ from Dipendenti.ModelsDipendenti.FisioterapistaModel import FisioterapistaModel
 
 class GestioneDipendentiController():
 
-    def listaDipendenti(cls):
-        return ListaDipendentiModel.visualizzaElencoDipendente(ListaDipendentiModel)
+    def visualizzaElencoDipendenti(cls):
+        return ElencoDipendentiModel.visualizzaElencoDipendenti(ElencoDipendentiModel)
 
     def ricercaDipendente(cls, **keyargs):
-        return ListaDipendentiModel.ricercaDipendente(ListaDipendentiModel, **keyargs)
+        return ElencoDipendentiModel.ricercaDipendente(ElencoDipendentiModel, **keyargs)
 
-    def creaDipendete(cls, ruolo, *args):
+    def creaDipendente(cls, ruolo, *args):
         if ruolo == "Fisioterapista":
             dipendente = FisioterapistaModel(*args)
 

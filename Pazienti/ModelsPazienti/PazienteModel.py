@@ -8,7 +8,7 @@ class PazienteModel:
     def __init__(self, nome, cognome, codicefiscale, telefono, via, civico, citta, provincia, prescrizioni):
         
         pazienti = {}
-        codicePaziente = ElencoPazientiModel.codicePazM(ElencoPazientiModel)
+        codicePaziente = ElencoPazientiModel.calcolaUltimoCodicePazienteM(ElencoPazientiModel)
         
         self.codicePaziente = codicePaziente + 1
         self.nome = nome
