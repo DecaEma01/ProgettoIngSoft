@@ -243,7 +243,7 @@ class ModificaDipendenteView(QWidget):
         args.append(self.attributiDipendente['citta'].text())
         args.append(self.attributiDipendente['provincia'].text())
 
-        if type(self.dipendente).__name__ == 'Fisioterapista':
+        if type(self.dipendente).__name__ == 'FisioterapistaModel':
             listaCertificazioni = []
 
             if self.listViewModel.rowCount() != 0:
