@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 import sys
 import os
+from datetime import datetime
 import threading
 
 
@@ -29,7 +30,7 @@ def print_hi(name):
     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
 
 def backup():
-    while (True):
+    while (datetime.now().strftime("%H:%M:%S")=='21:59:59' or datetime.now().strftime("%H:%M:%S")=='22:00:00'):
         BackupModel.eseguiBackup(BackupModel)
 
 # Press the green button in the gutter to run the script.

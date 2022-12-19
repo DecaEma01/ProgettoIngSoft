@@ -192,7 +192,8 @@ class PazientiRegistratiView(object):
     def visualizzaPaziente(self, form, app):
         try:
             selected = self.listView.selectedIndexes()[0].data()
-            codice = int(selected[0])
+            sel = selected.split()
+            codice = int(sel[0])
 
             paziente = ElencoPazientiController.ricercaPazienteC(ElencoPazientiController, codicePaziente = codice)[codice]
 
