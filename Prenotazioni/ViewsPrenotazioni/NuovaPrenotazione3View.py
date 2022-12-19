@@ -235,7 +235,7 @@ class NuovaPrenotazione3View(object):
             Form.close()
             istanzaP2View.close()
             istanzaP1View.close()
-            #istanzaGestioneView.close()
+
 
 
 
