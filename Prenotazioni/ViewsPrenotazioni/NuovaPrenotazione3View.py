@@ -225,7 +225,7 @@ class NuovaPrenotazione3View(object):
         else:
             trattamento = None
 
-        if self.controllaGiornoConsuleza():
+        if ((not trattamento) and self.controllaGiornoConsuleza()) or trattamento:
             data = self.getDataInserita()
             orario = self.comboBoxOrario.currentText()
             paziente = self.paziente
