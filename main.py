@@ -1,3 +1,6 @@
+import sched
+
+import schedule
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 import sys
@@ -23,25 +26,46 @@ from Pazienti.ModelsPazienti.PazienteModel import PazienteModel
 from Pazienti.ModelsPazienti.ElencoPazientiModel import ElencoPazientiModel
 from Generale.Backup.BackupModel import BackupModel
 
-from datetime import time
+import time
 
-def print_hi(name):
+def print_hi():
     # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    print(f'Hi')  # Press Ctrl+F8 to toggle the breakpoint.
 
-def backup():
-    while (datetime.now().strftime("%H:%M:%S")=='21:59:59' or datetime.now().strftime("%H:%M:%S")=='22:00:00'):
-        BackupModel.eseguiBackup(BackupModel)
+def backupGiornaliero():
+
+    dataOggi=datetime.today().strftime('%Y-%m-%d')
+    orarioBackup = " 00:16:00"
+    dataOrarioBackup = str(dataOggi+orarioBackup)
+    datatimeBackup = datetime.strptime(dataOrarioBackup, '%Y-%m-%d %H:%M:%S')
+
+    if datetime.now() < datatimeBackup:
+        unixDataBackup = time.mktime(datatimeBackup.timetuple())
+    else:
+        unixDataBackup = time.mktime(datatimeBackup.timetuple())+ float(86400)
+
+    print("unix timestamp dell'orario di backup di oggi "+str(unixDataBackup))
+
+    # Set up scheduler
+    s = sched.scheduler(time.time, time.sleep)
+    # Schedule when you want the action to occur
+    s.enterabs(unixDataBackup, 0, BackupModel().eseguiBackup)
+    # Block until the action has been run
+    s.run()
+
+    print("fatto backup")
+
+#def backupAlternativo():
+#    schedule.every(5).seconds.do(print_hi)
+#    while True:
+#        schedule.run_pending()
+#       #backupAlternativo()
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
 
-    #x = threading.Thread(target=backup)
-    #x.start()
-
-    if os.path.isfile('Dati/Dipendenti.pickle') == False:
-        dipendente1 = SegretarioModel('Giuseppe', 'Falcone', 'HGGIUH', '3285610013', 'spalato', '12', 'Pescara',
-                                      'Abruzzo')
+    x = threading.Thread(target=backupGiornaliero)
+    x.start()
 
     app = QApplication(sys.argv)
     vistaLogin = LoginView(app)
