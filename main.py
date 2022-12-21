@@ -40,12 +40,16 @@ def backupGiornaliero():
 if __name__ == '__main__':
 
     x = threading.Thread(target=backupGiornaliero)
+    x.setDaemon(True)
     x.start()
+
 
     app = QApplication(sys.argv)
     vistaLogin = LoginView(app)
     vistaLogin.show()
     sys.exit(app.exec())
+
+
 
 
 
