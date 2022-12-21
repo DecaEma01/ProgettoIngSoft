@@ -25,7 +25,7 @@ class AmministratoreHomeView(QWidget):
 
         self.setLayout(layoutVertMain)
 
-        self.setWindowTitle('Amministratore - Gestione dipendenti')
+        self.setWindowTitle('Amministratore - Home')
 
     def generaBottone(self, titolo, onClick, expanding = True, width = None):
         button = QPushButton(titolo)

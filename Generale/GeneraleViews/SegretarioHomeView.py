@@ -24,7 +24,7 @@ class SegretarioHomeView(QWidget):
 
         self.setLayout(layoutVertMain)
         self.resize(900, 700)
-        self.setWindowTitle('Amministratore - Gestione dipendenti')
+        self.setWindowTitle('Segretario - Home')
 
     def generaBottone(self, titolo, onClick, expanding = True, width = None):
         button = QPushButton(titolo)
