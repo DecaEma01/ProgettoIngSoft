@@ -235,7 +235,7 @@ class ModificaPazienteView(object):
                 ultimaPrescrizione = list(self.prescrizioni)[-1]
             
                 for key in self.prescrizioni:
-                    if self.prescrizioni[key] == self.prescrEdit.text():
+                    if str(key) == self.prescrEdit.text():
                         self.prescrizioni[key] = self.prescrizioni[ultimaPrescrizione]
                         presente = True
                 
@@ -247,7 +247,7 @@ class ModificaPazienteView(object):
                 self.aggiornaPrescrizioni(self.prescrizioni)
                 self.prescrEdit.setText('')       
         except:
-            QtWidgets.QMessageBox.critical(form, 'Errore', 'Inserire il NOME di una prescrizione presente', QtWidgets.QMessageBox.Ok)
+            QtWidgets.QMessageBox.critical(form, 'Errore', 'Non hai inserito un codice oppure non hai inserito un codice tra quelli delle prescrizione salvate.Inserire il Codice numerico di una prescrizione presente', QtWidgets.QMessageBox.Ok)
             return
         
     def exAggiungi(self):
@@ -271,17 +271,8 @@ class ModificaPazienteView(object):
         
         try:
             for chiave in self.attributiPaziente:
-                if chiave == 'nome' or chiave == 'cognome' or chiave == 'via' or chiave == 'citta' or chiave == 'provincia':
-                    if self.attributiPaziente[chiave].isalpha() == False:
-                        raise Exception(chiave)
-        except:
-            QtWidgets.QMessageBox.critical(form, 'Errore', f"L'elemento {chiave} contiene dei numeri", QtWidgets.QMessageBox.Ok)
-            return
-        
-        try:
-            for chiave in self.attributiPaziente:
-                if chiave == 'telefono' or chiave == 'numeroCivico':
-                    if self.attributiPaziente[chiave].isnumeric() == False:
+                if chiave == 'telefono':
+                    if self.attributiPaziente[chiave].strip().isnumeric() == False:
                         raise Exception(chiave)
         except:
             QtWidgets.QMessageBox.critical(form, 'Errore', f"L'elemento {chiave} contiene delle lettere", QtWidgets.QMessageBox.Ok)

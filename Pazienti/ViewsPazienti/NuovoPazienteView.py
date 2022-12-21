@@ -227,17 +227,8 @@ class NuovoPazienteView(object):
         
         try:
             for chiave in attributi:
-                if chiave == 'nome' or chiave == 'cognome' or chiave == 'via' or chiave == 'citta' or chiave == 'provincia':
-                    if attributi[chiave].isalpha() == False:
-                        raise Exception(chiave)
-        except:
-            QtWidgets.QMessageBox.critical(form, 'Errore', f"L'elemento {chiave} contiene dei numeri", QtWidgets.QMessageBox.Ok)
-            return
-        
-        try:
-            for chiave in attributi:
-                if chiave == 'telefono' or chiave == 'numeroCivico':
-                    if attributi[chiave].isnumeric() == False:
+                if chiave == 'telefono' :
+                    if attributi[chiave].strip().isnumeric() == False:
                         raise Exception(chiave)
         except:
             QtWidgets.QMessageBox.critical(form, 'Errore', f"L'elemento {chiave} contiene delle lettere", QtWidgets.QMessageBox.Ok)

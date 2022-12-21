@@ -173,6 +173,7 @@ class VisualizzaPazienteView(object):
     def exElimina(self, form):
         msg = QtWidgets.QMessageBox()
         msg.setText("Confermare la scelta?")
+        msg.setWindowTitle("Conferma eliminazione")
         msg.setStandardButtons(QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
         risp = msg.exec_()
         if risp == QtWidgets.QMessageBox.Ok:
